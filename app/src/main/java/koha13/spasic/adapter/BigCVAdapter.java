@@ -21,6 +21,7 @@ import java.util.List;
 import koha13.spasic.MainActivity;
 import koha13.spasic.R;
 import koha13.spasic.model.Song;
+import koha13.spasic.utils.GeneralDAO;
 
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder>{
 
@@ -44,6 +45,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtist());
+        holder.time.setText(GeneralDAO.secondToMinute(songs.get(position).getLength()));
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,6 +85,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         TextView songArtist;
         ImageView imageView;
         ImageButton menu;
+        TextView time;
 
         SongViewHolder(View itemView){
             super(itemView);
@@ -90,6 +93,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
             songArtist = (TextView)itemView.findViewById(R.id.cv_big_song_artist);
             imageView = (ImageView)itemView.findViewById(R.id.cv_big_image);
             menu = (ImageButton)itemView.findViewById(R.id.menu_cv_big);
+            time = (TextView)itemView.findViewById(R.id.cv_big_time);
         }
     }
 }
