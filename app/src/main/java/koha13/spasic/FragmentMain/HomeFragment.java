@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
         songs.add(new Song("Test1","Artist",123));
         songs.add(new Song("Test2","Artist",123));
         songs.add(new Song("Test3","Artist",123));
-        BigCVAdapter songCardAdapter = new BigCVAdapter(songs);
+        BigCVAdapter songCardAdapter = new BigCVAdapter(songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
         return rootView;
     }
