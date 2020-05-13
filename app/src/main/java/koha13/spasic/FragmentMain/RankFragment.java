@@ -1,4 +1,4 @@
-package koha13.spasic;
+package koha13.spasic.FragmentMain;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class OrangeFragment extends Fragment {
-    public OrangeFragment() {
+import koha13.spasic.R;
+
+public class RankFragment extends Fragment {
+    public RankFragment() {
         // Required empty public constructor
     }
 

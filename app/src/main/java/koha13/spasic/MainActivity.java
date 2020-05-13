@@ -12,6 +12,10 @@ import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
 
+import koha13.spasic.FragmentMain.HomeFragment;
+import koha13.spasic.FragmentMain.RankFragment;
+import koha13.spasic.FragmentMain.ViewPagerAdapter;
+
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
@@ -61,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void addTabs(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new AppleFragment(), "APPLE");
-        adapter.addFrag(new OrangeFragment(), "ORANGE");
-        adapter.addFrag(new OrangeFragment(), "ORANGE");
-        adapter.addFrag(new OrangeFragment(), "ORANGE");
+        adapter.addFrag(new HomeFragment(), "APPLE");
+        adapter.addFrag(new RankFragment(), "ORANGE");
+        adapter.addFrag(new RankFragment(), "ORANGE");
+        adapter.addFrag(new RankFragment(), "ORANGE");
         viewPager.setAdapter(adapter);
     }
 }
