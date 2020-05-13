@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Spasic</string>
+    <string name="footer_height">60dp</string>
 </resources>
