@@ -1,6 +1,6 @@
 package koha13.spasic.utils;
 
-public class GeneralDAO {
+public class GeneralDTO {
     public static String secondToMinute(int length){
         String hour = String.valueOf(length/3600);
         String min = String.valueOf(length%3600/60);

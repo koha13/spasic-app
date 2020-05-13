@@ -1,7 +1,6 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,16 +11,14 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import koha13.spasic.MainActivity;
 import koha13.spasic.R;
 import koha13.spasic.model.Song;
-import koha13.spasic.utils.GeneralDAO;
+import koha13.spasic.utils.GeneralDTO;
 
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder>{
 
@@ -45,7 +42,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtist());
-        holder.time.setText(GeneralDAO.secondToMinute(songs.get(position).getLength()));
+        holder.time.setText(GeneralDTO.secondToMinute(songs.get(position).getLength()));
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
