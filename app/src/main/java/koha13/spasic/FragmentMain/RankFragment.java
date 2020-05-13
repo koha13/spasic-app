@@ -38,7 +38,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_orange, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_rank, container, false);
 
         //Add spinner
         spinner = (Spinner) rootView.findViewById(R.id.regionSpinner);
@@ -68,13 +68,13 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         //First load when view created
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                loadRecyclerViewData();
-            }
-        });
+//        mSwipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSwipeRefreshLayout.setRefreshing(true);
+//                loadRecyclerViewData();
+//            }
+//        });
         return rootView;
     }
 
