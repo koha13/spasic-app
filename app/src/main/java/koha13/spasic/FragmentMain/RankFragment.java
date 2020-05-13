@@ -54,7 +54,7 @@ public class RankFragment extends Fragment {
         songs.add(new Song("Test1","Artist",123));
         songs.add(new Song("Test2","Artist",123));
         songs.add(new Song("Test3","Artist",123));
-        SongCardAdapter songCardAdapter = new SongCardAdapter(songs);
+        SongCardAdapter songCardAdapter = new SongCardAdapter(songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
         return rootView;
     }

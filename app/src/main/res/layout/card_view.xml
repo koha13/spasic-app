@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cv_song"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -17,39 +17,57 @@
             android:layout_height="60dp"
             android:src="@drawable/default_image"
             android:scaleType="centerCrop"
-            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
             android:layout_alignParentLeft="true"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/cv_image"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:layout_toRightOf="@+id/cv_image">
 
-            <TextView
-                android:id="@+id/cv_song_name"
+            <ImageButton
+                android:id="@+id/menu_cv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vert_black_18dp"
+                android:background="@android:color/transparent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:padding="5dp"/>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView is very longggggggggggggggggggggggggggggggggggggggggggggggggggggg"
-                android:textColor="#000000"
-                android:textSize="17dp"
-                android:scrollHorizontally="true"
-                android:ellipsize="end"
-                android:maxLines="2"/>
+                android:orientation="vertical"
+                android:layout_toLeftOf="@+id/menu_cv"
+                android:gravity="center_vertical">
 
-            <TextView
-                android:id="@+id/cv_song_artist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="TextViwewew"
-                android:textColor="#000000"
-                android:scrollHorizontally="true"
-                android:ellipsize="end"
-                android:maxLines="1"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/cv_song_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView is very longggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+                    android:textColor="#000000"
+                    android:textSize="17dp"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
 
-
-
+                <TextView
+                    android:id="@+id/cv_song_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextViwewew"
+                    android:textColor="#000000"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/cv_time"
+                    android:text="6:02"/>
+            </LinearLayout>
+        </RelativeLayout>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
