@@ -26,7 +26,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            getSupportActionBar().setDisplayShowHomeEnabled(false);
+//        }
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         addTabs(viewPager);
@@ -59,16 +64,16 @@ public class MainActivity extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_equalizer_white_24dp);
-        tabLayout.getTabAt(2).setIcon(R.drawable.ic_headset_white_24dp);
-        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person_white_24dp);
+//        tabLayout.getTabAt(2).setIcon(R.drawable.ic_headset_white_24dp);
+//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person_white_24dp);
     }
 
     private void addTabs(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new HomeFragment(), "APPLE");
         adapter.addFrag(new RankFragment(), "ORANGE");
-        adapter.addFrag(new RankFragment(), "ORANGE");
-        adapter.addFrag(new RankFragment(), "ORANGE");
+//        adapter.addFrag(new RankFragment(), "ORANGE");
+//        adapter.addFrag(new RankFragment(), "ORANGE");
         viewPager.setAdapter(adapter);
     }
 }
