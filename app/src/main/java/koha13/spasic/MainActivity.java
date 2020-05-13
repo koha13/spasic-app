@@ -2,7 +2,6 @@ package koha13.spasic;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -14,7 +13,7 @@ import com.google.android.material.tabs.TabLayout;
 
 import koha13.spasic.FragmentMain.HomeFragment;
 import koha13.spasic.FragmentMain.RankFragment;
-import koha13.spasic.FragmentMain.ViewPagerAdapter;
+import koha13.spasic.adapter.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

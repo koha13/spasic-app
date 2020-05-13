@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.SongCardView.SongCardAdapter;
+import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.model.Song;
 
 public class RankFragment extends Fragment {

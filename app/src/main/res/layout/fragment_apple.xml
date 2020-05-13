@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView android:id="@+id/scrollView"
+<LinearLayout android:id="@+id/scrollView"
     android:isScrollContainer="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="fill_vertical"
     android:clipToPadding="false"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-</androidx.core.widget.NestedScrollView>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSongMain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

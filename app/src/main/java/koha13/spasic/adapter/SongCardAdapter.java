@@ -1,4 +1,4 @@
-package koha13.spasic.SongCardView;
+package koha13.spasic.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

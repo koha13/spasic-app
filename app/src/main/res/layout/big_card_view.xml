@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/cv_big_song"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginHorizontal="1dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:color/transparent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/cv_big_image"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:src="@drawable/default_image"
+                android:scaleType="centerCrop"
+                android:layout_alignParentLeft="true"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/cv_big_image"
+                android:layout_alignRight="@+id/cv_big_image"
+                android:text="06:12"
+                android:textColor="#ffffff"
+                android:layout_marginBottom="2dp"
+                android:layout_marginRight="2dp"
+                android:background="#59626A"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
+
+            <ImageButton
+                android:id="@+id/menu_cv_big"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vert_black_18dp"
+                android:background="@android:color/transparent"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_toLeftOf="@+id/menu_cv_big"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/cv_big_song_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextView is very long"
+                    android:textColor="#000000"
+                    android:textSize="17dp"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"/>
+
+                <TextView
+                    android:id="@+id/cv_big_song_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="TextViwewew"
+                    android:textColor="#000000"
+                    android:scrollHorizontally="true"
+                    android:ellipsize="end"
+                    android:maxLines="1"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

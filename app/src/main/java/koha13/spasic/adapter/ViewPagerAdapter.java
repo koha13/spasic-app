@@ -1,4 +1,4 @@
-package koha13.spasic.FragmentMain;
+package koha13.spasic.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
