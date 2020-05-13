@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
-                int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.colorPrimaryDark);
+                int tabIconColor = ContextCompat.getColor(MainActivity.this, R.color.activeMain);
                 tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
             }
 
@@ -63,16 +63,16 @@ public class MainActivity extends AppCompatActivity {
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_equalizer_white_24dp);
-//        tabLayout.getTabAt(2).setIcon(R.drawable.ic_headset_white_24dp);
-//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person_white_24dp);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_headset_white_24dp);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person_white_24dp);
     }
 
     private void addTabs(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new HomeFragment(), "APPLE");
         adapter.addFrag(new RankFragment(), "ORANGE");
-//        adapter.addFrag(new RankFragment(), "ORANGE");
-//        adapter.addFrag(new RankFragment(), "ORANGE");
+        adapter.addFrag(new RankFragment(), "ORANGE");
+        adapter.addFrag(new RankFragment(), "ORANGE");
         viewPager.setAdapter(adapter);
     }
 }

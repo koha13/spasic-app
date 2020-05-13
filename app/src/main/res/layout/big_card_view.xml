@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/cv_big_image"
                 android:layout_alignRight="@+id/cv_big_image"
-                android:textColor="#ffffff"
+                android:textColor="@color/textLight"
                 android:layout_marginBottom="2dp"
                 android:layout_marginRight="2dp"
                 android:background="#59626A"/>
@@ -66,7 +66,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextView is very long"
-                    android:textColor="#000000"
+                    android:textColor="@color/textDark"
                     android:textSize="17dp"
                     android:scrollHorizontally="true"
                     android:ellipsize="end"
@@ -77,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="TextViwewew"
-                    android:textColor="#000000"
+                    android:textColor="@color/textDark"
                     android:scrollHorizontally="true"
                     android:ellipsize="end"
                     android:maxLines="1"/>
