@@ -43,6 +43,12 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtist());
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Business code here
+            }
+        });
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

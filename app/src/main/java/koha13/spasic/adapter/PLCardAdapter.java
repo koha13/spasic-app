@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -40,6 +41,12 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
         holder.plName.setText(pls.get(position).getName());
         holder.totalSong.setText(String.valueOf(pls.get(position).getSongs().size()) + " songs");
         holder.totalTime.setText(GeneralDTO.secondToMinute(pls.get(position).getTotalTime()));
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Business code here
+            }
+        });
         holder.play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,6 +62,7 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
     }
 
     public static class PLViewHolder extends RecyclerView.ViewHolder{
+        CardView cv;
         TextView plName;
         TextView totalSong;
         TextView totalTime;
@@ -62,6 +70,7 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
 
         PLViewHolder(View itemView){
             super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.pl_cv);
             plName = (TextView)itemView.findViewById(R.id.pl_cv_name);
             totalSong = (TextView)itemView.findViewById(R.id.pl_cv_info);
             totalTime = (TextView)itemView.findViewById(R.id.pl_cv_time);

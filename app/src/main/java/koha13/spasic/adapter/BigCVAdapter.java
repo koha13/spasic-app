@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -43,6 +44,12 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtist());
         holder.time.setText(GeneralDTO.secondToMinute(songs.get(position).getLength()));
+        holder.cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Business code here
+            }
+        });
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +85,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder{
+        CardView cv;
         TextView songName;
         TextView songArtist;
         ImageView imageView;
@@ -86,6 +94,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
         SongViewHolder(View itemView){
             super(itemView);
+            cv = (CardView)itemView.findViewById(R.id.cv_big_song);
             songName = (TextView)itemView.findViewById(R.id.cv_big_song_name);
             songArtist = (TextView)itemView.findViewById(R.id.cv_big_song_artist);
             imageView = (ImageView)itemView.findViewById(R.id.cv_big_image);
