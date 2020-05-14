@@ -38,6 +38,14 @@ public class PLActivity extends AppCompatActivity {
         SongCardAdapter songCardAdapter = new SongCardAdapter(songs, this, true);
         recyclerView.setAdapter(songCardAdapter);
 
+        ImageButton backBtn = (ImageButton) findViewById(R.id.backBtnPL);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         final ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
         menuBtn.setOnClickListener(new View.OnClickListener() {
             @Override
