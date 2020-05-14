@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menuPLItem"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+    <item
+        android:id="@+id/btn_delete"
+        android:title="Xóa khỏi danh sách" />
     <item
         android:id="@+id/btn_add_after_curent_song"
         android:title="Phát tiếp theo" />

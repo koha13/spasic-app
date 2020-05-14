@@ -20,20 +20,18 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.model.Song;
 
-public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private RecyclerView.LayoutManager layoutManager;
+    private Spinner spinner;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public RankFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    private RecyclerView.LayoutManager layoutManager;
-    private Spinner spinner;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,7 +45,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         list.add("Nhạc Việt");
         list.add("Nhạc Hàn");
         list.add("Nhạc Trung");
-        ArrayAdapter<String> adapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_spinner_item,list);
+        ArrayAdapter<String> adapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner.setAdapter(adapter);
 
@@ -57,9 +55,9 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1","Artist",123));
-        songs.add(new Song("Test2","Artist",123));
-        songs.add(new Song("Test3","Artist",123));
+        songs.add(new Song("Test1", "Artist", 123));
+        songs.add(new Song("Test2", "Artist", 123));
+        songs.add(new Song("Test3", "Artist", 123));
         SongCardAdapter songCardAdapter = new SongCardAdapter(songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
 
@@ -83,7 +81,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         loadRecyclerViewData();
     }
 
-    private void loadRecyclerViewData(){
+    private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
         Toast.makeText(getActivity(), "Ahlo", Toast.LENGTH_SHORT).show();

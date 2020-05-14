@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Playlist {
-    private String name;
     List<Song> songs;
+    private String name;
 
-    public int getTotalTime(){
+    public int getTotalTime() {
         int rs = 0;
-        for(int i=0;i<songs.size();i++){
-            rs+=songs.get(i).getLength();
+        for (int i = 0; i < songs.size(); i++) {
+            rs += songs.get(i).getLength();
         }
         return rs;
     }

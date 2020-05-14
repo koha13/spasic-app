@@ -1,21 +1,19 @@
 package koha13.spasic.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
-
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
+
 import com.google.android.material.tabs.TabLayout;
 
 import koha13.spasic.FragmentCurrentSong.CurrentSongFragment;
-import koha13.spasic.FragmentMain.HomeFragment;
-import koha13.spasic.FragmentMain.PLFragment;
+import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.FragmentMain.RankFragment;
-import koha13.spasic.MainActivity;
 import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
 
@@ -44,7 +42,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs2);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
-        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager){
+        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 super.onTabSelected(tab);
@@ -74,7 +72,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     private void addTabs(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(new CurrentSongFragment(), "CURRENTSONG");
-        adapter.addFrag(new RankFragment(), "RANK");
+        adapter.addFrag(new QueueFragment(), "QUEUE");
         viewPager.setAdapter(adapter);
     }
 }

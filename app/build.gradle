@@ -14,6 +14,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    sourceSets {
+        main {
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false

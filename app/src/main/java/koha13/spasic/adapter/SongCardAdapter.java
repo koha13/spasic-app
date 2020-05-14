@@ -1,7 +1,6 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,10 +24,17 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
     private List<Song> songs;
     private Context mContext;
+    private boolean isPLItem = false;
 
-    public SongCardAdapter(List<Song> songs, Context mContext){
+    public SongCardAdapter(List<Song> songs, Context mContext) {
         this.songs = songs;
         this.mContext = mContext;
+    }
+
+    public SongCardAdapter(List<Song> songs, Context mContext, boolean isPLItem) {
+        this.songs = songs;
+        this.mContext = mContext;
+        this.isPLItem = isPLItem;
     }
 
     @NonNull
@@ -53,26 +59,52 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(mContext, holder.menu);
-                popupMenu.inflate(R.menu.option_menu_big_cv);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.btn_add_after_curent_song:
-                                Toast.makeText(mContext,"Phat tiep theo", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_add_to_pl:
-                                Toast.makeText(mContext,"Them vao pl", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_add_to_queue:
-                                Toast.makeText(mContext,"Them vao ds", Toast.LENGTH_SHORT).show();
-                                break;
-                            default: break;
+                if(isPLItem){
+                    popupMenu.inflate(R.menu.option_menu_pl_item);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.btn_delete:
+                                    Toast.makeText(mContext, "Delete", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_add_after_curent_song:
+                                    Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_add_to_pl:
+                                    Toast.makeText(mContext, "Them vao pl", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_add_to_queue:
+                                    Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                });
-
+                    });
+                }else{
+                    popupMenu.inflate(R.menu.option_menu_big_cv);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.btn_add_after_curent_song:
+                                    Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_add_to_pl:
+                                    Toast.makeText(mContext, "Them vao pl", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_add_to_queue:
+                                    Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
+                }
                 popupMenu.show();
             }
         });
@@ -89,20 +121,20 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
     }
 
 
-    public static class SongViewHolder extends RecyclerView.ViewHolder{
+    public static class SongViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView songName;
         TextView songArtist;
         ImageView imageView;
         ImageButton menu;
 
-        SongViewHolder(View itemView){
+        SongViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv_song);
-            songName = (TextView)itemView.findViewById(R.id.cv_song_name);
-            songArtist = (TextView)itemView.findViewById(R.id.cv_song_artist);
-            imageView = (ImageView)itemView.findViewById(R.id.cv_image);
-            menu = (ImageButton)itemView.findViewById(R.id.menu_cv);
+            cv = (CardView) itemView.findViewById(R.id.cv_song);
+            songName = (TextView) itemView.findViewById(R.id.cv_song_name);
+            songArtist = (TextView) itemView.findViewById(R.id.cv_song_artist);
+            imageView = (ImageView) itemView.findViewById(R.id.cv_image);
+            menu = (ImageButton) itemView.findViewById(R.id.menu_cv);
         }
     }
 }

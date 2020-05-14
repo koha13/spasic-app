@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import koha13.spasic.R;
+import koha13.spasic.activity.PLActivity;
 import koha13.spasic.model.Playlist;
 import koha13.spasic.utils.GeneralDTO;
 
@@ -23,7 +25,7 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
     List<Playlist> pls;
     Context mContext;
 
-    public PLCardAdapter(List<Playlist> pls, Context mContext){
+    public PLCardAdapter(List<Playlist> pls, Context mContext) {
         this.pls = pls;
         this.mContext = mContext;
     }
@@ -44,7 +46,8 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Business code here
+                Intent intent = new Intent(mContext, PLActivity.class);
+                mContext.startActivity(intent);
             }
         });
         holder.play.setOnClickListener(new View.OnClickListener() {
@@ -61,20 +64,20 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
         return pls.size();
     }
 
-    public static class PLViewHolder extends RecyclerView.ViewHolder{
+    public static class PLViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView plName;
         TextView totalSong;
         TextView totalTime;
         ImageButton play;
 
-        PLViewHolder(View itemView){
+        PLViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.pl_cv);
-            plName = (TextView)itemView.findViewById(R.id.pl_cv_name);
-            totalSong = (TextView)itemView.findViewById(R.id.pl_cv_info);
-            totalTime = (TextView)itemView.findViewById(R.id.pl_cv_time);
-            play = (ImageButton)itemView.findViewById(R.id.play_pl_cv);
+            cv = (CardView) itemView.findViewById(R.id.pl_cv);
+            plName = (TextView) itemView.findViewById(R.id.pl_cv_name);
+            totalSong = (TextView) itemView.findViewById(R.id.pl_cv_info);
+            totalTime = (TextView) itemView.findViewById(R.id.pl_cv_time);
+            play = (ImageButton) itemView.findViewById(R.id.play_pl_cv);
         }
     }
 }

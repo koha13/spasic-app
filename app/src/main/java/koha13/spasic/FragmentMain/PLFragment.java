@@ -15,18 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.adapter.BigCVAdapter;
 import koha13.spasic.adapter.PLCardAdapter;
 import koha13.spasic.model.Playlist;
 import koha13.spasic.model.Song;
 
-public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private RecyclerView.LayoutManager layoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public PLFragment() {
         // Required empty public constructor
     }
-
-    private RecyclerView.LayoutManager layoutManager;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,10 +43,10 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         recyclerView.setLayoutManager(layoutManager);
         List<Playlist> pls = new ArrayList<>();
         List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1","Artist",123));
-        songs.add(new Song("Test2","Artist",123));
-        songs.add(new Song("Test3","Artist",123));
-        Playlist pl = new Playlist("Test 1", songs);
+        songs.add(new Song("Test1", "Artist", 123));
+        songs.add(new Song("Test2", "Artist", 123));
+        songs.add(new Song("Test3", "Artist", 123));
+        Playlist pl = new Playlist(songs, "Test1");
         pls.add(pl);
         PLCardAdapter songCardAdapter = new PLCardAdapter(pls, getActivity());
         recyclerView.setAdapter(songCardAdapter);
@@ -73,7 +71,7 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         loadRecyclerViewData();
     }
 
-    private void loadRecyclerViewData(){
+    private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
         Toast.makeText(getActivity(), "Ahlo", Toast.LENGTH_SHORT).show();

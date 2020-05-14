@@ -21,12 +21,12 @@ import koha13.spasic.R;
 import koha13.spasic.model.Song;
 import koha13.spasic.utils.GeneralDTO;
 
-public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder>{
+public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {
 
     private List<Song> songs;
     private Context mContext;
 
-    public BigCVAdapter(List<Song> songs, Context context){
+    public BigCVAdapter(List<Song> songs, Context context) {
         this.songs = songs;
         this.mContext = context;
     }
@@ -58,17 +58,18 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
+                        switch (item.getItemId()) {
                             case R.id.btn_add_after_curent_song:
-                                Toast.makeText(mContext,"Phat tiep theo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                Toast.makeText(mContext,"Them vao pl", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Them vao pl", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_queue:
-                                Toast.makeText(mContext,"Them vao ds", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
                                 break;
-                            default: break;
+                            default:
+                                break;
                         }
                         return false;
                     }
@@ -84,7 +85,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         return songs.size();
     }
 
-    public static class SongViewHolder extends RecyclerView.ViewHolder{
+    public static class SongViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView songName;
         TextView songArtist;
@@ -92,14 +93,14 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         ImageButton menu;
         TextView time;
 
-        SongViewHolder(View itemView){
+        SongViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView)itemView.findViewById(R.id.cv_big_song);
-            songName = (TextView)itemView.findViewById(R.id.cv_big_song_name);
-            songArtist = (TextView)itemView.findViewById(R.id.cv_big_song_artist);
-            imageView = (ImageView)itemView.findViewById(R.id.cv_big_image);
-            menu = (ImageButton)itemView.findViewById(R.id.menu_cv_big);
-            time = (TextView)itemView.findViewById(R.id.cv_big_time);
+            cv = (CardView) itemView.findViewById(R.id.cv_big_song);
+            songName = (TextView) itemView.findViewById(R.id.cv_big_song_name);
+            songArtist = (TextView) itemView.findViewById(R.id.cv_big_song_artist);
+            imageView = (ImageView) itemView.findViewById(R.id.cv_big_image);
+            menu = (ImageButton) itemView.findViewById(R.id.menu_cv_big);
+            time = (TextView) itemView.findViewById(R.id.cv_big_time);
         }
     }
 }

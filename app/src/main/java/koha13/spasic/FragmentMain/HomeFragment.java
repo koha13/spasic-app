@@ -18,13 +18,12 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.BigCVAdapter;
 import koha13.spasic.model.Song;
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    private RecyclerView.LayoutManager layoutManager;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
     public HomeFragment() {
         // Required empty public constructor
     }
-
-    private RecyclerView.LayoutManager layoutManager;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,9 +41,9 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1","Artist",123));
-        songs.add(new Song("Test2","Artist",123));
-        songs.add(new Song("Test3","Artist",123));
+        songs.add(new Song("Test1", "Artist", 123));
+        songs.add(new Song("Test2", "Artist", 123));
+        songs.add(new Song("Test3", "Artist", 123));
         BigCVAdapter songCardAdapter = new BigCVAdapter(songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
 
@@ -68,7 +67,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         loadRecyclerViewData();
     }
 
-    private void loadRecyclerViewData(){
+    private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
         Toast.makeText(getActivity(), "Ahlo", Toast.LENGTH_SHORT).show();

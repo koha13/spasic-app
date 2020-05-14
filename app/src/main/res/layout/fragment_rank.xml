@@ -1,14 +1,13 @@
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rank_swipe_container"
-    android:isScrollContainer="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="fill_vertical"
     android:clipToPadding="false"
+    android:isScrollContainer="false"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,28 +18,30 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#D1DEEC"
-            android:paddingHorizontal="10dp"
             android:layout_marginBottom="5dp"
-            android:gravity="center_vertical">
+            android:background="#D1DEEC"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp">
+
             <Spinner
                 android:id="@+id/regionSpinner"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp">
-            </Spinner>
+                android:layout_height="50dp"></Spinner>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nghe tất cả"
                 android:layout_alignParentRight="true"
                 android:background="@android:color/transparent"
-                android:drawableLeft="@drawable/ic_play_circle_filled_white_24dp" />
+                android:drawableLeft="@drawable/ic_play_circle_filled_white_24dp"
+                android:text="Nghe tất cả" />
         </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewSong"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 

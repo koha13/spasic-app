@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_height="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
+    android:layout_height="match_parent"
     android:layout_marginTop="10dp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,31 +15,33 @@
             android:id="@+id/cs_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_image"
-            android:layout_centerHorizontal="true"/>
+            android:src="@drawable/default_image" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/cs_image"
-            android:orientation="vertical"
-            android:gravity="center_vertical"
             android:background="#CCD9E2EA"
-            >
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/cs_song_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:text="Song's name"
                 android:textColor="@color/textDark"
-                android:textSize="24dp"
-                android:text="Song's name"/>
+                android:textSize="24dp" />
+
             <TextView
                 android:id="@+id/cs_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Song's artist"/>
+                android:text="Song's artist" />
         </LinearLayout>
     </RelativeLayout>
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,28 +7,28 @@
     tools:context=".MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-<!--        <androidx.appcompat.widget.Toolbar-->
-<!--            android:id="@+id/toolbar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="?attr/actionBarSize"-->
-<!--            android:background="?attr/colorPrimary"-->
-<!--            app:layout_scrollFlags="scroll|enterAlways">-->
+        <!--        <androidx.appcompat.widget.Toolbar-->
+        <!--            android:id="@+id/toolbar"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="?attr/actionBarSize"-->
+        <!--            android:background="?attr/colorPrimary"-->
+        <!--            app:layout_scrollFlags="scroll|enterAlways">-->
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Spasic"/>-->
-<!--        </androidx.appcompat.widget.Toolbar>-->
+        <!--            <TextView-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:text="Spasic"/>-->
+        <!--        </androidx.appcompat.widget.Toolbar>-->
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"/>
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -46,60 +45,61 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
         android:gravity="center_vertical"
-        android:paddingHorizontal="10dp"
-        android:background="@color/colorPrimary">
+        android:paddingHorizontal="10dp">
 
         <ImageButton
             android:id="@+id/playBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/ic_play_circle_filled_orange_40dp"
-            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/nextBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:background="@android:color/transparent"
             android:scaleType="fitXY"
             android:src="@drawable/ic_skip_next_black_24dp"
-            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/playBtn"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/song_info_ft"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="90dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginLeft="90dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="vertical">
+            app:layout_constraintLeft_toLeftOf="parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scrollHorizontally="true"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:scrollHorizontally="true"
+                android:text="Out longgggggggg"
                 android:textColor="@color/textLight"
-                android:textSize="18dp"
-                android:text="Out longgggggggg"/>
+                android:textSize="18dp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textLight"
-                android:scrollHorizontally="true"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="Some random artist"/>
+                android:scrollHorizontally="true"
+                android:text="Some random artist"
+                android:textColor="@color/textLight" />
 
         </LinearLayout>
 
