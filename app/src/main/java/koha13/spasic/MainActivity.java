@@ -46,10 +46,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = findViewById(R.id.viewpager);
         addTabs(viewPager);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
         tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
@@ -89,4 +89,5 @@ public class MainActivity extends AppCompatActivity {
 //        adapter.addFrag(new RankFragment(), "ORANGE");
         viewPager.setAdapter(adapter);
     }
+
 }

@@ -9,6 +9,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Song {
     private String name;
-    private String artist;
+    private String artists;
     private int length;
+    private int id;
+    private String album;
+    private String songImage;
+    private String lyric;
+    private boolean like;
+
+    public Song(String name, String artists, int length) {
+        this.name = name;
+        this.artists = artists;
+        this.length = length;
+    }
 }

@@ -15,12 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
+import koha13.spasic.api.AllSongsFeed;
 import koha13.spasic.adapter.BigCVAdapter;
+import koha13.spasic.api.ResponseCallBack;
+import koha13.spasic.data.StaticData;
 import koha13.spasic.model.Song;
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallBack<List<Song>> {
     private RecyclerView.LayoutManager layoutManager;
-    private SwipeRefreshLayout mSwipeRefreshLayout;
+    private List<Song> songs;
+    public static SwipeRefreshLayout mSwipeRefreshLayout;
+    private RecyclerView recyclerView;
+    BigCVAdapter songCardAdapter;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -36,15 +42,11 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         //Recycler view big Cardview
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSongMain);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSongMain);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1", "Artist", 123));
-        songs.add(new Song("Test2", "Artist", 123));
-        songs.add(new Song("Test3", "Artist", 123));
-        BigCVAdapter songCardAdapter = new BigCVAdapter(songs, getActivity());
+        songCardAdapter = new BigCVAdapter(StaticData.songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
 
         //Swipe refresh
@@ -70,9 +72,27 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        Toast.makeText(getActivity(), "Ahlo", Toast.LENGTH_SHORT).show();
+        AllSongsFeed.getAllSongs(this);
 
-        // Stop refresh animation
+    }
+
+    @Override
+    public void onDataSuccess(List<Song> data) {
+        StaticData.updateAllSongs(data);
         mSwipeRefreshLayout.setRefreshing(false);
+        songCardAdapter = new BigCVAdapter(StaticData.songs, getActivity());
+        recyclerView.setAdapter(songCardAdapter);
+    }
+
+    @Override
+    public void onDataFail(String message) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailed(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        Toast.makeText(getActivity(), "Can't load", Toast.LENGTH_SHORT).show();
     }
 }
