@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -16,12 +18,17 @@ import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.PLCardAdapter;
+import koha13.spasic.api.ResponseCallBack;
+import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.model.Playlist;
 import koha13.spasic.model.Song;
 
-public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallBack<List<Playlist>> {
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    private AllPlaylistsViewModel allPlaylistsViewModel;
+    private RecyclerView recyclerView;
+
     public PLFragment() {
         // Required empty public constructor
     }
@@ -37,33 +44,24 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         View rootView = inflater.inflate(R.layout.fragment_pl, container, false);
 
         //Recycler view big Cardview
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSongPL);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSongPL);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        List<Playlist> pls = new ArrayList<>();
-        List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1", "Artist", 123));
-        songs.add(new Song("Test2", "Artist", 123));
-        songs.add(new Song("Test3", "Artist", 123));
-        Playlist pl = new Playlist(songs, "Test1");
-        pls.add(pl);
-        PLCardAdapter songCardAdapter = new PLCardAdapter(pls, getActivity());
-        recyclerView.setAdapter(songCardAdapter);
+
+        allPlaylistsViewModel = ViewModelProviders.of(getActivity()).get(AllPlaylistsViewModel.class);
+        allPlaylistsViewModel.getAllPlaylists().observe(getActivity(), new Observer<List<Playlist>>() {
+            @Override
+            public void onChanged(List<Playlist> playlists) {
+                PLCardAdapter songCardAdapter = new PLCardAdapter(playlists, getActivity());
+                recyclerView.setAdapter(songCardAdapter);
+            }
+        });
 
         //Swipe refresh
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.pl_swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        //First load when view created
-//        mSwipeRefreshLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mSwipeRefreshLayout.setRefreshing(true);
-////                loadRecyclerViewData();
-//
-//            }
-//        });
         return rootView;
     }
 
@@ -75,9 +73,21 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        Toast.makeText(getActivity(), "Ahlo", Toast.LENGTH_SHORT).show();
+        allPlaylistsViewModel.fetchAllPlaylists(this);
+    }
 
-        // Stop refresh animation
+    @Override
+    public void onDataSuccess(List<Playlist> data) {
         mSwipeRefreshLayout.setRefreshing(false);
+    }
+
+    @Override
+    public void onDataFail(String message) {
+        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFailed(Throwable error) {
+        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 }

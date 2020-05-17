@@ -6,33 +6,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.List;
 
 import koha13.spasic.FragmentMain.HomeFragment;
 import koha13.spasic.FragmentMain.PLFragment;
 import koha13.spasic.FragmentMain.RankFragment;
 import koha13.spasic.activity.CurrentSongActivity;
 import koha13.spasic.adapter.ViewPagerAdapter;
-import koha13.spasic.api.ApiFeed;
-import koha13.spasic.api.ResponseCallBack;
-import koha13.spasic.data.DataViewModel;
-import koha13.spasic.model.Song;
+import koha13.spasic.data.AllPlaylistsViewModel;
+import koha13.spasic.data.AllSongsViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private DataViewModel dataViewModel;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -46,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
 //            getSupportActionBar().setDisplayShowHomeEnabled(false);
 //        }
 
-        dataViewModel = ViewModelProviders.of(this).get(DataViewModel.class);
         fetchData();
 
         LinearLayout songInfo = findViewById(R.id.song_info_ft);
@@ -87,22 +79,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fetchData(){
-        ApiFeed.getAllSongs(new ResponseCallBack<List<Song>>() {
-            @Override
-            public void onDataSuccess(List<Song> data) {
-                dataViewModel.updateAllSongs(data);
-            }
-
-            @Override
-            public void onDataFail(String message) {
-                Toast.makeText(MainActivity.this, "Can't load", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailed(Throwable error) {
-                Toast.makeText(MainActivity.this, "Can't load", Toast.LENGTH_SHORT).show();
-            }
-        });
+        AllSongsViewModel.fetchAllSongs(null);
+        AllPlaylistsViewModel.fetchAllPlaylists(null);
     }
 
     private void setupTabIcons() {

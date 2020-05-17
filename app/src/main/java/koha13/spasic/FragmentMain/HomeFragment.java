@@ -16,11 +16,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.api.ApiFeed;
 import koha13.spasic.adapter.BigCVAdapter;
 import koha13.spasic.api.ResponseCallBack;
-import koha13.spasic.data.DataViewModel;
-import koha13.spasic.data.StaticData;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.model.Song;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallBack<List<Song>> {
@@ -29,7 +27,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public static SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView recyclerView;
     private BigCVAdapter songCardAdapter;
-    private DataViewModel dataViewModel;
+    private AllSongsViewModel allSongsViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,8 +57,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             }
         };
 
-        dataViewModel = ViewModelProviders.of(getActivity()).get(DataViewModel.class);
-        dataViewModel.getAllSongs().observe(getActivity(), allSongsChangeObserver);
+        allSongsViewModel = ViewModelProviders.of(getActivity()).get(AllSongsViewModel.class);
+        allSongsViewModel.getAllSongs().observe(getActivity(), allSongsChangeObserver);
 
         //Swipe refresh
         mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.main_swipe_container);
@@ -77,13 +75,12 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        ApiFeed.getAllSongs(this);
+        allSongsViewModel.fetchAllSongs(this);
 
     }
 
     @Override
     public void onDataSuccess(List<Song> data) {
-        dataViewModel.updateAllSongs(data);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Playlist {
-    List<Song> songs;
+    private int id;
+    private List<Song> songs;
     private String name;
+    private String avatar;
 
     public int getTotalTime() {
         int rs = 0;

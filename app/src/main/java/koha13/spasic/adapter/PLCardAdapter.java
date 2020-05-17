@@ -13,11 +13,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.activity.PLActivity;
 import koha13.spasic.model.Playlist;
+import koha13.spasic.model.Song;
 import koha13.spasic.utils.GeneralDTO;
 
 public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHolder> {
@@ -39,7 +41,7 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PLCardAdapter.PLViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PLCardAdapter.PLViewHolder holder, final int position) {
         holder.plName.setText(pls.get(position).getName());
         holder.totalSong.setText(String.valueOf(pls.get(position).getSongs().size()) + " songs");
         holder.totalTime.setText(GeneralDTO.secondToMinute(pls.get(position).getTotalTime()));
@@ -47,6 +49,7 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, PLActivity.class);
+                intent.putExtra("plID", pls.get(position).getId());
                 mContext.startActivity(intent);
             }
         });

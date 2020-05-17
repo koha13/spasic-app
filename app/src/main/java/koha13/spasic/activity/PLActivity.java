@@ -17,11 +17,14 @@ import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
+import koha13.spasic.adapter.SongPLAdapter;
+import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.model.Song;
 
 public class PLActivity extends AppCompatActivity {
 
     private RecyclerView.LayoutManager layoutManager;
+    private int plID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +34,12 @@ public class PLActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1", "Artist", 123));
-        songs.add(new Song("Test2", "Artist", 123));
-        songs.add(new Song("Test3", "Artist", 123));
-        SongCardAdapter songCardAdapter = new SongCardAdapter(songs, this, true);
+
+        plID=getIntent().getIntExtra("plID", -1);
+
+        List<Song> songs = AllPlaylistsViewModel.getSongsFromPlByID(plID);
+
+        SongPLAdapter songCardAdapter = new SongPLAdapter(songs, this);
         recyclerView.setAdapter(songCardAdapter);
 
         ImageButton backBtn = (ImageButton) findViewById(R.id.backBtnPL);
