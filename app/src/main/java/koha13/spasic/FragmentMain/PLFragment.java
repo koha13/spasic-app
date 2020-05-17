@@ -56,14 +56,14 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         //First load when view created
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-//                loadRecyclerViewData();
-
-            }
-        });
+//        mSwipeRefreshLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                mSwipeRefreshLayout.setRefreshing(true);
+////                loadRecyclerViewData();
+//
+//            }
+//        });
         return rootView;
     }
 
