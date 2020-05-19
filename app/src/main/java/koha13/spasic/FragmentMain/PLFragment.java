@@ -21,7 +21,7 @@ import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.entity.Playlist;
 
-public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallback<List<Playlist>> {
+public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private AllPlaylistsViewModel allPlaylistsViewModel;
@@ -71,21 +71,23 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        allPlaylistsViewModel.fetchAllPlaylists(this);
-    }
+        allPlaylistsViewModel.fetchAllPlaylists(new ResponseCallback<List<Playlist>>() {
+            @Override
+            public void onDataSuccess(List<Playlist> data) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
 
-    @Override
-    public void onDataSuccess(List<Playlist> data) {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
+            @Override
+            public void onDataFail(String message) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            }
 
-    @Override
-    public void onDataFail(String message) {
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailed(Throwable error) {
-        Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailed(Throwable error) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

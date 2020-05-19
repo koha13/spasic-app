@@ -21,7 +21,7 @@ import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.entity.Song;
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallback<List<Song>> {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView.LayoutManager layoutManager;
     private List<Song> songs;
     public static SwipeRefreshLayout mSwipeRefreshLayout;
@@ -75,24 +75,24 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        allSongsViewModel.fetchAllSongs(this);
+        allSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
+            @Override
+            public void onDataSuccess(List<Song> data) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
 
-    }
+            @Override
+            public void onDataFail(String message) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+            }
 
-    @Override
-    public void onDataSuccess(List<Song> data) {
-        mSwipeRefreshLayout.setRefreshing(false);
-    }
+            @Override
+            public void onFailed(Throwable error) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
-    @Override
-    public void onDataFail(String message) {
-        mSwipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFailed(Throwable error) {
-        mSwipeRefreshLayout.setRefreshing(false);
-        Toast.makeText(getActivity(), "Can't load", Toast.LENGTH_SHORT).show();
     }
 }
