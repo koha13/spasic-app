@@ -34,6 +34,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@+id/backBtnPL"
                         android:text="Playlist's name"
+                        android:id="@+id/pl_activity_name"
                         android:textColor="@color/textLight"
                         android:textSize="20dp"
                         android:textStyle="bold"

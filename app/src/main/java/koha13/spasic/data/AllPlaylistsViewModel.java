@@ -54,13 +54,13 @@ public class AllPlaylistsViewModel extends ViewModel {
         });
     }
 
-    public static List<Song> getSongsFromPlByID(int id) {
+    public static Playlist getPlByID(int id) {
         List<Playlist> pls = allPlaylists.getValue();
         for (int i = 0; i < pls.size(); i++) {
             if (pls.get(i).getId() == id) {
-                return pls.get(i).getSongs();
+                return pls.get(i);
             }
         }
-        return new ArrayList<Song>();
+        return new Playlist();
     }
 }

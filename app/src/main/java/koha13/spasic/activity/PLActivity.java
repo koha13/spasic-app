@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.adapter.SongPLAdapter;
 import koha13.spasic.data.AllPlaylistsViewModel;
+import koha13.spasic.model.Playlist;
 import koha13.spasic.model.Song;
 
 public class PLActivity extends AppCompatActivity {
@@ -37,9 +39,12 @@ public class PLActivity extends AppCompatActivity {
 
         plID=getIntent().getIntExtra("plID", -1);
 
-        List<Song> songs = AllPlaylistsViewModel.getSongsFromPlByID(plID);
+        Playlist pl = AllPlaylistsViewModel.getPlByID(plID);
 
-        SongPLAdapter songCardAdapter = new SongPLAdapter(songs, this);
+        TextView plName = findViewById(R.id.pl_activity_name);
+        plName.setText(pl.getName());
+
+        SongPLAdapter songCardAdapter = new SongPLAdapter(pl.getSongs(), this);
         recyclerView.setAdapter(songCardAdapter);
 
         ImageButton backBtn = (ImageButton) findViewById(R.id.backBtnPL);
@@ -50,31 +55,35 @@ public class PLActivity extends AppCompatActivity {
             }
         });
 
-        final ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
-        menuBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu = new PopupMenu(PLActivity.this, menuBtn);
-                popupMenu.inflate(R.menu.option_pl);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()) {
-                            case R.id.btn_rename_pl:
-                                Toast.makeText(PLActivity.this, "Rename pl", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_delete_pl:
-                                Toast.makeText(PLActivity.this, "Delete pl", Toast.LENGTH_SHORT).show();
-                                break;
-                            default:
-                                break;
+        if(pl.getName().compareToIgnoreCase("Loved") != 0) {
+            final ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
+            menuBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PopupMenu popupMenu = new PopupMenu(PLActivity.this, menuBtn);
+                    popupMenu.inflate(R.menu.option_pl);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.btn_rename_pl:
+                                    Toast.makeText(PLActivity.this, "Rename pl", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case R.id.btn_delete_pl:
+                                    Toast.makeText(PLActivity.this, "Delete pl", Toast.LENGTH_SHORT).show();
+                                    break;
+                                default:
+                                    break;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
-        });
-
+                    });
+                    popupMenu.show();
+                }
+            });
+        }else{
+            ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
+            menuBtn.setVisibility(View.INVISIBLE);
+        }
     }
 }
