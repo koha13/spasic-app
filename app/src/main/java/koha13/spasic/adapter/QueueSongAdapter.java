@@ -22,12 +22,9 @@ import koha13.spasic.R;
 
 public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
-    //    private List<Song> songs;
     private Context mContext;
-    private boolean isPLItem = false;
 
     public QueueSongAdapter(Context mContext) {
-//        this.songs = songs;
         this.mContext = mContext;
     }
 
