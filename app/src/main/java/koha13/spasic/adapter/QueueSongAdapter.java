@@ -15,38 +15,34 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import java.util.Collections;
 
-import java.util.List;
-
+import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
-import koha13.spasic.model.Song;
-import koha13.spasic.utils.GeneralDTO;
 
-public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {
+public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
-    private List<Song> songs;
+    //    private List<Song> songs;
     private Context mContext;
+    private boolean isPLItem = false;
 
-    public BigCVAdapter(List<Song> songs, Context context) {
-        this.songs = songs;
-        this.mContext = context;
+    public QueueSongAdapter(Context mContext) {
+//        this.songs = songs;
+        this.mContext = mContext;
     }
 
     @NonNull
     @Override
     public SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.big_card_view, parent, false);
-        BigCVAdapter.SongViewHolder svh = new BigCVAdapter.SongViewHolder(v);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        SongViewHolder svh = new SongViewHolder(v);
         return svh;
     }
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
-        holder.songName.setText(songs.get(position).getName());
-        holder.songArtist.setText(songs.get(position).getArtists());
-        Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
-        holder.time.setText(GeneralDTO.secondToMinute(songs.get(position).getLength()));
+        holder.songName.setText(QueueFragment.queueSongs.get(position).getName());
+        holder.songArtist.setText(QueueFragment.queueSongs.get(position).getArtists());
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +53,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(mContext, holder.menu);
+
                 popupMenu.inflate(R.menu.option_menu_big_cv);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -85,8 +82,35 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        return QueueFragment.queueSongs.size();
     }
+
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(QueueFragment.queueSongs, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(QueueFragment.queueSongs, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+        QueueFragment.queueSongs.remove(position);
+        notifyItemRemoved(position);
+    }
+
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
@@ -94,16 +118,14 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         TextView songArtist;
         ImageView imageView;
         ImageButton menu;
-        TextView time;
 
         SongViewHolder(View itemView) {
             super(itemView);
-            cv = itemView.findViewById(R.id.cv_big_song);
-            songName = itemView.findViewById(R.id.cv_big_song_name);
-            songArtist = itemView.findViewById(R.id.cv_big_song_artist);
-            imageView = itemView.findViewById(R.id.cv_big_image);
-            menu = itemView.findViewById(R.id.menu_cv_big);
-            time = itemView.findViewById(R.id.cv_big_time);
+            cv = itemView.findViewById(R.id.cv_song);
+            songName = itemView.findViewById(R.id.cv_song_name);
+            songArtist = itemView.findViewById(R.id.cv_song_artist);
+            imageView = itemView.findViewById(R.id.cv_image);
+            menu = itemView.findViewById(R.id.menu_cv);
         }
     }
 }
