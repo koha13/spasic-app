@@ -1,4 +1,4 @@
-package koha13.spasic.model;
+package koha13.spasic.entity;
 
 import java.util.List;
 

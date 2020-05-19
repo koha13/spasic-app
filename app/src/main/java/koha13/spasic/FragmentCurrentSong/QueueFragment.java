@@ -13,13 +13,12 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.QueueSongAdapter;
 import koha13.spasic.data.AllSongsViewModel;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Song;
 
 public class QueueFragment extends Fragment {
 

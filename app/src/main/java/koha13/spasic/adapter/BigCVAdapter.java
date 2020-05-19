@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {

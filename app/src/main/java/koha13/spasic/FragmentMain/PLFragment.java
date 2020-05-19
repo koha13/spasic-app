@@ -13,17 +13,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.PLCardAdapter;
-import koha13.spasic.api.ResponseCallBack;
+import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllPlaylistsViewModel;
-import koha13.spasic.model.Playlist;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Playlist;
 
-public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallBack<List<Playlist>> {
+public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallback<List<Playlist>> {
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private AllPlaylistsViewModel allPlaylistsViewModel;

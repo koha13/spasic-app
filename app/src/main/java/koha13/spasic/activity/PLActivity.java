@@ -7,21 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import koha13.spasic.R;
-import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.adapter.SongPLAdapter;
 import koha13.spasic.data.AllPlaylistsViewModel;
-import koha13.spasic.model.Playlist;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Playlist;
 
 public class PLActivity extends AppCompatActivity {
 

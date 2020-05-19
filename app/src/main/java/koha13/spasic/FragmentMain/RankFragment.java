@@ -18,7 +18,7 @@ import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Song;
 
 public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView.LayoutManager layoutManager;

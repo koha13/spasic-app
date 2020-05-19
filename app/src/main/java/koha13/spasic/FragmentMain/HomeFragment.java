@@ -17,11 +17,11 @@ import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.BigCVAdapter;
-import koha13.spasic.api.ResponseCallBack;
+import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllSongsViewModel;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Song;
 
-public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallBack<List<Song>> {
+public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, ResponseCallback<List<Song>> {
     private RecyclerView.LayoutManager layoutManager;
     private List<Song> songs;
     public static SwipeRefreshLayout mSwipeRefreshLayout;

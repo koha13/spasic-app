@@ -13,13 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.Serializable;
 import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.activity.PLActivity;
-import koha13.spasic.model.Playlist;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Playlist;
 import koha13.spasic.utils.GeneralDTO;
 
 public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHolder> {

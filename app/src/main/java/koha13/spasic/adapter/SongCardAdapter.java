@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.model.Song;
+import koha13.spasic.entity.Song;
 
 public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongViewHolder> {
 
