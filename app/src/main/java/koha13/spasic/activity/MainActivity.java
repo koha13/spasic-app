@@ -1,4 +1,4 @@
-package koha13.spasic;
+package koha13.spasic.activity;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayout;
 import koha13.spasic.FragmentMain.HomeFragment;
 import koha13.spasic.FragmentMain.PLFragment;
 import koha13.spasic.FragmentMain.RankFragment;
-import koha13.spasic.activity.CurrentSongActivity;
+import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
 import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.data.AllSongsViewModel;
