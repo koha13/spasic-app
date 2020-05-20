@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
@@ -42,7 +43,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtists());
         Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
@@ -66,7 +67,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                Toast.makeText(mContext, "Them vao pl", Toast.LENGTH_SHORT).show();
+                                new AddToPlDialog(songs.get(position),mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();

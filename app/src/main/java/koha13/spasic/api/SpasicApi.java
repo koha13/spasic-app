@@ -11,6 +11,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface SpasicApi {
     @GET("songs")
@@ -21,4 +23,13 @@ public interface SpasicApi {
 
     @POST("auth/login")
     Call<User> login(@Body LoginRequest loginRequest);
+
+    @POST("playlists/{id}/song")
+    Call<Object> addSongToPl(@Path("id") int id, @Query("idSong") int idSong, @Header("Authorization") String token);
+
+    @GET("playlists/{id}/deletesong")
+    Call<Object> deleteSongFromPl(@Path("id") int id, @Query("idSong") int idSong, @Header("Authorization") String token);
+
+    @POST("playlists/add")
+    Call<Playlist> createPl(@Query("name") String plName, @Header("Authorization") String token);
 }
