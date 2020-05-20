@@ -76,6 +76,7 @@ public class AllPlaylistsViewModel extends ViewModel {
                                     break;
                                 }
                             }
+                            allPlaylists.setValue(pls);
                         }
                     }
 
@@ -102,6 +103,7 @@ public class AllPlaylistsViewModel extends ViewModel {
                                     break;
                                 }
                             }
+                            allPlaylists.setValue(pls);
                         }
                     }
 

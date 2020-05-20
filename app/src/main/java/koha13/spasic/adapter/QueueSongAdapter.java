@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
 
+import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
 
@@ -60,7 +61,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
+                                new AddToPlDialog(QueueFragment.queueSongs.get(position),mContext).getDialog().show();
                                 break;
                             case R.id.btn_go_artist:
                                 Toast.makeText(mContext, "Chuyen den ca si", Toast.LENGTH_SHORT).show();

@@ -8,5 +8,5 @@
         android:title="Thêm vào hàng đợi" />
     <item
         android:id="@+id/btn_add_to_pl"
-        android:title="Thêm vào danh sách phát" />
+        android:title="Thêm vào playlist" />
 </menu>
