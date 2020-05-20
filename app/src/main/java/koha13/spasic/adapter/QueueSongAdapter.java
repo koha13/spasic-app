@@ -37,7 +37,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
         holder.songName.setText(QueueFragment.queueSongs.get(position).getName());
         holder.songArtist.setText(QueueFragment.queueSongs.get(position).getArtists());
         holder.cv.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +51,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(mContext, holder.menu);
 
-                popupMenu.inflate(R.menu.option_menu_big_cv);
+                popupMenu.inflate(R.menu.option_menu_queue);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
@@ -60,10 +60,13 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                Toast.makeText(mContext, "Them vao pl", Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.btn_go_artist:
+                                Toast.makeText(mContext, "Chuyen den ca si", Toast.LENGTH_SHORT).show();
+                                break;
+                            case R.id.btn_go_album:
+                                Toast.makeText(mContext, "Chuyen den album", Toast.LENGTH_SHORT).show();
                                 break;
                             default:
                                 break;

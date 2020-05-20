@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/btn_add_after_curent_song"
+        android:title="Phát tiếp theo" />
+    <item
+        android:id="@+id/btn_add_to_pl"
+        android:title="Thêm vào playlist" />
+    <item
+        android:id="@+id/btn_go_artist"
+        android:title="Chuyển đến ca sĩ"/>
+    <item
+        android:id="@+id/btn_go_album"
+        android:title="Chuyển đến album"/>
+</menu>
