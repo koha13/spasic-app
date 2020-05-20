@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
@@ -32,12 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
-//            getSupportActionBar().setDisplayShowHomeEnabled(false);
-//        }
 
         fetchData();
 
@@ -87,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_home_white_24dp);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_equalizer_white_24dp);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_headset_white_24dp);
-//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person_white_24dp);
+//        tabLayout.getTabAt(3).setIcon(R.drawable.ic_person_white_48dp);
     }
 
     private void addTabs(ViewPager viewPager) {

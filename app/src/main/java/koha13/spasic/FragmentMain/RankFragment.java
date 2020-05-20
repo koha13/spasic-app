@@ -24,6 +24,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private RecyclerView.LayoutManager layoutManager;
     private Spinner spinner;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+
     public RankFragment() {
         // Required empty public constructor
     }
@@ -39,7 +40,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View rootView = inflater.inflate(R.layout.fragment_rank, container, false);
 
         //Add spinner
-        spinner = (Spinner) rootView.findViewById(R.id.regionSpinner);
+        spinner = rootView.findViewById(R.id.regionSpinner);
         List<String> list = new ArrayList<>();
         list.add("Nhạc US/UK");
         list.add("Nhạc Việt");
@@ -50,7 +51,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         spinner.setAdapter(adapter);
 
         //Add recycler viewcard
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSong);
+        RecyclerView recyclerView = rootView.findViewById(R.id.recyclerViewSong);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -62,7 +63,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setAdapter(songCardAdapter);
 
         //Swipe refresh
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.rank_swipe_container);
+        mSwipeRefreshLayout = rootView.findViewById(R.id.rank_swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         //First load when view created
