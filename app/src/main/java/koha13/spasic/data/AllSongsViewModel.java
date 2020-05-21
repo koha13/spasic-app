@@ -17,7 +17,7 @@ import retrofit2.Response;
 public class AllSongsViewModel extends ViewModel {
     private static MutableLiveData<List<Song>> allSongs = new MutableLiveData<>();
 
-    public MutableLiveData<List<Song>> getAllSongs() {
+    public static MutableLiveData<List<Song>> getAllSongs() {
         return allSongs;
     }
 

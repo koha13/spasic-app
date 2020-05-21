@@ -71,6 +71,15 @@ public class AllPlaylistsViewModel extends ViewModel {
                 break;
             }
         }
+        if(plId == -1){
+            List<Song> songs = AllSongsViewModel.getAllSongs().getValue();
+            for(Song s:songs){
+                if(s.getId() == song.getId()){
+                    s.setLike(true);
+                    break;
+                }
+            }
+        }
         allPlaylists.setValue(pls);
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.addSongToPl(plId, song.getId(),
@@ -94,6 +103,15 @@ public class AllPlaylistsViewModel extends ViewModel {
             if (pl.getId() == plId) {
                 pl.getSongs().remove(song);
                 break;
+            }
+        }
+        if(plId == -1){
+            List<Song> songs = AllSongsViewModel.getAllSongs().getValue();
+            for(Song s:songs){
+                if(s.getId() == song.getId()){
+                    s.setLike(false);
+                    break;
+                }
             }
         }
         allPlaylists.setValue(pls);
@@ -147,12 +165,10 @@ public class AllPlaylistsViewModel extends ViewModel {
         mAPIService.deletePl(id, "Bearer " + UserData.user.getToken()).enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                Log.d("Here", String.valueOf(response.code()));
             }
 
             @Override
             public void onFailure(Call<Object> call, Throwable t) {
-
             }
         });
     }
