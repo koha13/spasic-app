@@ -28,7 +28,7 @@ import koha13.spasic.entity.Playlist;
 public class PLActivity extends AppCompatActivity {
 
     private RecyclerView.LayoutManager layoutManager;
-    private int plID;
+    private int plId;
     private AllPlaylistsViewModel viewModel;
     TextView plName;
     ImageButton backBtn;
@@ -45,17 +45,17 @@ public class PLActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        plID=getIntent().getIntExtra("plID", -1);
+        plId=getIntent().getIntExtra("plID", -1);
 
         viewModel = ViewModelProviders.of(this).get(AllPlaylistsViewModel.class);
         viewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
-                pl = AllPlaylistsViewModel.getPlByID(plID);
+                pl = AllPlaylistsViewModel.getPlByID(plId);
                 plName = findViewById(R.id.pl_activity_name);
                 plName.setText(pl.getName());
 
-                songCardAdapter = new SongPLAdapter(pl.getSongs(), PLActivity.this);
+                songCardAdapter = new SongPLAdapter(pl.getSongs(), PLActivity.this, plId);
                 recyclerView.setAdapter(songCardAdapter);
 
                 backBtn = (ImageButton) findViewById(R.id.backBtnPL);
@@ -111,7 +111,7 @@ public class PLActivity extends AppCompatActivity {
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        AllPlaylistsViewModel.deletePlById(plID);
+                        AllPlaylistsViewModel.deletePlById(plId);
                     }
                 },1000);
 

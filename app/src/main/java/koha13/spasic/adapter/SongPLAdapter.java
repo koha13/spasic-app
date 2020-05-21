@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +23,7 @@ import java.util.List;
 
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
+import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
@@ -28,11 +31,12 @@ public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHo
 
     private List<Song> songs;
     private Context mContext;
-    private boolean isPLItem = false;
+    private int plId;
 
-    public SongPLAdapter(List<Song> songs, Context mContext) {
+    public SongPLAdapter(List<Song> songs, Context mContext, int plId) {
         this.songs = songs;
         this.mContext = mContext;
+        this.plId = plId;
     }
 
     @NonNull
@@ -61,11 +65,12 @@ public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHo
                 PopupMenu popupMenu = new PopupMenu(mContext, holder.menu);
                 popupMenu.inflate(R.menu.option_menu_pl_item);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.btn_delete:
-                                Toast.makeText(mContext, "Delete", Toast.LENGTH_SHORT).show();
+                                AllPlaylistsViewModel.deleteSongFromPl(plId, songs.get(position));
                                 break;
                             case R.id.btn_add_after_curent_song:
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
