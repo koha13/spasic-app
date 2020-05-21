@@ -22,7 +22,7 @@ public class RetrofitClient {
         return retrofit;
     }
 
-    public static final String BASE_URL = "https://koha13.live/api/";
+    public static final String BASE_URL = "http://spasic-api.herokuapp.com";
 
     public static SpasicApi getAPIService() {
 

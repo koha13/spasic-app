@@ -1,5 +1,7 @@
 package koha13.spasic.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -62,22 +64,21 @@ public class AllPlaylistsViewModel extends ViewModel {
     }
 
     public static void addSongToPl(final int plId, final Song song) {
+        List<Playlist> pls = allPlaylists.getValue();
+        for (Playlist pl : pls) {
+            if (pl.getId() == plId) {
+                pl.getSongs().add(song);
+                break;
+            }
+        }
+        allPlaylists.setValue(pls);
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.addSongToPl(plId, song.getId(),
                 "Bearer " + UserData.user.getToken())
                 .enqueue(new Callback<Object>() {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
-                        if (response.isSuccessful()) {
-                            List<Playlist> pls = allPlaylists.getValue();
-                            for (Playlist pl : pls) {
-                                if (pl.getId() == plId) {
-                                    pl.getSongs().add(song);
-                                    break;
-                                }
-                            }
-                            allPlaylists.setValue(pls);
-                        }
+                            Log.d("here",String.valueOf(response.code()));
                     }
 
                     @Override
@@ -89,21 +90,22 @@ public class AllPlaylistsViewModel extends ViewModel {
     }
 
     public static void deleteSongFromPl(final int plId, final Song song) {
+        List<Playlist> pls = allPlaylists.getValue();
+        for (Playlist pl : pls) {
+            if (pl.getId() == plId) {
+                pl.getSongs().remove(song);
+                break;
+            }
+        }
+        allPlaylists.setValue(pls);
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.deleteSongFromPl(plId, song.getId(),
                 "Bearer " + UserData.user.getToken())
                 .enqueue(new Callback<Object>() {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
-                        if (response.isSuccessful()) {
-                            List<Playlist> pls = allPlaylists.getValue();
-                            for (Playlist pl : pls) {
-                                if (pl.getId() == plId) {
-                                    pl.getSongs().remove(song);
-                                    break;
-                                }
-                            }
-                            allPlaylists.setValue(pls);
+                        if (response.code() == 200) {
+                            Log.d("Here", "Api ok");
                         }
                     }
 
@@ -122,6 +124,7 @@ public class AllPlaylistsViewModel extends ViewModel {
                 if(response.isSuccessful()){
                     List<Playlist> pls = allPlaylists.getValue();
                     pls.add(response.body());
+                    allPlaylists.setValue(pls);
                     addSongToPl(response.body().getId(), song);
                 }
             }

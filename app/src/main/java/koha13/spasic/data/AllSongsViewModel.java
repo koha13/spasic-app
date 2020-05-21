@@ -27,7 +27,7 @@ public class AllSongsViewModel extends ViewModel {
 
     public static void fetchAllSongs(final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.getAllSongs("Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.YfClARxxRTXTnXeVO-0cqQ81V2gjllSbG5IrNmUvN9s").enqueue(new Callback<List<Song>>() {
+        mAPIService.getAllSongs("Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {
