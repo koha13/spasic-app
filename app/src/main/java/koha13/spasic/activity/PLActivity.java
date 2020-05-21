@@ -1,12 +1,15 @@
 package koha13.spasic.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
@@ -30,6 +33,7 @@ public class PLActivity extends AppCompatActivity {
     ImageButton backBtn;
     SongPLAdapter songCardAdapter;
     RecyclerView recyclerView;
+    Playlist pl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class PLActivity extends AppCompatActivity {
         viewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
-                Playlist pl = AllPlaylistsViewModel.getPlByID(plID);
+                pl = AllPlaylistsViewModel.getPlByID(plID);
                 plName = findViewById(R.id.pl_activity_name);
                 plName.setText(pl.getName());
 
@@ -61,7 +65,7 @@ public class PLActivity extends AppCompatActivity {
                     }
                 });
 
-                if(pl.getName().compareToIgnoreCase("Loved") != 0) {
+                if(pl.getId() != -1) {
                     final ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
                     menuBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -76,7 +80,7 @@ public class PLActivity extends AppCompatActivity {
                                             Toast.makeText(PLActivity.this, "Rename pl", Toast.LENGTH_SHORT).show();
                                             break;
                                         case R.id.btn_delete_pl:
-                                            Toast.makeText(PLActivity.this, "Delete pl", Toast.LENGTH_SHORT).show();
+                                            deletePL();
                                             break;
                                         default:
                                             break;
@@ -93,7 +97,24 @@ public class PLActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private void deletePL(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xóa playlist: "+pl.getName()).setNegativeButton("Hủy", null)
+                .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onBackPressed();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AllPlaylistsViewModel.deletePlById(plID);
+                    }
+                },1000);
 
+            }
+        }).show();
     }
 }

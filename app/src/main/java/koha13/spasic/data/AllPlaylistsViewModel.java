@@ -1,5 +1,7 @@
 package koha13.spasic.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -131,4 +133,28 @@ public class AllPlaylistsViewModel extends ViewModel {
             }
         });
     }
+
+    public static void deletePlById(int id) {
+        List<Playlist> pls = allPlaylists.getValue();
+        for (Playlist pl : pls) {
+            if (pl.getId() == id) {
+                pls.remove(pl);
+                break;
+            }
+        }
+        allPlaylists.setValue(pls);
+        SpasicApi mAPIService = RetrofitClient.getAPIService();
+        mAPIService.deletePl(id, "Bearer " + UserData.user.getToken()).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.d("Here", String.valueOf(response.code()));
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
 }

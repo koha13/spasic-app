@@ -32,4 +32,7 @@ public interface SpasicApi {
 
     @POST("playlists/add")
     Call<Playlist> createPl(@Query("name") String plName, @Header("Authorization") String token);
+
+    @GET("playlists/delete/{id}")
+    Call<Object> deletePl(@Path("id") int id, @Header("Authorization") String token);
 }
