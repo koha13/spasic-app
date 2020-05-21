@@ -1,7 +1,5 @@
 package koha13.spasic.data;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -78,7 +76,6 @@ public class AllPlaylistsViewModel extends ViewModel {
                 .enqueue(new Callback<Object>() {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
-                            Log.d("here",String.valueOf(response.code()));
                     }
 
                     @Override
@@ -105,7 +102,6 @@ public class AllPlaylistsViewModel extends ViewModel {
                     @Override
                     public void onResponse(Call<Object> call, Response<Object> response) {
                         if (response.code() == 200) {
-                            Log.d("Here", "Api ok");
                         }
                     }
 
@@ -121,7 +117,7 @@ public class AllPlaylistsViewModel extends ViewModel {
         mAPIService.createPl(plName, "Bearer " + UserData.user.getToken()).enqueue(new Callback<Playlist>() {
             @Override
             public void onResponse(Call<Playlist> call, Response<Playlist> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<Playlist> pls = allPlaylists.getValue();
                     pls.add(response.body());
                     allPlaylists.setValue(pls);
