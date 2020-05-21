@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,6 +22,7 @@ import java.util.Collections;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
+import koha13.spasic.data.SongControlViewModel;
 
 public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
@@ -39,8 +42,8 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
-        holder.songName.setText(QueueFragment.queueSongs.get(position).getName());
-        holder.songArtist.setText(QueueFragment.queueSongs.get(position).getArtists());
+        holder.songName.setText(SongControlViewModel.queueSongs.get(position).getName());
+        holder.songArtist.setText(SongControlViewModel.queueSongs.get(position).getArtists());
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +57,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
 
                 popupMenu.inflate(R.menu.option_menu_queue);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
@@ -61,7 +65,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(QueueFragment.queueSongs.get(position),mContext).getDialog().show();
+                                new AddToPlDialog(SongControlViewModel.queueSongs.get(position),mContext).getDialog().show();
                                 break;
                             case R.id.btn_go_artist:
                                 Toast.makeText(mContext, "Chuyen den ca si", Toast.LENGTH_SHORT).show();
@@ -83,7 +87,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
 
     @Override
     public int getItemCount() {
-        return QueueFragment.queueSongs.size();
+        return SongControlViewModel.queueSongs.size();
     }
 
     @Override
@@ -95,11 +99,11 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
     public boolean onItemMove(int fromPosition, int toPosition) {
         if (fromPosition < toPosition) {
             for (int i = fromPosition; i < toPosition; i++) {
-                Collections.swap(QueueFragment.queueSongs, i, i + 1);
+                Collections.swap(SongControlViewModel.queueSongs, i, i + 1);
             }
         } else {
             for (int i = fromPosition; i > toPosition; i--) {
-                Collections.swap(QueueFragment.queueSongs, i, i - 1);
+                Collections.swap(SongControlViewModel.queueSongs, i, i - 1);
             }
         }
         notifyItemMoved(fromPosition, toPosition);
@@ -108,7 +112,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
 
     @Override
     public void onItemDismiss(int position) {
-        QueueFragment.queueSongs.remove(position);
+        SongControlViewModel.queueSongs.remove(position);
         notifyItemRemoved(position);
     }
 

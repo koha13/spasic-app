@@ -18,6 +18,7 @@ import java.util.List;
 import koha13.spasic.R;
 import koha13.spasic.adapter.QueueSongAdapter;
 import koha13.spasic.data.AllSongsViewModel;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class QueueFragment extends Fragment {
@@ -25,7 +26,6 @@ public class QueueFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private AllSongsViewModel allSongsViewModel;
     private RecyclerView recyclerView;
-    public static List<Song> queueSongs;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class QueueFragment extends Fragment {
         final Observer<List<Song>> observer = new Observer<List<Song>>() {
             @Override
             public void onChanged(List<Song> songs) {
-                queueSongs = songs;
+                SongControlViewModel.queueSongs = songs;
                 QueueSongAdapter songCardAdapter = new QueueSongAdapter(getActivity());
                 ItemTouchHelper.Callback callback = new ItemTouchHelperCallBack(songCardAdapter);
                 ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
