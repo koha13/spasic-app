@@ -24,9 +24,7 @@ import java.util.Collections;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
-import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.SongControlViewModel;
-import koha13.spasic.entity.Song;
 
 public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
@@ -37,7 +35,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         this.mContext = mContext;
     }
 
-    public void setTouchHelper(ItemTouchHelper touchHelper){
+    public void setTouchHelper(ItemTouchHelper touchHelper) {
         this.touchHelper = touchHelper;
     }
 
@@ -83,7 +81,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(SongControlViewModel.queueSongs.get(position),mContext).getDialog().show();
+                                new AddToPlDialog(SongControlViewModel.queueSongs.get(position), mContext).getDialog().show();
                                 break;
                             case R.id.btn_go_artist:
                                 Toast.makeText(mContext, "Chuyen den ca si", Toast.LENGTH_SHORT).show();
