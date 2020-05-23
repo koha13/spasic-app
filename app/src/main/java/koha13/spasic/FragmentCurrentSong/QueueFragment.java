@@ -7,24 +7,16 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import koha13.spasic.R;
 import koha13.spasic.adapter.QueueSongAdapter;
-import koha13.spasic.data.AllSongsViewModel;
-import koha13.spasic.data.SongControlViewModel;
-import koha13.spasic.entity.Song;
 
 public class QueueFragment extends Fragment {
 
     private RecyclerView.LayoutManager layoutManager;
-    private AllSongsViewModel allSongsViewModel;
     private RecyclerView recyclerView;
 
     @Override
@@ -36,24 +28,16 @@ public class QueueFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_queue, container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerQueue);
+        recyclerView = rootView.findViewById(R.id.recyclerQueue);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-        allSongsViewModel = ViewModelProviders.of(getActivity()).get(AllSongsViewModel.class);
-        final Observer<List<Song>> observer = new Observer<List<Song>>() {
-            @Override
-            public void onChanged(List<Song> songs) {
-                SongControlViewModel.queueSongs = songs;
-                QueueSongAdapter songCardAdapter = new QueueSongAdapter(getActivity());
-                ItemTouchHelper.Callback callback = new ItemTouchHelperCallBack(songCardAdapter);
-                ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-                touchHelper.attachToRecyclerView(recyclerView);
-                recyclerView.setAdapter(songCardAdapter);
-            }
-        };
-        allSongsViewModel.getAllSongs().observe(getActivity(), observer);
+        QueueSongAdapter songCardAdapter = new QueueSongAdapter(getActivity());
+        ItemTouchHelper.Callback callback = new ItemTouchHelperCallBack(songCardAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        songCardAdapter.setTouchHelper(touchHelper);
+        touchHelper.attachToRecyclerView(recyclerView);
+        recyclerView.setAdapter(songCardAdapter);
 
 //        List<Song> songs = new ArrayList<>();
 //        songs.add(new Song("Test1", "Artist", 123));
@@ -67,12 +51,13 @@ public class QueueFragment extends Fragment {
         return rootView;
     }
 
-    public interface ItemTouchHelperAdapter{
+    public interface ItemTouchHelperAdapter {
         boolean onItemMove(int fromPosition, int toPosition);
+
         void onItemDismiss(int position);
     }
 
-    public class ItemTouchHelperCallBack extends ItemTouchHelper.Callback{
+    public class ItemTouchHelperCallBack extends ItemTouchHelper.Callback {
 
         private final ItemTouchHelperAdapter mAdapter;
 

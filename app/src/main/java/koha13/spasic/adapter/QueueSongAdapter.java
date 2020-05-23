@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Collections;
@@ -22,20 +24,27 @@ import java.util.Collections;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.entity.Song;
 
 public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
     private Context mContext;
+    private ItemTouchHelper touchHelper;
 
     public QueueSongAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
+    public void setTouchHelper(ItemTouchHelper touchHelper){
+        this.touchHelper = touchHelper;
+    }
+
     @NonNull
     @Override
     public SongViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_view_queue, parent, false);
         SongViewHolder svh = new SongViewHolder(v);
         return svh;
     }
@@ -44,6 +53,15 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
         holder.songName.setText(SongControlViewModel.queueSongs.get(position).getName());
         holder.songArtist.setText(SongControlViewModel.queueSongs.get(position).getArtists());
+        holder.move.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    touchHelper.startDrag(holder);
+                }
+                return false;
+            }
+        });
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,14 +141,16 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         TextView songArtist;
         ImageView imageView;
         ImageButton menu;
+        ImageButton move;
 
         SongViewHolder(View itemView) {
             super(itemView);
-            cv = itemView.findViewById(R.id.cv_song);
+            cv = itemView.findViewById(R.id.cv_song_queue);
             songName = itemView.findViewById(R.id.cv_song_name);
             songArtist = itemView.findViewById(R.id.cv_song_artist);
             imageView = itemView.findViewById(R.id.cv_image);
             menu = itemView.findViewById(R.id.menu_cv);
+            move = itemView.findViewById(R.id.drag_handle);
         }
     }
 }
