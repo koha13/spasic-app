@@ -1,5 +1,6 @@
 package koha13.spasic.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,6 +67,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
     }
 
     private void login(){
+        hideKeyboard(this);
         String us = username.getText().toString().toLowerCase().trim();
         String pw = password.getText().toString().toLowerCase().trim();
         if(us.length()<6 || pw.length()<6){
@@ -75,7 +78,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         RotateAnimation r = new RotateAnimation(ROTATE_FROM, ROTATE_TO,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
                 0.5f);
-        r.setDuration(3000000);
+        r.setDuration(5000);
         r.setRepeatCount(0);
         loadingIcon.setAnimation(r);
     }
@@ -113,6 +116,16 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
 
     @Override
     public void onFailed(Throwable error) {
-        Log.d("Login", "Failed");
+        loadingScreen.setVisibility(View.INVISIBLE);
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
