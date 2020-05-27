@@ -3,6 +3,7 @@ package koha13.spasic.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -33,17 +34,29 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("PRIVATE_DATA", MODE_PRIVATE);
         String token = prefs.getString("token", null);
         if (token == null) {
-            Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }, 1500);
         } else {
             UserData.user.setId(prefs.getInt("id", 0));
             UserData.user.setRole(prefs.getString("role", null));
             UserData.user.setUsername(prefs.getString("username", null));
             UserData.user.setToken(prefs.getString("token", null));
-            Intent intent = new Intent(SplashScreen.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(SplashScreen.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }, 1500);
         }
     }
 }
