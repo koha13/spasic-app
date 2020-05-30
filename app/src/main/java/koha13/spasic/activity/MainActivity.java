@@ -36,15 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
         fetchData();
 
-        LinearLayout songInfo = findViewById(R.id.song_info_ft);
-        songInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CurrentSongActivity.class);
-                startActivity(intent);
-            }
-        });
-
         viewPager = findViewById(R.id.viewpager);
         addTabs(viewPager);
 
