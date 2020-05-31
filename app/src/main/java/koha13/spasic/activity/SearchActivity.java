@@ -299,6 +299,8 @@ public class SearchActivity extends AppCompatActivity {
         suggestions = new ArrayList<>();
         for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
             suggestions.add(s.getName());
+        }
+        for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
             boolean checkArtist = true;
             boolean checkAlbum = true;
             for(String stringTemp:suggestions){
