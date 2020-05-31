@@ -26,6 +26,7 @@
         <activity android:name=".activity.PLActivity" />
         <activity android:name=".activity.CurrentSongActivity" />
         <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.SearchActivity" />
     </application>
 
 </manifest>
