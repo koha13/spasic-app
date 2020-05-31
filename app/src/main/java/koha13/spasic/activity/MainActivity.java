@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         fetchData();
         ImageButton searchBtn = findViewById(R.id.tb_search_ic);
         searchBtn.setOnClickListener(new View.OnClickListener() {

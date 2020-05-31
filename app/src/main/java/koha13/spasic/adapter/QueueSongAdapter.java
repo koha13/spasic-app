@@ -19,6 +19,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.Collections;
 
 import koha13.spasic.AddToPlDialog;
@@ -51,6 +53,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
         holder.songName.setText(SongControlViewModel.queueSongs.get(position).getName());
         holder.songArtist.setText(SongControlViewModel.queueSongs.get(position).getArtists());
+        Picasso.get().load(SongControlViewModel.queueSongs.get(position).getSongImage()).into(holder.imageView);
         holder.move.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

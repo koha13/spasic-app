@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -64,79 +64,113 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="5dp"
+        android:paddingBottom="60dp"
+        android:layout_marginTop="50dp">
         <LinearLayout
-            android:id="@+id/linear_search"
-            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_marginTop="10dp"
+            <LinearLayout
+                android:id="@+id/ln_songs"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Bài hát"
-                android:textColor="@color/textDark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bài hát"
+                    android:textColor="@color/textDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/re_song"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <ImageButton
-                android:id="@+id/more_song"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
-
-            <TextView
-                android:layout_marginTop="10dp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/re_song"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/more_song"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/darker_gray"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ln_artist"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nghệ sĩ"
-                android:textColor="@color/textDark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nghệ sĩ"
+                    android:textColor="@color/textDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/re_artist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <ImageButton
-                android:id="@+id/more_artist"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>
-
-            <TextView
+                <GridView
+                    android:id="@+id/gv_artist"
+                    android:layout_width="match_parent"
+                    android:numColumns="2"
+                    android:columnWidth="200dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    android:horizontalSpacing="16dp"
+                    android:verticalSpacing="16dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/more_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ln_album"
+                android:visibility="invisible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Album"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/textDark"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Album"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/textDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/re_album"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <ImageButton
-                android:id="@+id/more_album"
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+                <GridView
+                    android:id="@+id/gv_album"
+                    android:layout_width="match_parent"
+                    android:numColumns="2"
+                    android:columnWidth="200dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    android:horizontalSpacing="16dp"
+                    android:verticalSpacing="16dp"
+                    android:layout_height="wrap_content"/>
+                <ImageButton
+                    android:id="@+id/more_album"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 
-</LinearLayout>
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:name="koha13.spasic.footer.FooterFragment"
+        android:layout_gravity="bottom"
+        android:id="@+id/footer"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

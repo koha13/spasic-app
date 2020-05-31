@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 import koha13.spasic.R;
@@ -48,6 +50,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
     public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtists());
+        Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

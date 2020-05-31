@@ -16,10 +16,6 @@ import koha13.spasic.activity.CurrentSongActivity;
 
 public class FooterFragment extends Fragment {
 
-    public static FooterFragment newInstance() {
-        return new FooterFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
