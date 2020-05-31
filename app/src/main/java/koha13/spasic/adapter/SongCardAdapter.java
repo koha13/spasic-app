@@ -25,10 +25,15 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
     private List<Song> songs;
     private Context mContext;
     private boolean isPLItem = false;
+    private int num = -1;
 
     public SongCardAdapter(List<Song> songs, Context mContext) {
         this.songs = songs;
         this.mContext = mContext;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 
     @NonNull
@@ -82,7 +87,9 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        if (num > -1) return num;
+        else
+            return songs.size();
     }
 
     @Override

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.SearchActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,18 +34,18 @@
                     android:id="@+id/searchbox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/back_btn_search"
-                    android:hint="TÌm kiếm trên Spasic"
-                    android:textColor="@color/textLight"
-                    android:maxLines="1"
                     android:layout_marginRight="10dp"
-                    android:textSize="20dp"
-                    android:paddingRight="15dp"
-                    android:inputType="text"
-                    android:imeOptions="actionSearch"
-                    android:textColorHint="@color/textLight"
+                    android:layout_toRightOf="@+id/back_btn_search"
                     android:completionThreshold="0"
-                    android:paddingLeft="5dp" />
+                    android:hint="TÌm kiếm trên Spasic"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="15dp"
+                    android:textColor="@color/textLight"
+                    android:textColorHint="@color/textLight"
+                    android:textSize="20dp" />
 
                 <ImageButton
                     android:id="@+id/btn_delete_search"
@@ -54,12 +54,89 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="15dp"
-                    android:visibility="invisible"
                     android:background="@android:color/transparent"
-                    android:src="@drawable/ic_highlight_off_white_24dp" />
+                    android:src="@drawable/ic_highlight_off_white_24dp"
+                    android:visibility="invisible" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/linear_search"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Bài hát"
+                android:textColor="@color/textDark"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/re_song"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/more_song"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nghệ sĩ"
+                android:textColor="@color/textDark"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/re_artist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/more_artist"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Album"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/textDark"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/re_album"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/more_album"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_keyboard_arrow_down_white_24dp"/>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
