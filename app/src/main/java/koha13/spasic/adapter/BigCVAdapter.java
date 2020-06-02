@@ -21,6 +21,7 @@ import java.util.List;
 
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
@@ -29,8 +30,8 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
     private List<Song> songs;
     private Context mContext;
 
-    public BigCVAdapter(List<Song> songs, Context context) {
-        this.songs = songs;
+    public BigCVAdapter(Context context) {
+        this.songs = AllSongsViewModel.getAllSongs();
         this.mContext = context;
     }
 

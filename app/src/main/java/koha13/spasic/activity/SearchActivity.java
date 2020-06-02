@@ -149,7 +149,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchSong() {
         songsSearch = new ArrayList<>();
-        for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
+        for (Song s : AllSongsViewModel.getAllSongs()) {
             if (s.getName().toLowerCase().contains(searchBox.getText().toString().toLowerCase().trim())) {
                 songsSearch.add(s);
             }
@@ -194,7 +194,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchArtist() {
         artists = new ArrayList<>();
-        for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
+        for (Song s : AllSongsViewModel.getAllSongs()) {
             if (s.getArtists().toLowerCase().contains(searchBox.getText().toString().toLowerCase().trim())) {
                 boolean check = true;
                 for (Artist a : artists) {
@@ -245,7 +245,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void searchAlbum(){
         albums = new ArrayList<>();
-        for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
+        for (Song s : AllSongsViewModel.getAllSongs()) {
             if (s.getAlbum().toLowerCase().contains(searchBox.getText().toString().toLowerCase().trim())) {
                 boolean check = true;
                 for (Album a : albums) {
@@ -297,10 +297,10 @@ public class SearchActivity extends AppCompatActivity {
 
     private void updateSuggestion(){
         suggestions = new ArrayList<>();
-        for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
+        for (Song s : AllSongsViewModel.getAllSongs()) {
             suggestions.add(s.getName());
         }
-        for (Song s : AllSongsViewModel.getAllSongs().getValue()) {
+        for (Song s : AllSongsViewModel.getAllSongs()) {
             boolean checkArtist = true;
             boolean checkAlbum = true;
             for(String stringTemp:suggestions){

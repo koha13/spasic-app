@@ -15,8 +15,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SpasicApi {
-    @GET("songs")
-    Call<List<Song>> getAllSongs(@Header("Authorization") String token);
+    @GET("allsongs")
+    Call<List<Song>> getAllSongs(@Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
 
     @GET("playlists")
     Call<List<Playlist>> getAllPlaylists(@Header("Authorization") String token);
