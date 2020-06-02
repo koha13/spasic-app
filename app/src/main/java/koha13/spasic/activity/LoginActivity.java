@@ -21,9 +21,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import koha13.spasic.R;
 import koha13.spasic.api.ResponseCallback;
+import koha13.spasic.data.AllPlaylistsViewModel;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.UserData;
+import koha13.spasic.entity.Playlist;
+import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
 import koha13.spasic.model.LoginRequest;
 
@@ -91,9 +97,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         editor.putString("username", UserData.user.getUsername());
         editor.putInt("id", UserData.user.getId());
         editor.apply();
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        fetchData();
     }
 
     @Override
@@ -127,5 +131,41 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void fetchData(){
+        AllSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
+            @Override
+            public void onDataSuccess(List<Song> data) {
+                AllPlaylistsViewModel.fetchAllPlaylists(new ResponseCallback<List<Playlist>>() {
+                    @Override
+                    public void onDataSuccess(List<Playlist> data) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDataFail(String message) {
+
+                    }
+
+                    @Override
+                    public void onFailed(Throwable error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onDataFail(String message) {
+
+            }
+
+            @Override
+            public void onFailed(Throwable error) {
+
+            }
+        });
     }
 }
