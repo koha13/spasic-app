@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,13 +38,14 @@ public class SearchActivity extends AppCompatActivity {
     AutoCompleteTextView searchBox;
     ImageButton timesBtn;
     ImageButton backBtn;
-    List<String> suggestions;
+//    List<String> suggestions = new ArrayList<>();
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SongSearchFragment songSearchFragment;
     private AlbumSearchFragment albumSearchFragment;
     private ArtistSearchFragment artistSearchFragment;
     private ViewPagerAdapter adapter;
+    private ArrayAdapter<String> adapterSuggestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +66,11 @@ public class SearchActivity extends AppCompatActivity {
 
     private void initView() {
         searchBox = findViewById(R.id.searchbox);
+//        adapterSuggestion = new ArrayAdapter<String>(SearchActivity.this,
+//                android.R.layout.simple_dropdown_item_1line, suggestions);
+//        searchBox.setAdapter(adapterSuggestion);
         timesBtn = findViewById(R.id.btn_delete_search);
         backBtn = findViewById(R.id.back_btn_search);
-//        updateSuggestion();
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-//                android.R.layout.simple_dropdown_item_1line, suggestions);
-//        searchBox.setAdapter(adapter);
         searchBox.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -100,9 +102,9 @@ public class SearchActivity extends AppCompatActivity {
                 timer.schedule(new TimerTask() {
                     @Override
                     public void run() {
-                        //Search here
+//                        updateSuggestion();
                     }
-                }, 1600);
+                }, 600);
             }
         });
 
@@ -165,22 +167,65 @@ public class SearchActivity extends AppCompatActivity {
 
 //    private void updateSuggestion(){
 //        suggestions = new ArrayList<>();
-//        for (Song s : AllSongsViewModel.getAllSongs()) {
-//            suggestions.add(s.getName());
-//        }
-//        for (Song s : AllSongsViewModel.getAllSongs()) {
-//            boolean checkArtist = true;
-//            boolean checkAlbum = true;
-//            for(String stringTemp:suggestions){
-//                if(s.getAlbum().compareToIgnoreCase(stringTemp) == 0){
-//                    checkAlbum = false;
-//                }
-//                if(s.getArtists().compareToIgnoreCase(stringTemp) == 0){
-//                    checkArtist = false;
+//        SearchApiImpl.searchSong(searchBox.getText().toString(), 0, new ResponseCallback<List<Song>>() {
+//            @Override
+//            public void onDataSuccess(List<Song> data) {
+//                for(Song s: data){
+//                    if(!suggestions.contains((String) s.getName())){
+//                        suggestions.add(s.getName());
+//                    }
 //                }
 //            }
-//            if(checkArtist) suggestions.add(s.getArtists());
-//            if (checkAlbum) suggestions.add(s.getAlbum());
-//        }
+//
+//            @Override
+//            public void onDataFail(String message) {
+//
+//            }
+//
+//            @Override
+//            public void onFailed(Throwable error) {
+//
+//            }
+//        });
+//        SearchApiImpl.searchArtist(searchBox.getText().toString(), 0, new ResponseCallback<List<Artist>>() {
+//            @Override
+//            public void onDataSuccess(List<Artist> data) {
+//                for(Artist s: data){
+//                    if(!suggestions.contains((String) s.getName())){
+//                        suggestions.add(s.getName());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onDataFail(String message) {
+//
+//            }
+//
+//            @Override
+//            public void onFailed(Throwable error) {
+//
+//            }
+//        });
+//        SearchApiImpl.searchAlbum(searchBox.getText().toString(), 0, new ResponseCallback<List<Album>>() {
+//            @Override
+//            public void onDataSuccess(List<Album> data) {
+//                for(Album s: data){
+//                    if(!suggestions.contains((String) s.getName())){
+//                        suggestions.add(s.getName());
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onDataFail(String message) {
+//
+//            }
+//
+//            @Override
+//            public void onFailed(Throwable error) {
+//
+//            }
+//        });
 //    }
 }
