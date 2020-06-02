@@ -2,6 +2,8 @@ package koha13.spasic.api;
 
 import java.util.List;
 
+import koha13.spasic.entity.Album;
+import koha13.spasic.entity.Artist;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
@@ -35,4 +37,13 @@ public interface SpasicApi {
 
     @GET("playlists/delete/{id}")
     Call<Object> deletePl(@Path("id") int id, @Header("Authorization") String token);
+
+    @GET("searchsong")
+    Call<List<Song>> searchSong(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
+
+    @GET("searchalbum")
+    Call<List<Album>> searchAlbum(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
+
+    @GET("searchartist")
+    Call<List<Artist>> searchArtist(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
 }

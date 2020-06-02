@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.AddToPlDialog;
@@ -27,16 +29,20 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
     private List<Song> songs;
     private Context mContext;
-    private boolean isPLItem = false;
-    private int num = -1;
 
     public SongCardAdapter(List<Song> songs, Context mContext) {
         this.songs = songs;
         this.mContext = mContext;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void addSong(List<Song> songs){
+        if(songs == null) songs = new ArrayList<>();
+        this.songs.addAll(songs);
+        notifyDataSetChanged();
+    }
+
+    public void reset(){
+        songs = new ArrayList<>();
     }
 
     @NonNull
@@ -72,7 +78,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(songs.get(position),mContext).getDialog().show();
+                                new AddToPlDialog(songs.get(position), mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
@@ -91,9 +97,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
     @Override
     public int getItemCount() {
-        if (num > -1) return num;
-        else
-            return songs.size();
+        return songs.size();
     }
 
     @Override

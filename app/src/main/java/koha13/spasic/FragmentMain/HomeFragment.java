@@ -54,7 +54,6 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Log.d("Here", "Load");
                 AllSongsViewModel.moreSongs(page, null);
             }
         };
