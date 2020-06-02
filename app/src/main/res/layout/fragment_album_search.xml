@@ -6,7 +6,7 @@
     android:layout_width="match_parent">
 
     <GridView
-        android:id="@+id/gv_album"
+        android:id="@+id/gv_album_search"
         android:layout_width="match_parent"
         android:numColumns="2"
         android:columnWidth="200dp"

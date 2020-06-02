@@ -34,6 +34,7 @@ import java.util.TimerTask;
 import koha13.spasic.FragmentMain.HomeFragment;
 import koha13.spasic.FragmentMain.PLFragment;
 import koha13.spasic.FragmentMain.RankFragment;
+import koha13.spasic.FragmentSearch.AlbumSearchFragment;
 import koha13.spasic.FragmentSearch.SongSearchFragment;
 import koha13.spasic.R;
 import koha13.spasic.adapter.AlbumGridViewAdapter;
@@ -53,25 +54,11 @@ public class SearchActivity extends AppCompatActivity {
     AutoCompleteTextView searchBox;
     ImageButton timesBtn;
     ImageButton backBtn;
-    RecyclerView songRe;
-    GridView artistGv;
-    GridView albumGv;
-//    SongCardAdapter songAdapter;
-//    ImageButton moreSong;
-//    ImageButton moreArtist;
-//    ImageButton moreAlbum;
-//    List<Song> songsSearch;
-//    boolean isExpandSongs;
-//    List<Artist> artists;
-//    ArtistGridViewAdapter playlistGridViewAdapter;
-//    boolean isExpandArtists;
-//    List<Album> albums;
-//    boolean isExpandAlbum;
-//    AlbumGridViewAdapter albumGridViewAdapter;
     List<String> suggestions;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SongSearchFragment songSearchFragment;
+    private AlbumSearchFragment albumSearchFragment;
     private ViewPagerAdapter adapter;
 
     @Override
@@ -164,6 +151,7 @@ public class SearchActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabs_search);
         tabLayout.setupWithViewPager(viewPager);
         songSearchFragment = new SongSearchFragment();
+        albumSearchFragment = new AlbumSearchFragment();
         addTabs(viewPager);
         setupTabIcons();
     }
@@ -171,17 +159,19 @@ public class SearchActivity extends AppCompatActivity {
     private void addTabs(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(songSearchFragment, "Song");
-//        adapter.addFrag(new AlbumS(), "Album");
+        adapter.addFrag(albumSearchFragment, "Album");
 //        adapter.addFrag(new PLFragment(), "Artist");
         viewPager.setAdapter(adapter);
     }
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setText("Songs");
+        tabLayout.getTabAt(1).setText("Albums");
     }
 
     private void search() {
         songSearchFragment.setSearchKey(searchBox.getText().toString());
+        albumSearchFragment.setSearchKey(searchBox.getText().toString());
     }
 
 

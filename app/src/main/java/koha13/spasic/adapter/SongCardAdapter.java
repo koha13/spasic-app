@@ -43,6 +43,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
     public void reset(){
         songs = new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @NonNull

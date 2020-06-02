@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
@@ -27,8 +28,15 @@ public class AlbumGridViewAdapter extends BaseAdapter {
         this.albums = albums;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void addAlbums(List<Album> albums){
+        if(albums==null) albums = new ArrayList<>();
+        this.albums.addAll(albums);
+        notifyDataSetChanged();
+    }
+
+    public void reset(){
+        albums = new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @Override
