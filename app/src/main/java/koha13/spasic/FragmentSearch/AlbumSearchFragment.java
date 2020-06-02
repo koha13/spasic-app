@@ -1,6 +1,7 @@
 package koha13.spasic.FragmentSearch;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.List;
 import koha13.spasic.R;
 import koha13.spasic.activity.SearchActivity;
 import koha13.spasic.adapter.AlbumGridViewAdapter;
+import koha13.spasic.adapter.EndlessScrollListener;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.SearchApiImpl;
 import koha13.spasic.entity.Album;
@@ -49,6 +51,24 @@ public class AlbumSearchFragment extends Fragment {
         List<Album> albums = new ArrayList<>();
         albumGridViewAdapter = new AlbumGridViewAdapter(albums, getActivity());
         albumGv.setAdapter(albumGridViewAdapter);
+        albumGv.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public boolean onLoadMore(int page, int totalItemsCount) {
+                SearchApiImpl.searchAlbum(searchKey, page, new ResponseCallback<List<Album>>() {
+                    @Override
+                    public void onDataSuccess(List<Album> data) {
+                        albumGridViewAdapter.addAlbums(data);
+                    }
+
+                    @Override
+                    public void onDataFail(String message) { }
+
+                    @Override
+                    public void onFailed(Throwable error) { }
+                });
+                return true; // ONLY if more data is actually being loaded; false otherwise.
+            }
+        });
     }
 
     private void updateSearch() {
