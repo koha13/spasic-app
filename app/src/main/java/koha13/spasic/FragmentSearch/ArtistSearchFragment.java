@@ -13,19 +13,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.activity.SearchActivity;
-import koha13.spasic.adapter.AlbumGridViewAdapter;
+import koha13.spasic.adapter.ArtistGridViewAdapter;
 import koha13.spasic.adapter.EndlessScrollListener;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.SearchApiImpl;
-import koha13.spasic.entity.Album;
+import koha13.spasic.entity.Artist;
 
-public class AlbumSearchFragment extends Fragment {
+public class ArtistSearchFragment extends Fragment {
     private String searchKey;
-    private GridView albumGv;
-    private AlbumGridViewAdapter albumGridViewAdapter;
+    private GridView artistGv;
+    private ArtistGridViewAdapter artistGridViewAdapter;
 
-    public AlbumSearchFragment() {
+    public ArtistSearchFragment() {
     }
 
     public void setSearchKey(String searchKey) {
@@ -42,30 +41,33 @@ public class AlbumSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_album_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_artist_search, container, false);
         initView(rootView);
+        Log.d("Here", "Load again");
         return rootView;
     }
 
     private void initView(View rootView) {
-        albumGv = rootView.findViewById(R.id.gv_album_search);
-        List<Album> albums = new ArrayList<>();
-        albumGridViewAdapter = new AlbumGridViewAdapter(albums, getActivity());
-        albumGv.setAdapter(albumGridViewAdapter);
-        albumGv.setOnScrollListener(new EndlessScrollListener() {
+        artistGv = rootView.findViewById(R.id.gv_artist_search);
+        List<Artist> artists = new ArrayList<>();
+        artistGridViewAdapter = new ArtistGridViewAdapter(artists, getActivity());
+        artistGv.setAdapter(artistGridViewAdapter);
+        artistGv.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
-                SearchApiImpl.searchAlbum(searchKey, page, new ResponseCallback<List<Album>>() {
+                SearchApiImpl.searchArtist(searchKey, page, new ResponseCallback<List<Artist>>() {
                     @Override
-                    public void onDataSuccess(List<Album> data) {
-                        albumGridViewAdapter.addAlbums(data);
+                    public void onDataSuccess(List<Artist> data) {
+                        artistGridViewAdapter.addArtist(data);
                     }
 
                     @Override
-                    public void onDataFail(String message) { }
+                    public void onDataFail(String message) {
+                    }
 
                     @Override
-                    public void onFailed(Throwable error) { }
+                    public void onFailed(Throwable error) {
+                    }
                 });
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }
@@ -73,11 +75,11 @@ public class AlbumSearchFragment extends Fragment {
     }
 
     private void updateSearch() {
-        albumGridViewAdapter.reset();
-        SearchApiImpl.searchAlbum(searchKey, 0, new ResponseCallback<List<Album>>() {
+        artistGridViewAdapter.reset();
+        SearchApiImpl.searchArtist(searchKey, 0, new ResponseCallback<List<Artist>>() {
             @Override
-            public void onDataSuccess(List<Album> data) {
-                albumGridViewAdapter.addAlbums(data);
+            public void onDataSuccess(List<Artist> data) {
+                artistGridViewAdapter.addArtist(data);
             }
 
             @Override

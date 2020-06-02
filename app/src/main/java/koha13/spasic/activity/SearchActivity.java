@@ -1,50 +1,32 @@
 package koha13.spasic.activity;
 
 import android.app.Activity;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import koha13.spasic.FragmentMain.HomeFragment;
-import koha13.spasic.FragmentMain.PLFragment;
-import koha13.spasic.FragmentMain.RankFragment;
 import koha13.spasic.FragmentSearch.AlbumSearchFragment;
+import koha13.spasic.FragmentSearch.ArtistSearchFragment;
 import koha13.spasic.FragmentSearch.SongSearchFragment;
 import koha13.spasic.R;
-import koha13.spasic.adapter.AlbumGridViewAdapter;
-import koha13.spasic.adapter.ArtistGridViewAdapter;
-import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.adapter.ViewPagerAdapter;
-import koha13.spasic.data.AllSongsViewModel;
-import koha13.spasic.entity.Album;
-import koha13.spasic.entity.Artist;
-import koha13.spasic.entity.Song;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -59,6 +41,7 @@ public class SearchActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private SongSearchFragment songSearchFragment;
     private AlbumSearchFragment albumSearchFragment;
+    private ArtistSearchFragment artistSearchFragment;
     private ViewPagerAdapter adapter;
 
     @Override
@@ -78,7 +61,7 @@ public class SearchActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void initView(){
+    private void initView() {
         searchBox = findViewById(R.id.searchbox);
         timesBtn = findViewById(R.id.btn_delete_search);
         backBtn = findViewById(R.id.back_btn_search);
@@ -96,7 +79,8 @@ public class SearchActivity extends AppCompatActivity {
 
         searchBox.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -148,10 +132,12 @@ public class SearchActivity extends AppCompatActivity {
         });
 
         viewPager = findViewById(R.id.viewpager_search);
+        viewPager.setOffscreenPageLimit(3);
         tabLayout = findViewById(R.id.tabs_search);
         tabLayout.setupWithViewPager(viewPager);
         songSearchFragment = new SongSearchFragment();
         albumSearchFragment = new AlbumSearchFragment();
+        artistSearchFragment = new ArtistSearchFragment();
         addTabs(viewPager);
         setupTabIcons();
     }
@@ -160,18 +146,20 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFrag(songSearchFragment, "Song");
         adapter.addFrag(albumSearchFragment, "Album");
-//        adapter.addFrag(new PLFragment(), "Artist");
+        adapter.addFrag(artistSearchFragment, "Artist");
         viewPager.setAdapter(adapter);
     }
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setText("Songs");
         tabLayout.getTabAt(1).setText("Albums");
+        tabLayout.getTabAt(2).setText("Artists");
     }
 
     private void search() {
         songSearchFragment.setSearchKey(searchBox.getText().toString());
         albumSearchFragment.setSearchKey(searchBox.getText().toString());
+        artistSearchFragment.setSearchKey(searchBox.getText().toString());
     }
 
 

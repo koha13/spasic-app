@@ -35,7 +35,7 @@ public class AlbumGridViewAdapter extends BaseAdapter {
     }
 
     public void reset(){
-        albums = new ArrayList<>();
+        this.albums = new ArrayList<>();
         notifyDataSetChanged();
     }
 

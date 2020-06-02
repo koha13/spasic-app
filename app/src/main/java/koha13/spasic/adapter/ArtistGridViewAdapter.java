@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
@@ -19,20 +20,25 @@ public class ArtistGridViewAdapter extends BaseAdapter {
 
     List<Artist> artists;
     Context mContext;
-    int num = -1;
 
     public ArtistGridViewAdapter(List<Artist> artists, Context mContext) {
         this.mContext = mContext;
         this.artists = artists;
     }
 
-    public void setNum(int num) {
-        this.num = num;
+    public void addArtist(List<Artist> artists) {
+        if (artists == null) this.artists = new ArrayList<>();
+        this.artists.addAll(artists);
+        notifyDataSetChanged();
+    }
+
+    public void reset() {
+        this.artists = new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        if (num > -1) return num;
         return artists.size();
     }
 
