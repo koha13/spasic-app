@@ -27,11 +27,9 @@ import koha13.spasic.utils.GeneralDTO;
 
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {
 
-    private List<Song> songs;
     private Context mContext;
 
     public BigCVAdapter(Context context) {
-        this.songs = AllSongsViewModel.getAllSongs();
         this.mContext = context;
     }
 
@@ -45,10 +43,10 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
-        holder.songName.setText(songs.get(position).getName());
-        holder.songArtist.setText(songs.get(position).getArtists());
-        Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
-        holder.time.setText(GeneralDTO.secondToMinute(songs.get(position).getLength()));
+        holder.songName.setText(AllSongsViewModel.getAllSongs().get(position).getName());
+        holder.songArtist.setText(AllSongsViewModel.getAllSongs().get(position).getArtists());
+        Picasso.get().load(AllSongsViewModel.getAllSongs().get(position).getSongImage()).into(holder.imageView);
+        holder.time.setText(GeneralDTO.secondToMinute(AllSongsViewModel.getAllSongs().get(position).getLength()));
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +66,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(songs.get(position),mContext).getDialog().show();
+                                new AddToPlDialog(AllSongsViewModel.getAllSongs().get(position),mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
@@ -87,7 +85,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        return AllSongsViewModel.getAllSongs().size();
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {

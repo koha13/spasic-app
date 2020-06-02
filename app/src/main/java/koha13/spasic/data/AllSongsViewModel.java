@@ -22,6 +22,10 @@ public class AllSongsViewModel{
         return allSongs;
     }
 
+    public static void reset(){
+        allSongs = new ArrayList<>();
+    }
+
     public static void updateAllSongs(List<Song> songs) {
         allSongs = songs;
     }

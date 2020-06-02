@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
@@ -55,6 +56,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 AllSongsViewModel.moreSongs(page, null);
+                songCardAdapter.notifyDataSetChanged();
             }
         };
         // Adds the scroll listener to RecyclerView
@@ -74,6 +76,8 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
+        AllSongsViewModel.reset();
+        songCardAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(true);
         AllSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
             @Override
@@ -94,6 +98,5 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
