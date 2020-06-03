@@ -31,7 +31,7 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_skip_next_black_24dp"
+            android:src="@drawable/ic_skip_next_white_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/playBtn"
             app:layout_constraintTop_toTopOf="parent" />

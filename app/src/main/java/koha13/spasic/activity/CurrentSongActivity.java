@@ -1,33 +1,41 @@
 package koha13.spasic.activity;
 
-import android.graphics.PorterDuff;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.viewpager.widget.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.tabs.TabLayout;
-
-import koha13.spasic.FragmentCurrentSong.CurrentSongFragment;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
-import koha13.spasic.FragmentMain.RankFragment;
 import koha13.spasic.R;
-import koha13.spasic.adapter.ViewPagerAdapter;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
     private ImageButton backBtn;
+    private TextView songName;
+    private TextView songArtist;
+    private ImageButton queueBtn;
+    private boolean isQueue = false;
+    Fragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_song);
 
+        initView();
+    }
+
+    private void initView() {
+        songName = findViewById(R.id.song_name);
+        songName.setSelected(true);
+        songArtist = findViewById(R.id.song_artist);
+        songArtist.setSelected(true);
         backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,44 +43,26 @@ public class CurrentSongActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager2);
-        addTabs(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs2);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-        tabLayout.setOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager) {
+        mFragment = new QueueFragment();
+        queueBtn = findViewById(R.id.queue_btn);
+        queueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                super.onTabSelected(tab);
-                int tabIconColor = ContextCompat.getColor(CurrentSongActivity.this, R.color.activeMain);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-            }
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+                if (!isQueue) {
+                    ft.replace(R.id.framelayout, mFragment).commit();
+                    isQueue = true;
+                    queueBtn.setColorFilter(Color.parseColor("#FF5722"));
+                } else {
+                    ft.remove(mFragment).commit();
+                    isQueue = false;
+                    queueBtn.setColorFilter(Color.parseColor("#FFFFFF"));
+                }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-                super.onTabUnselected(tab);
-                int tabIconColor = ContextCompat.getColor(CurrentSongActivity.this, R.color.tabUnselectedIconColor);
-                tab.getIcon().setColorFilter(tabIconColor, PorterDuff.Mode.SRC_IN);
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                super.onTabReselected(tab);
             }
         });
     }
 
-    private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(R.drawable.ic_music_note_white_24dp);
-        tabLayout.getTabAt(1).setIcon(R.drawable.ic_queue_music_white_24dp);
-    }
-
-    private void addTabs(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFrag(new CurrentSongFragment(), "CURRENTSONG");
-        adapter.addFrag(new QueueFragment(), "QUEUE");
-        viewPager.setAdapter(adapter);
-    }
 }
