@@ -13,6 +13,7 @@
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
+            app:contentInsetStart="0dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary">
@@ -27,7 +28,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
                     android:background="@android:color/transparent"
                     android:src="@drawable/ic_arrow_back_white_24dp" />
 
@@ -38,7 +39,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_toRightOf="@+id/back_btn_search"
                     android:completionThreshold="0"
-                    android:hint="TÌm kiếm trên Spasic"
+                    android:hint="Tìm kiếm trên Spasic"
                     android:imeOptions="actionSearch"
                     android:inputType="text"
                     android:maxLines="1"
@@ -46,7 +47,7 @@
                     android:paddingRight="15dp"
                     android:textColor="@color/textLight"
                     android:textColorHint="@color/textLight"
-                    android:textSize="20dp" />
+                    android:textSize="@dimen/text_size_title" />
 
                 <ImageButton
                     android:id="@+id/btn_delete_search"
@@ -72,7 +73,7 @@
         android:id="@+id/viewpager_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="60dp"
+        android:paddingBottom="@dimen/footer_height"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </androidx.viewpager.widget.ViewPager>
