@@ -7,7 +7,7 @@
     android:isScrollContainer="false"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:paddingBottom="60dp"
+    android:paddingBottom="@dimen/footer_height"
     android:paddingTop="?attr/actionBarSize"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
