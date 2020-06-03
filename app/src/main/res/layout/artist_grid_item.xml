@@ -19,7 +19,7 @@
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:background="#99000000"
+        android:background="@color/semi_transparent_bg"
         android:layout_alignBottom="@+id/grid_item_image">
 
         <TextView
