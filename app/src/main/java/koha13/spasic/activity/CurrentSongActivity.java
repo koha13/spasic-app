@@ -1,5 +1,6 @@
 package koha13.spasic.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
@@ -48,13 +50,16 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
                 if (!isQueue){
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.framelayout, mFragment).commit();
+                    ft.replace(R.id.framelayout, mFragment).commit();
                     isQueue = true;
+                    queueBtn.setColorFilter(Color.parseColor("#FF5722"));
                 }else{
-                    fragmentManager.beginTransaction().remove(mFragment).commit();
+                    ft.remove(mFragment).commit();
                     isQueue = false;
+                    queueBtn.setColorFilter(Color.parseColor("#FFFFFF"));
                 }
 
             }
