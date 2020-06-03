@@ -8,9 +8,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/footer_height"
         android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
+        android:background="@color/white"
         android:gravity="center_vertical"
         android:paddingHorizontal="10dp">
 
@@ -31,7 +31,7 @@
             android:layout_height="40dp"
             android:background="@android:color/transparent"
             android:scaleType="fitXY"
-            android:src="@drawable/ic_skip_next_white_24dp"
+            android:src="@drawable/ic_skip_next_orange_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/playBtn"
             app:layout_constraintTop_toTopOf="parent" />
@@ -54,8 +54,9 @@
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:text="Out longgggggggg"
-                android:textColor="@color/textLight"
-                android:textSize="18dp" />
+                android:textColor="@color/textDark"
+                android:textStyle="bold"
+                android:textSize="@dimen/text_size_title" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,7 +65,7 @@
                 android:maxLines="1"
                 android:scrollHorizontally="true"
                 android:text="Some random artist"
-                android:textColor="@color/textLight" />
+                android:textColor="@color/textDark" />
 
         </LinearLayout>
 
