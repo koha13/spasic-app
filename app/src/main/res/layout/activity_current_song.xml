@@ -5,40 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.CurrentSongActivity">
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/image_song"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_image"/>
-        <ImageButton
-            android:id="@+id/love_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginRight="5dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_favorite_orange_24dp"/>
-        <ImageButton
-            android:id="@+id/add_to_pl_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitXY"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="60dp"
-            android:layout_marginLeft="5dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_playlist_add_orange_24dp"/>
-    </RelativeLayout>
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/image_song"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_image"/>
+            <ImageButton
+                android:id="@+id/love_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp"
+                android:layout_marginRight="5dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_favorite_orange_24dp"/>
+            <ImageButton
+                android:id="@+id/add_to_pl_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="60dp"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_playlist_add_orange_24dp"/>
+        </RelativeLayout>
+
+    </FrameLayout>
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:background="#55000000"
@@ -156,7 +161,6 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_shuffle_white_24dp" />
-
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
