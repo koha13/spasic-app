@@ -5,4 +5,5 @@
     <dimen name="margin_hori_imagebutton_toolbar">10dp</dimen>
     <dimen name="footer_height">60dp</dimen>
     <dimen name="text_size_title">20dp</dimen>
+    <dimen name="text_size_sub">15dp</dimen>
 </resources>
