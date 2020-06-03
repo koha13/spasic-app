@@ -2,7 +2,6 @@ package koha13.spasic.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -52,11 +51,11 @@ public class CurrentSongActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
-                if (!isQueue){
+                if (!isQueue) {
                     ft.replace(R.id.framelayout, mFragment).commit();
                     isQueue = true;
                     queueBtn.setColorFilter(Color.parseColor("#FF5722"));
-                }else{
+                } else {
                     ft.remove(mFragment).commit();
                     isQueue = false;
                     queueBtn.setColorFilter(Color.parseColor("#FFFFFF"));
