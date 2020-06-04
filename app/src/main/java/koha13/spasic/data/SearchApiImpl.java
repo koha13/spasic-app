@@ -97,4 +97,60 @@ public class SearchApiImpl {
             }
         });
     }
+
+    public static void getSongByAlbum(String key, final ResponseCallback<List<Song>> callback){
+        SpasicApi mAPIService = RetrofitClient.getAPIService();
+        mAPIService.getSongByAlbum(key,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+            @Override
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
+                if (response.isSuccessful()) {
+                    if (callback != null)
+                        callback.onDataSuccess(response.body());
+                } else {
+                    if (callback != null) {
+                        try {
+                            callback.onDataFail(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Song>> call, Throwable t) {
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFailed(t);
+            }
+        });
+    }
+
+    public static void getSongByArtist(String key, final ResponseCallback<List<Song>> callback){
+        SpasicApi mAPIService = RetrofitClient.getAPIService();
+        mAPIService.getSongByArtist(key,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+            @Override
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
+                if (response.isSuccessful()) {
+                    if (callback != null)
+                        callback.onDataSuccess(response.body());
+                } else {
+                    if (callback != null) {
+                        try {
+                            callback.onDataFail(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Song>> call, Throwable t) {
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFailed(t);
+            }
+        });
+    }
 }
