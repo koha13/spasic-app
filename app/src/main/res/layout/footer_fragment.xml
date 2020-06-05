@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/footer_height"
         android:layout_gravity="bottom"
-        android:background="@color/white"
+        android:background="@color/transparent"
         android:gravity="center_vertical"
         android:paddingHorizontal="10dp">
 
