@@ -1,11 +1,13 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
+import koha13.spasic.activity.AlbumDetailActivity;
 import koha13.spasic.entity.Album;
 import koha13.spasic.entity.Artist;
 
@@ -21,7 +24,6 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 
     List<Album> albums;
     Context mContext;
-    int num = -1;
 
     public AlbumGridViewAdapter(List<Album> albums, Context mContext) {
         this.mContext = mContext;
@@ -41,7 +43,6 @@ public class AlbumGridViewAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (num > -1) return num;
         return albums.size();
     }
 
@@ -56,16 +57,25 @@ public class AlbumGridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = layoutInflater.inflate(R.layout.album_grid_item, null);
         ImageView image = convertView.findViewById(R.id.grid_item_image);
         TextView albumName = convertView.findViewById(R.id.grid_item_name);
         TextView artistName = convertView.findViewById(R.id.grid_item_artist);
+        RelativeLayout item = convertView.findViewById(R.id.album_item);
 
         Picasso.get().load(albums.get(position).getImageLink()).into(image);
         albumName.setText(albums.get(position).getName());
         artistName.setText(albums.get(position).getArtist());
+        item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, AlbumDetailActivity.class);
+                intent.putExtra("albumName", albums.get(position).getName());
+                mContext.startActivity(intent);
+            }
+        });
 
         return convertView;
     }

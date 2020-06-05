@@ -153,9 +153,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setText("Songs");
+        tabLayout.getTabAt(0).setText("Bài hát");
         tabLayout.getTabAt(1).setText("Albums");
-        tabLayout.getTabAt(2).setText("Artists");
+        tabLayout.getTabAt(2).setText("Nghệ sĩ");
     }
 
     private void search() {
