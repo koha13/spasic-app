@@ -25,4 +25,7 @@ public class SongControlViewModel extends ViewModel {
     public static void updateRandomState(boolean rs){
         randomState.setValue(rs);
     }
+
+    public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
+
 }

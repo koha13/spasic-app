@@ -24,6 +24,9 @@ import koha13.spasic.R;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
+import static koha13.spasic.activity.MainActivity.musicService;
+
+
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {
 
     private List<Song> songs;
@@ -44,14 +47,23 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
-        holder.songName.setText(songs.get(position).getName());
-        holder.songArtist.setText(songs.get(position).getArtists());
-        Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
-        holder.time.setText(GeneralDTO.secondToMinute(songs.get(position).getLength()));
+        final Song currentSong = songs.get(position);
+        holder.songName.setText(currentSong.getName());
+        holder.songArtist.setText(currentSong.getArtists());
+        Picasso.get().load(currentSong.getSongImage()).into(holder.imageView);
+        holder.time.setText(GeneralDTO.secondToMinute(currentSong.getLength()));
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Business code here
+                Toast.makeText(mContext, "click cv", Toast.LENGTH_SHORT).show();
+//                Uri uri = Uri.parse(currentSong.getLink());
+//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                intent.setDataAndType(uri, "audio/*");
+                System.out.println("Music service: "+ musicService);
+                System.out.println("Possition:"+position);
+                musicService.setSongPos(position);
+                musicService.playSong();
+//                mContext.startActivity(intent);
             }
         });
         holder.menu.setOnClickListener(new View.OnClickListener() {

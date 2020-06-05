@@ -1,19 +1,24 @@
 package koha13.spasic.activity;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 import koha13.spasic.FragmentMain.HomeFragment;
 import koha13.spasic.FragmentMain.PLFragment;
@@ -22,11 +27,18 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
 import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.data.AllSongsViewModel;
+import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.entity.Song;
+import koha13.spasic.service.MusicService;
 
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    public static MusicService musicService;
+    private Intent playIntent;
+    private boolean musicBound = false;
+    private ServiceConnection musicConnection;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -35,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fetchData();
+
+        initPlayerService();
 
         LinearLayout songInfo = findViewById(R.id.song_info_ft);
         songInfo.setOnClickListener(new View.OnClickListener() {
@@ -73,7 +87,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchData(){
+    private void initPlayerService() {
+        SongControlViewModel.isPlaying.setValue(false);
+
+        musicConnection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
+                System.out.println("_________BINDER");
+                musicService = binder.getService();
+                musicService.setSongs(new ArrayList<Song>());
+                musicBound = true;
+            }
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {
+                musicBound = false;
+            }
+        };
+        if (playIntent == null) {
+            playIntent = new Intent(this, MusicService.class);
+            bindService(playIntent, musicConnection, Context.BIND_AUTO_CREATE);
+            startService(playIntent);
+        }
+        System.out.println("------------------------------");
+        System.out.println(musicConnection);
+        System.out.println(musicService);
+    }
+
+    private void fetchData() {
         AllSongsViewModel.fetchAllSongs(null);
         AllPlaylistsViewModel.fetchAllPlaylists(null);
     }
@@ -94,4 +136,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
     }
 
+    @Override
+    protected void onDestroy() {
+        stopService(playIntent);
+        musicService = null;
+        super.onDestroy();
+    }
 }

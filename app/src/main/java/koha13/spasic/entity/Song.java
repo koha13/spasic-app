@@ -16,6 +16,7 @@ public class Song {
     private String songImage;
     private String lyric;
     private boolean like;
+    private String link;
 
     public Song(String name, String artists, int length) {
         this.name = name;

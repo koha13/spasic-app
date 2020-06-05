@@ -4,6 +4,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,12 +17,19 @@ import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.FragmentMain.RankFragment;
 import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
+import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.service.MusicService;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ImageButton backBtn;
+    private ImageButton btnPrevious;
+    private ImageButton btnNext;
+    private ImageButton btnPlay;
+    private ImageButton btnShuffle;
+    private ImageButton btnLoop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +43,53 @@ public class CurrentSongActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        btnPlay = findViewById(R.id.btnPlay);
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "btnPlay", Toast.LENGTH_SHORT).show();
+                if (SongControlViewModel.isPlaying.getValue()){
+                    MainActivity.musicService.stopSong();
+                } else {
+                    MainActivity.musicService.playSong();
+                }
+            }
+        });
+
+        btnLoop = findViewById(R.id.btnLoop);
+        btnLoop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "btnLoop", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        btnPrevious = findViewById(R.id.btnPrevious);
+        btnPrevious.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "btnPrevious", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnNext = findViewById(R.id.btnNext);
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "btnNext", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnShuffle = findViewById(R.id.btnShuffle);
+        btnShuffle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "btnShuffle", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         viewPager = (ViewPager) findViewById(R.id.viewpager2);
         addTabs(viewPager);

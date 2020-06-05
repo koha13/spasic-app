@@ -57,6 +57,7 @@
         android:gravity="center_vertical|center_horizontal">
 
         <ImageButton
+            android:id="@+id/btnLoop"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -64,6 +65,7 @@
             android:src="@drawable/ic_repeat_black_24dp" />
 
         <ImageButton
+            android:id="@+id/btnPrevious"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -71,6 +73,7 @@
             android:src="@drawable/ic_skip_previous_black_24dp" />
 
         <ImageButton
+            android:id="@+id/btnPlay"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -78,6 +81,7 @@
             android:src="@drawable/ic_play_circle_filled_orange_40dp" />
 
         <ImageButton
+            android:id="@+id/btnNext"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
@@ -85,6 +89,7 @@
             android:src="@drawable/ic_skip_next_black_24dp" />
 
         <ImageButton
+            android:id="@+id/btnShuffle"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
