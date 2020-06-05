@@ -1,11 +1,13 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -14,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
+import koha13.spasic.activity.AlbumDetailActivity;
+import koha13.spasic.activity.ArtistDetailActivity;
 import koha13.spasic.entity.Artist;
 
 public class ArtistGridViewAdapter extends BaseAdapter {
@@ -53,12 +57,21 @@ public class ArtistGridViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = layoutInflater.inflate(R.layout.artist_grid_item, null);
         ImageView image = convertView.findViewById(R.id.grid_item_image);
         TextView artistName = convertView.findViewById(R.id.grid_item_name);
+        RelativeLayout item = convertView.findViewById(R.id.artist_item);
 
+        item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, ArtistDetailActivity.class);
+                intent.putExtra("artistName", artists.get(position).getName());
+                mContext.startActivity(intent);
+            }
+        });
         Picasso.get().load(artists.get(position).getImageLink()).into(image);
         artistName.setText(artists.get(position).getName());
 

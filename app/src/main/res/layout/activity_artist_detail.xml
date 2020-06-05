@@ -2,7 +2,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,35 +12,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:id="@+id/image_song_album"
+                android:id="@+id/image_song_artist"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_image"/>
             <ImageButton
-                android:id="@+id/play_all_album"
+                android:id="@+id/play_all_artist"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_play_circle_outline_orange_40dp"
-                android:layout_alignBottom="@+id/image_song_album"
+                android:layout_alignBottom="@+id/image_song_artist"
                 android:layout_alignParentRight="true"
                 android:background="@color/transparent"/>
             <ImageButton
-                android:id="@+id/back_btn_album"
+                android:id="@+id/back_btn_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_arrow_back_white_24dp"/>
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/song_info"
+            android:id="@+id/song_info_artist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/album_name"
+                android:id="@+id/artist_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
@@ -49,20 +48,14 @@
                 android:textColor="@color/textDark"
                 android:textSize="30dp" />
             <TextView
-                android:id="@+id/album_artist"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:ellipsize="end" />
-            <TextView
-                android:id="@+id/album_num_song"
+                android:id="@+id/artist_num_song"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:ellipsize="end" />
         </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_song_album"
+            android:id="@+id/rv_song_artist"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="10dp"

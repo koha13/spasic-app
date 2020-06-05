@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.AlbumDetailActivity"></activity>
+        <activity android:name=".activity.ArtistDetailActivity"></activity>
+        <activity android:name=".activity.AlbumDetailActivity" />
         <activity
             android:name=".activity.LoginActivity"
             android:windowSoftInputMode="stateVisible|adjustResize" />

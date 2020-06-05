@@ -48,8 +48,8 @@ public interface SpasicApi {
     Call<List<Artist>> searchArtist(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
 
     @GET("artist")
-    Call<List<Song>> getSongByArtist(@Query("key") String key,@Header("Authorization") String token);
+    Call<List<Song>> getSongByArtist(@Query("key") String key, @Header("Authorization") String token);
 
     @GET("album")
-    Call<List<Song>> getSongByAlbum(@Query("key") String key,@Header("Authorization") String token);
+    Call<List<Song>> getSongByAlbum(@Query("key") String key, @Header("Authorization") String token);
 }
