@@ -20,7 +20,7 @@
             <ImageView
                 android:id="@+id/cv_big_image"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="200dp"
                 android:layout_alignParentLeft="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_image" />
@@ -30,58 +30,62 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/cv_big_image"
-                android:layout_alignBottom="@+id/cv_big_image"
+                android:layout_alignTop="@+id/song_info"
                 android:layout_marginRight="2dp"
-                android:layout_marginBottom="2dp"
+                android:layout_marginTop="-20dp"
+                android:text="asd"
                 android:background="#59626A"
                 android:paddingHorizontal="4dp"
                 android:textColor="@color/textLight" />
-        </RelativeLayout>
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp">
-
-            <ImageButton
-                android:id="@+id/menu_cv_big"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
-                android:padding="5dp"
-                android:src="@drawable/ic_more_vert_black_18dp" />
-
-            <LinearLayout
+            <RelativeLayout
+                android:id="@+id/song_info"
+                android:layout_alignBottom="@+id/cv_big_image"
                 android:layout_width="match_parent"
+                android:background="@color/semi_transparent_bg"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/menu_cv_big"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:paddingHorizontal="10dp">
 
-                <TextView
-                    android:id="@+id/cv_big_song_name"
+                <ImageButton
+                    android:id="@+id/menu_cv_big"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_more_vert_white_24dp" />
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:scrollHorizontally="true"
-                    android:text="TextView is very long"
-                    android:textColor="@color/textDark"
-                    android:textSize="17dp" />
+                    android:layout_toLeftOf="@+id/menu_cv_big"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/cv_big_song_artist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:scrollHorizontally="true"
-                    android:text="TextViwewew"
-                    android:textColor="@color/textDark" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/cv_big_song_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:scrollHorizontally="true"
+                        android:text="TextView is very long"
+                        android:textColor="@color/textLight"
+                        android:textStyle="bold"
+                        android:textSize="20dp" />
+
+                    <TextView
+                        android:id="@+id/cv_big_song_artist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:scrollHorizontally="true"
+                        android:text="TextViwewew"
+                        android:textColor="@color/textLight" />
+                </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
     </LinearLayout>

@@ -72,7 +72,7 @@ public class AllPlaylistsViewModel extends ViewModel {
             }
         }
         if(plId == -1){
-            List<Song> songs = AllSongsViewModel.getAllSongs().getValue();
+            List<Song> songs = AllSongsViewModel.getAllSongs();
             for(Song s:songs){
                 if(s.getId() == song.getId()){
                     s.setLike(true);
@@ -106,7 +106,7 @@ public class AllPlaylistsViewModel extends ViewModel {
             }
         }
         if(plId == -1){
-            List<Song> songs = AllSongsViewModel.getAllSongs().getValue();
+            List<Song> songs = AllSongsViewModel.getAllSongs();
             for(Song s:songs){
                 if(s.getId() == song.getId()){
                     s.setLike(false);

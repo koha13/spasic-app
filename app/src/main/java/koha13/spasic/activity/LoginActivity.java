@@ -1,5 +1,6 @@
 package koha13.spasic.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,9 +21,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import koha13.spasic.R;
 import koha13.spasic.api.ResponseCallback;
+import koha13.spasic.data.AllPlaylistsViewModel;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.UserData;
+import koha13.spasic.entity.Playlist;
+import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
 import koha13.spasic.model.LoginRequest;
 
@@ -65,6 +73,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
     }
 
     private void login(){
+        hideKeyboard(this);
         String us = username.getText().toString().toLowerCase().trim();
         String pw = password.getText().toString().toLowerCase().trim();
         if(us.length()<6 || pw.length()<6){
@@ -75,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         RotateAnimation r = new RotateAnimation(ROTATE_FROM, ROTATE_TO,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
                 0.5f);
-        r.setDuration(3000000);
+        r.setDuration(5000);
         r.setRepeatCount(0);
         loadingIcon.setAnimation(r);
     }
@@ -88,9 +97,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         editor.putString("username", UserData.user.getUsername());
         editor.putInt("id", UserData.user.getId());
         editor.apply();
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        fetchData();
     }
 
     @Override
@@ -113,6 +120,52 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
 
     @Override
     public void onFailed(Throwable error) {
-        Log.d("Login", "Failed");
+        loadingScreen.setVisibility(View.INVISIBLE);
+        Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    private void fetchData(){
+        AllSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
+            @Override
+            public void onDataSuccess(List<Song> data) {
+                AllPlaylistsViewModel.fetchAllPlaylists(new ResponseCallback<List<Playlist>>() {
+                    @Override
+                    public void onDataSuccess(List<Playlist> data) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onDataFail(String message) {
+
+                    }
+
+                    @Override
+                    public void onFailed(Throwable error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onDataFail(String message) {
+
+            }
+
+            @Override
+            public void onFailed(Throwable error) {
+
+            }
+        });
     }
 }

@@ -2,6 +2,7 @@ package koha13.spasic.activity;
 
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.PorterDuff;
@@ -9,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
@@ -46,15 +48,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fetchData();
-
-        initPlayerService();
-
-        LinearLayout songInfo = findViewById(R.id.song_info_ft);
-        songInfo.setOnClickListener(new View.OnClickListener() {
+        ImageButton searchBtn = findViewById(R.id.tb_search_ic);
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CurrentSongActivity.class);
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
                 startActivity(intent);
             }
         });

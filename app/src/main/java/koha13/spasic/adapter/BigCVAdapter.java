@@ -21,6 +21,7 @@ import java.util.List;
 
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
@@ -29,11 +30,9 @@ import static koha13.spasic.activity.MainActivity.musicService;
 
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {
 
-    private List<Song> songs;
     private Context mContext;
 
-    public BigCVAdapter(List<Song> songs, Context context) {
-        this.songs = songs;
+    public BigCVAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -47,11 +46,10 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
-        final Song currentSong = songs.get(position);
-        holder.songName.setText(currentSong.getName());
-        holder.songArtist.setText(currentSong.getArtists());
-        Picasso.get().load(currentSong.getSongImage()).into(holder.imageView);
-        holder.time.setText(GeneralDTO.secondToMinute(currentSong.getLength()));
+        holder.songName.setText(AllSongsViewModel.getAllSongs().get(position).getName());
+        holder.songArtist.setText(AllSongsViewModel.getAllSongs().get(position).getArtists());
+        Picasso.get().load(AllSongsViewModel.getAllSongs().get(position).getSongImage()).into(holder.imageView);
+        holder.time.setText(GeneralDTO.secondToMinute(AllSongsViewModel.getAllSongs().get(position).getLength()));
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,7 +77,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(songs.get(position),mContext).getDialog().show();
+                                new AddToPlDialog(AllSongsViewModel.getAllSongs().get(position),mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
@@ -98,7 +96,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public int getItemCount() {
-        return songs.size();
+        return AllSongsViewModel.getAllSongs().size();
     }
 
     public static class SongViewHolder extends RecyclerView.ViewHolder {

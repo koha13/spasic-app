@@ -1,6 +1,7 @@
 package koha13.spasic.FragmentCurrentSong;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import koha13.spasic.R;
 import koha13.spasic.adapter.QueueSongAdapter;
+import koha13.spasic.adapter.SongCardAdapter;
+import koha13.spasic.entity.Song;
 
 public class QueueFragment extends Fragment {
 
@@ -39,15 +45,6 @@ public class QueueFragment extends Fragment {
         touchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(songCardAdapter);
 
-//        List<Song> songs = new ArrayList<>();
-//        songs.add(new Song("Test1", "Artist", 123));
-//        songs.add(new Song("Test2", "Artist", 123));
-//        songs.add(new Song("Test3", "Artist", 123));
-//        QueueSongAdapter songCardAdapter = new QueueSongAdapter(songs, getActivity());
-//        ItemTouchHelper.Callback callback = new ItemTouchHelperCallBack(songCardAdapter);
-//        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-//        touchHelper.attachToRecyclerView(recyclerView);
-//        recyclerView.setAdapter(songCardAdapter);
         return rootView;
     }
 

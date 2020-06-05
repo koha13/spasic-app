@@ -16,11 +16,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.LoginActivity"
-            android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity android:name=".activity.ArtistDetailActivity"></activity>
+        <activity android:name=".activity.AlbumDetailActivity" />
+        <activity
+            android:name=".activity.LoginActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".activity.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,6 +35,7 @@
         <service
             android:name=".service.MusicService"
             android:enabled="true" />
+        <activity android:name=".activity.SearchActivity" />
     </application>
 
 </manifest>

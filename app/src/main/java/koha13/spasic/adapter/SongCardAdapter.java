@@ -15,8 +15,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
+import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.entity.Song;
 
@@ -24,11 +29,21 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
     private List<Song> songs;
     private Context mContext;
-    private boolean isPLItem = false;
 
     public SongCardAdapter(List<Song> songs, Context mContext) {
         this.songs = songs;
         this.mContext = mContext;
+    }
+
+    public void addSong(List<Song> songs){
+        if(songs == null) songs = new ArrayList<>();
+        this.songs.addAll(songs);
+        notifyDataSetChanged();
+    }
+
+    public void reset(){
+        songs = new ArrayList<>();
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -40,9 +55,10 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final SongViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
         holder.songName.setText(songs.get(position).getName());
         holder.songArtist.setText(songs.get(position).getArtists());
+        Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +79,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                Toast.makeText(mContext, "Them vao pl", Toast.LENGTH_SHORT).show();
+                                new AddToPlDialog(songs.get(position), mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();

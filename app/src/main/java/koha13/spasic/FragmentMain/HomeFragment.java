@@ -1,34 +1,36 @@
 package koha13.spasic.FragmentMain;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.activity.MainActivity;
 import koha13.spasic.adapter.BigCVAdapter;
+import koha13.spasic.adapter.EndlessRecyclerViewScrollListener;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.entity.Song;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private List<Song> songs;
     public static SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView recyclerView;
     private BigCVAdapter songCardAdapter;
-    private AllSongsViewModel allSongsViewModel;
+    private EndlessRecyclerViewScrollListener scrollListener;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -45,25 +47,25 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         //Recycler view big Cardview
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSongMain);
+        recyclerView = rootView.findViewById(R.id.recyclerViewSongMain);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-
-        final Observer<List<Song>> allSongsChangeObserver = new Observer<List<Song>>() {
+        songCardAdapter = new BigCVAdapter(getActivity());
+        recyclerView.setAdapter(songCardAdapter);
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
             @Override
-            public void onChanged(List<Song> songs) {
-                MainActivity.musicService.setSongs(songs);
-                songCardAdapter = new BigCVAdapter(songs, getActivity());
-                recyclerView.setAdapter(songCardAdapter);
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+
+                AllSongsViewModel.moreSongs(page, null);
+                songCardAdapter.notifyDataSetChanged();
             }
         };
-
-        allSongsViewModel = ViewModelProviders.of(getActivity()).get(AllSongsViewModel.class);
-        allSongsViewModel.getAllSongs().observe(getActivity(), allSongsChangeObserver);
+        // Adds the scroll listener to RecyclerView
+        recyclerView.addOnScrollListener(scrollListener);
 
         //Swipe refresh
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.main_swipe_container);
+        mSwipeRefreshLayout = rootView.findViewById(R.id.main_swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return rootView;
@@ -76,11 +78,14 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
+        AllSongsViewModel.reset();
+        songCardAdapter.notifyDataSetChanged();
         mSwipeRefreshLayout.setRefreshing(true);
-        allSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
+        AllSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
             @Override
             public void onDataSuccess(List<Song> data) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                songCardAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -95,6 +100,5 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

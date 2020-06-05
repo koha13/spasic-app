@@ -5,55 +5,124 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.CurrentSongActivity">
+    <FrameLayout
+        android:id="@+id/framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/image_song"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_image"/>
+            <ImageButton
+                android:id="@+id/love_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/footer_height"
+                android:layout_marginRight="5dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_favorite_orange_24dp"/>
+            <ImageButton
+                android:id="@+id/add_to_pl_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:scaleType="fitXY"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/footer_height"
+                android:layout_marginLeft="5dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_playlist_add_orange_24dp"/>
+        </RelativeLayout>
+
+    </FrameLayout>
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
+        android:background="@color/semi_transparent_bg"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
+            app:contentInsetStart="0dp"
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary">
+            android:layout_height="?attr/actionBarSize">
 
-            <ImageButton
-                android:id="@+id/backBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_arrow_back_white_24dp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trình phát"
-                android:textColor="@color/textLight"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                <ImageButton
+                    android:id="@+id/backBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_arrow_back_white_24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_toLeftOf="@+id/queue_btn"
+                    android:layout_toRightOf="@+id/backBtn"
+                    android:gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/song_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Song name"
+                        android:singleLine="true"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:textColor="@color/textLight"
+                        android:textSize="@dimen/text_size_title"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/song_artist"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Song artist"
+                        android:ellipsize="marquee"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:scrollHorizontally="true"
+                        android:singleLine="true"
+                        android:textColor="@color/textLight"
+                        android:textSize="@dimen/text_size_sub" />
+                </LinearLayout>
+
+
+                <ImageButton
+                    android:id="@+id/queue_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
+                    android:background="@color/transparent"
+                    android:src="@drawable/ic_queue_music_white_24dp" />
+            </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabMode="fixed" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="65dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/footer_height"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:background="@color/semi_transparent_bg"
         android:gravity="center_vertical|center_horizontal">
 
         <ImageButton
@@ -62,7 +131,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_repeat_black_24dp" />
+            android:src="@drawable/ic_repeat_white_24dp" />
 
         <ImageButton
             android:id="@+id/btnPrevious"
@@ -70,7 +139,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_skip_previous_black_24dp" />
+            android:src="@drawable/ic_skip_previous_white_24dp" />
 
         <ImageButton
             android:id="@+id/btnPlay"
@@ -86,7 +155,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_skip_next_black_24dp" />
+            android:src="@drawable/ic_skip_next_white_24dp" />
 
         <ImageButton
             android:id="@+id/btnShuffle"
@@ -94,8 +163,7 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_shuffle_black_24dp" />
-
+            android:src="@drawable/ic_shuffle_white_24dp" />
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

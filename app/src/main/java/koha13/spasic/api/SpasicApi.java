@@ -2,6 +2,8 @@ package koha13.spasic.api;
 
 import java.util.List;
 
+import koha13.spasic.entity.Album;
+import koha13.spasic.entity.Artist;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
@@ -15,8 +17,8 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface SpasicApi {
-    @GET("songs")
-    Call<List<Song>> getAllSongs(@Header("Authorization") String token);
+    @GET("allsongs")
+    Call<List<Song>> getAllSongs(@Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
 
     @GET("playlists")
     Call<List<Playlist>> getAllPlaylists(@Header("Authorization") String token);
@@ -35,4 +37,19 @@ public interface SpasicApi {
 
     @GET("playlists/delete/{id}")
     Call<Object> deletePl(@Path("id") int id, @Header("Authorization") String token);
+
+    @GET("searchsong")
+    Call<List<Song>> searchSong(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
+
+    @GET("searchalbum")
+    Call<List<Album>> searchAlbum(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
+
+    @GET("searchartist")
+    Call<List<Artist>> searchArtist(@Query("key") String key, @Query("page") int page, @Query("size") int size, @Header("Authorization") String token);
+
+    @GET("artist")
+    Call<List<Song>> getSongByArtist(@Query("key") String key, @Header("Authorization") String token);
+
+    @GET("album")
+    Call<List<Song>> getSongByAlbum(@Query("key") String key, @Header("Authorization") String token);
 }
