@@ -2,7 +2,6 @@ package koha13.spasic.activity;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.PorterDuff;
@@ -11,7 +10,6 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,17 +18,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-
 import koha13.spasic.FragmentMain.HomeFragment;
 import koha13.spasic.FragmentMain.PLFragment;
 import koha13.spasic.FragmentMain.RankFragment;
 import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
-import koha13.spasic.data.AllPlaylistsViewModel;
-import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.SongControlViewModel;
-import koha13.spasic.entity.Song;
 import koha13.spasic.service.MusicService;
 
 public class MainActivity extends AppCompatActivity {
@@ -83,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
                 super.onTabReselected(tab);
             }
         });
+
+        initPlayerService();
     }
 
     private void initPlayerService() {
@@ -94,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
                 System.out.println("_________BINDER");
                 musicService = binder.getService();
-                musicService.setSongs(new ArrayList<Song>());
                 musicBound = true;
             }
 
@@ -111,11 +105,6 @@ public class MainActivity extends AppCompatActivity {
         System.out.println("------------------------------");
         System.out.println(musicConnection);
         System.out.println(musicService);
-    }
-
-    private void fetchData() {
-        AllSongsViewModel.fetchAllSongs(null);
-        AllPlaylistsViewModel.fetchAllPlaylists(null);
     }
 
     private void setupTabIcons() {

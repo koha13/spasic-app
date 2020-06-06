@@ -6,23 +6,23 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
-import java.util.List;
+import java.util.Objects;
 
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener {
     private MediaPlayer player;
-    private List<Song> songs;
-    private int songPos;
     private final IBinder musicBind = new MusicBinder();
-    private boolean isLoop;
 
     @Nullable
     @Override
@@ -52,11 +52,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         mp.start();
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
-        songPos = 0;
         player = new MediaPlayer();
         initMusicPlayer();
     }
@@ -70,9 +68,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.setOnErrorListener(this);
     }
 
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
-    }
 
     public class MusicBinder extends Binder {
         public MusicBinder() {
@@ -83,10 +78,19 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void playSong() {
-        player.reset();
-        Song currentSong = songs.get(songPos);
-        Uri trackUri = Uri.parse(currentSong.getLink());
+        playSong(Objects.requireNonNull(SongControlViewModel.currentSong.getValue()));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void playSong(Song song) {
+        if (!song.equals(SongControlViewModel.currentSong.getValue())) {
+            player.reset();
+            SongControlViewModel.currentSong.postValue(song);
+        }
+        SongControlViewModel.isPlaying.postValue(true);
+        Uri trackUri = Uri.parse(song.getLink());
         try {
             player.setDataSource(getApplicationContext(), trackUri);
         } catch (Exception e) {
@@ -95,12 +99,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.prepareAsync();
     }
 
-    public void stopSong(){
+    public void stopSong() {
+        SongControlViewModel.isPlaying.postValue(false);
         player.stop();
-    }
-
-    public void setSongPos(int songPos) {
-        this.songPos = songPos;
     }
 }
 

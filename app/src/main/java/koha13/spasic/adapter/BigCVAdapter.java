@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
@@ -46,22 +46,17 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
-        holder.songName.setText(AllSongsViewModel.getAllSongs().get(position).getName());
-        holder.songArtist.setText(AllSongsViewModel.getAllSongs().get(position).getArtists());
-        Picasso.get().load(AllSongsViewModel.getAllSongs().get(position).getSongImage()).into(holder.imageView);
-        holder.time.setText(GeneralDTO.secondToMinute(AllSongsViewModel.getAllSongs().get(position).getLength()));
+        final Song song = AllSongsViewModel.getAllSongs().get(position);
+        holder.songName.setText(song.getName());
+        holder.songArtist.setText(song.getArtists());
+        Picasso.get().load(song.getSongImage()).into(holder.imageView);
+        holder.time.setText(GeneralDTO.secondToMinute(song.getLength()));
         holder.cv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "click cv", Toast.LENGTH_SHORT).show();
-//                Uri uri = Uri.parse(currentSong.getLink());
-//                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-//                intent.setDataAndType(uri, "audio/*");
-                System.out.println("Music service: "+ musicService);
-                System.out.println("Possition:"+position);
-                musicService.setSongPos(position);
-                musicService.playSong();
-//                mContext.startActivity(intent);
+                System.out.println("Music service: " + musicService);
+                musicService.playSong(song);
             }
         });
         holder.menu.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +72,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(AllSongsViewModel.getAllSongs().get(position),mContext).getDialog().show();
+                                new AddToPlDialog(AllSongsViewModel.getAllSongs().get(position), mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();

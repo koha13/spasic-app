@@ -1,20 +1,27 @@
 package koha13.spasic.activity;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
 import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.entity.Song;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
@@ -53,13 +60,17 @@ public class CurrentSongActivity extends AppCompatActivity {
 
         btnPlay = findViewById(R.id.btnPlay);
         btnPlay.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnPlay", Toast.LENGTH_SHORT).show();
-                if (SongControlViewModel.isPlaying.getValue()) {
-                    MainActivity.musicService.stopSong();
-                } else {
-                    MainActivity.musicService.playSong();
+                // TODO: change button image
+                if (SongControlViewModel.currentSong.getValue()!=null){
+                    if (SongControlViewModel.isPlaying.getValue()) {
+                        MainActivity.musicService.stopSong();
+                    } else {
+                        MainActivity.musicService.playSong();
+                    }
                 }
             }
         });
@@ -68,32 +79,60 @@ public class CurrentSongActivity extends AppCompatActivity {
         btnLoop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "btnLoop", Toast.LENGTH_SHORT).show();
-
+                // TODO: change button image
+                SongControlViewModel.loopState ++;
+                if (SongControlViewModel.loopState > 2) {
+                    SongControlViewModel.loopState = 0;
+                }
+                Toast.makeText(getApplicationContext(), "btnLoop" + SongControlViewModel.loopState, Toast.LENGTH_SHORT).show();
             }
         });
 
         btnPrevious = findViewById(R.id.btnPrevious);
         btnPrevious.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnPrevious", Toast.LENGTH_SHORT).show();
+                // TODO: change button image
+                if (SongControlViewModel.getPrevious()){
+                    MainActivity.musicService.playSong();
+                }
             }
         });
 
         btnNext = findViewById(R.id.btnNext);
         btnNext.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnNext", Toast.LENGTH_SHORT).show();
+                // TODO: change button image
+                if (SongControlViewModel.getNext()){
+                    MainActivity.musicService.playSong();
+                }
             }
         });
 
         btnShuffle = findViewById(R.id.btnShuffle);
         btnShuffle.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnShuffle", Toast.LENGTH_SHORT).show();
+                // TODO: change button image
+                List queueSongs = SongControlViewModel.queueSongs;
+                if (queueSongs == null || queueSongs.size() == 0) {
+                    // TODO:
+                } else {
+                    SongControlViewModel.shuffleQueue();
+                    int randomIndex = new Random().nextInt(queueSongs.size());
+                    Song pickedSong = SongControlViewModel.queueSongs.get(randomIndex);
+                    while (pickedSong.equals(SongControlViewModel.currentSong.getValue())){
+                        randomIndex = new Random().nextInt(queueSongs.size());
+                        pickedSong = SongControlViewModel.queueSongs.get(randomIndex);
+                    }
+                }
             }
         });
 
