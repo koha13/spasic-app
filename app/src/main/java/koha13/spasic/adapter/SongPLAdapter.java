@@ -24,6 +24,7 @@ import java.util.List;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.data.AllPlaylistsViewModel;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
@@ -49,10 +50,11 @@ public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHo
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder,final int position) {
-        holder.songName.setText(songs.get(position).getName());
-        holder.songArtist.setText(songs.get(position).getArtists());
-        holder.time.setText(GeneralDTO.secondToMinute(songs.get(position).getLength()));
-        Picasso.get().load(songs.get(position).getSongImage()).into(holder.imageView);
+        final Song song = songs.get(position);
+        holder.songName.setText(song.getName());
+        holder.songArtist.setText(song.getArtists());
+        holder.time.setText(GeneralDTO.secondToMinute(song.getLength()));
+        Picasso.get().load(song.getSongImage()).into(holder.imageView);
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,16 +72,18 @@ public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHo
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.btn_delete:
-                                AllPlaylistsViewModel.deleteSongFromPl(plId, songs.get(position));
+                                AllPlaylistsViewModel.deleteSongFromPl(plId, song);
                                 break;
                             case R.id.btn_add_after_curent_song:
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
+                                SongControlViewModel.addSongAfterCurrentSong(song);
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(songs.get(position),mContext).getDialog().show();
+                                new AddToPlDialog(song,mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
                                 Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
+                                SongControlViewModel.addSongToQueue(song);
                                 break;
                             default:
                                 break;

@@ -67,4 +67,21 @@ public class SongControlViewModel extends ViewModel {
     private static void backupQueue() {
         savedQueueSongs = queueSongs;
     }
+
+    public static boolean addSongToQueue(Song song) {
+        int index = queueSongs.indexOf(song);
+        if (index != -1) {
+            queueSongs.remove(song);
+        }
+        queueSongs.add(song);
+        return true;
+    }
+
+    public static void addSongAfterCurrentSong(Song song) {
+        int index = queueSongs.indexOf(currentSong);
+        if (index != -1) {
+            queueSongs.remove(song);
+            queueSongs.add(index+1, song);
+        }
+    }
 }

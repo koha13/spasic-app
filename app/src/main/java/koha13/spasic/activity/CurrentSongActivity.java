@@ -13,8 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -28,13 +29,14 @@ public class CurrentSongActivity extends AppCompatActivity {
     private ImageButton backBtn;
     private ImageButton btnPrevious;
     private ImageButton btnNext;
-    private ImageButton btnPlay;
+    private ImageButton playBtn;
     private ImageButton btnShuffle;
     private ImageButton btnLoop;
     private TextView songName;
     private TextView songArtist;
     private ImageButton queueBtn;
     private boolean isQueue = false;
+    SongControlViewModel songControlViewModel;
     Fragment mFragment;
 
     @Override
@@ -58,17 +60,18 @@ public class CurrentSongActivity extends AppCompatActivity {
             }
         });
 
-        btnPlay = findViewById(R.id.btnPlay);
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        playBtn = findViewById(R.id.btnPlay);
+        playBtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnPlay", Toast.LENGTH_SHORT).show();
-                // TODO: change button image
                 if (SongControlViewModel.currentSong.getValue()!=null){
                     if (SongControlViewModel.isPlaying.getValue()) {
-                        MainActivity.musicService.stopSong();
+                        playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
+                        MainActivity.musicService.pauseSong();
                     } else {
+                        playBtn.setImageResource(R.drawable.ic_pause_circle_filled_orange_40dp);
                         MainActivity.musicService.playSong();
                     }
                 }
@@ -79,8 +82,8 @@ public class CurrentSongActivity extends AppCompatActivity {
         btnLoop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: change button image
                 SongControlViewModel.loopState ++;
+                updateBtnLoop(SongControlViewModel.loopState);
                 if (SongControlViewModel.loopState > 2) {
                     SongControlViewModel.loopState = 0;
                 }
@@ -94,7 +97,6 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnPrevious", Toast.LENGTH_SHORT).show();
-                // TODO: change button image
                 if (SongControlViewModel.getPrevious()){
                     MainActivity.musicService.playSong();
                 }
@@ -107,10 +109,7 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnNext", Toast.LENGTH_SHORT).show();
-                // TODO: change button image
-                if (SongControlViewModel.getNext()){
-                    MainActivity.musicService.playSong();
-                }
+                MainActivity.musicService.nextSong();
             }
         });
 
@@ -136,6 +135,26 @@ public class CurrentSongActivity extends AppCompatActivity {
             }
         });
 
+        songControlViewModel = ViewModelProviders.of(CurrentSongActivity.this).get(SongControlViewModel.class);
+        songControlViewModel.isPlaying.observe(CurrentSongActivity.this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if(aBoolean == true){
+                    playBtn.setImageResource(R.drawable.ic_pause_circle_filled_orange_40dp);
+                } else {
+                    playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
+                }
+            }
+        });
+
+        songControlViewModel.currentSong.observe(CurrentSongActivity.this, new Observer<Song>() {
+            @Override
+            public void onChanged(Song song) {
+                songName.setText(song.getName());
+                songArtist.setText(song.getArtists());
+            }
+        });
+
 
         mFragment = new QueueFragment();
         queueBtn = findViewById(R.id.queue_btn);
@@ -157,6 +176,16 @@ public class CurrentSongActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void updateBtnLoop(Integer loopState) {
+        if (loopState == 0) {
+            btnLoop.setImageResource(R.drawable.ic_repeat_white_24dp);
+        } else if (loopState == 1) {
+            btnLoop.setImageResource(R.drawable.ic_repeat_one_orange_24dp);
+        } else if (loopState == 2) {
+            btnLoop.setImageResource(R.drawable.ic_repeat_all_orange_24dp);
+        }
     }
 
 }

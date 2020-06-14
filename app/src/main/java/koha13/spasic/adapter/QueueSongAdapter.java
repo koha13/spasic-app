@@ -27,6 +27,7 @@ import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
 import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.entity.Song;
 
 public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
@@ -51,9 +52,10 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
 
     @Override
     public void onBindViewHolder(@NonNull final SongViewHolder holder, final int position) {
-        holder.songName.setText(SongControlViewModel.queueSongs.get(position).getName());
-        holder.songArtist.setText(SongControlViewModel.queueSongs.get(position).getArtists());
-        Picasso.get().load(SongControlViewModel.queueSongs.get(position).getSongImage()).into(holder.imageView);
+        final Song song = SongControlViewModel.queueSongs.get(position);
+        holder.songName.setText(song.getName());
+        holder.songArtist.setText(song.getArtists());
+        Picasso.get().load(song.getSongImage()).into(holder.imageView);
         holder.move.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -81,10 +83,11 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.btn_add_after_curent_song:
-                                Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
+                                SongControlViewModel.addSongAfterCurrentSong(song);
+                                Toast.makeText(mContext, "Đã thêm vào ds", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
-                                new AddToPlDialog(SongControlViewModel.queueSongs.get(position), mContext).getDialog().show();
+                                new AddToPlDialog(song, mContext).getDialog().show();
                                 break;
                             case R.id.btn_go_artist:
                                 Toast.makeText(mContext, "Chuyen den ca si", Toast.LENGTH_SHORT).show();

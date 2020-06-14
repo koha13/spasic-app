@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.data.AllSongsViewModel;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
@@ -56,6 +57,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
             @Override
             public void onClick(View v) {
                 System.out.println("Music service: " + musicService);
+                Toast.makeText(mContext, "Click cv", Toast.LENGTH_SHORT).show();
                 musicService.playSong(song);
             }
         });
@@ -70,12 +72,14 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                         switch (item.getItemId()) {
                             case R.id.btn_add_after_curent_song:
                                 Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
+                                SongControlViewModel.addSongAfterCurrentSong(song);
                                 break;
                             case R.id.btn_add_to_pl:
                                 new AddToPlDialog(AllSongsViewModel.getAllSongs().get(position), mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
-                                Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
+                                SongControlViewModel.addSongToQueue(song);
+                                Toast.makeText(mContext, "Đã thêm", Toast.LENGTH_SHORT).show();
                                 break;
                             default:
                                 break;

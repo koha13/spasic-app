@@ -1,11 +1,9 @@
 package koha13.spasic.FragmentMain;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -13,11 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.activity.MainActivity;
 import koha13.spasic.adapter.BigCVAdapter;
 import koha13.spasic.adapter.EndlessRecyclerViewScrollListener;
 import koha13.spasic.api.ResponseCallback;

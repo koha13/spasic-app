@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 
 import java.util.Objects;
 
+import koha13.spasic.activity.MainActivity;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
@@ -68,6 +69,18 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.setOnErrorListener(this);
     }
 
+    public void pauseSong() {
+        SongControlViewModel.isPlaying.postValue(false);
+        player.pause();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void nextSong() {
+        if (SongControlViewModel.getNext()){
+            MainActivity.musicService.playSong();
+        }
+    }
+
 
     public class MusicBinder extends Binder {
         public MusicBinder() {
@@ -87,21 +100,27 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public void playSong(Song song) {
         if (!song.equals(SongControlViewModel.currentSong.getValue())) {
             player.reset();
+            Uri trackUri = Uri.parse(song.getLink());
+            try {
+                player.setDataSource(getApplicationContext(), trackUri);
+                player.prepareAsync();
+            } catch (Exception e) {
+                Log.e("MUSIC SERVICE", "Error setting data source", e);
+            }
             SongControlViewModel.currentSong.postValue(song);
+        } else {
+            int length = player.getCurrentPosition();
+            player.seekTo(length);
+            player.start();
         }
         SongControlViewModel.isPlaying.postValue(true);
-        Uri trackUri = Uri.parse(song.getLink());
-        try {
-            player.setDataSource(getApplicationContext(), trackUri);
-        } catch (Exception e) {
-            Log.e("MUSIC SERVICE", "Error setting data source", e);
-        }
-        player.prepareAsync();
     }
 
     public void stopSong() {
         SongControlViewModel.isPlaying.postValue(false);
         player.stop();
     }
+
+
 }
 

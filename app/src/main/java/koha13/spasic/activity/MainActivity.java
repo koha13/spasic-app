@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
                 MusicService.MusicBinder binder = (MusicService.MusicBinder) service;
-                System.out.println("_________BINDER");
                 musicService = binder.getService();
                 musicBound = true;
             }

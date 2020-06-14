@@ -56,6 +56,7 @@
             app:layout_constraintLeft_toLeftOf="parent">
 
             <TextView
+                android:id="@+id/txtSongName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
@@ -63,10 +64,11 @@
                 android:scrollHorizontally="true"
                 android:text="Out longgggggggg"
                 android:textColor="@color/textDark"
-                android:textStyle="bold"
-                android:textSize="@dimen/text_size_title" />
+                android:textSize="@dimen/text_size_title"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txtSongArtist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
