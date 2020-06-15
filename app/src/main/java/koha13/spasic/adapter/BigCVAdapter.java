@@ -17,7 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
@@ -50,7 +50,9 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         final Song song = AllSongsViewModel.getAllSongs().get(position);
         holder.songName.setText(song.getName());
         holder.songArtist.setText(song.getArtists());
-        Picasso.get().load(song.getSongImage()).into(holder.imageView);
+        Glide.with(mContext)
+                .load(song.getSongImage())
+                .into(holder.imageView);
         holder.time.setText(GeneralDTO.secondToMinute(song.getLength()));
         if (SongControlViewModel.currentSong.getValue() != null && song.getId() == SongControlViewModel.currentSong.getValue().getId()) {
             holder.bgCS.setVisibility(View.VISIBLE);
@@ -60,7 +62,7 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                 holder.iconCS.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
             }
             holder.iconCS.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.bgCS.setVisibility(View.GONE);
             holder.iconCS.setVisibility(View.GONE);
         }

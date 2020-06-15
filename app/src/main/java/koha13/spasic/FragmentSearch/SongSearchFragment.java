@@ -1,7 +1,6 @@
 package koha13.spasic.FragmentSearch;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,9 @@ public class SongSearchFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private EndlessRecyclerViewScrollListener scrollListener;
 
-    public SongSearchFragment(){}
+    public SongSearchFragment() {
+    }
+
     public void setSearchKey(String searchKey) {
         this.searchKey = searchKey;
         updateSearch();
@@ -55,7 +56,7 @@ public class SongSearchFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         songRe.setLayoutManager(linearLayoutManager);
         songRe.setAdapter(songAdapter);
-        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager,20) {
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager, 20) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 SearchApiImpl.searchSong(searchKey, page, new ResponseCallback<List<Song>>() {
@@ -79,7 +80,7 @@ public class SongSearchFragment extends Fragment {
         songRe.addOnScrollListener(scrollListener);
     }
 
-    private void updateSearch(){
+    private void updateSearch() {
         songAdapter.reset();
         SearchApiImpl.searchSong(searchKey, 0, new ResponseCallback<List<Song>>() {
             @Override

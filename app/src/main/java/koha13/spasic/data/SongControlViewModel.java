@@ -1,7 +1,5 @@
 package koha13.spasic.data;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -17,13 +15,11 @@ public class SongControlViewModel extends ViewModel {
     public static MutableLiveData<Song> currentSong = new MutableLiveData<>();
     public static Integer loopState = 0;
     public static Boolean randomState = false;
+    public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
 
     public static void updateCurrentSong(Song song) {
         currentSong.setValue(song);
     }
-
-    public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
-
 
     public static Song getPreviousSong() {
         if (isQueueEmpty()) return null;
@@ -32,7 +28,7 @@ public class SongControlViewModel extends ViewModel {
         }
         for (int index = 1; index < queueSongs.size(); index++) {
             if (queueSongs.get(index).getId() == currentSong.getValue().getId()) {
-                return queueSongs.get(index-1);
+                return queueSongs.get(index - 1);
             }
         }
         return null;
@@ -47,9 +43,9 @@ public class SongControlViewModel extends ViewModel {
         if (queueSongs.get(queueSongs.size() - 1).getId() == currentSong.getValue().getId()) {
             return queueSongs.get(0);
         }
-        for (int index = 0; index < queueSongs.size()-1; index++) {
+        for (int index = 0; index < queueSongs.size() - 1; index++) {
             if (queueSongs.get(index).getId() == currentSong.getValue().getId()) {
-                return queueSongs.get(index+1);
+                return queueSongs.get(index + 1);
             }
         }
         return null;
@@ -85,9 +81,8 @@ public class SongControlViewModel extends ViewModel {
         int index = queueSongs.indexOf(currentSong);
         if (index != -1) {
             queueSongs.remove(song);
-            queueSongs.add(index+1, song);
-        }
-        else{
+            queueSongs.add(index + 1, song);
+        } else {
             queueSongs.add(song);
         }
     }

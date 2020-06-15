@@ -19,7 +19,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.Collections;
 
@@ -55,7 +55,9 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         final Song song = SongControlViewModel.queueSongs.get(position);
         holder.songName.setText(song.getName());
         holder.songArtist.setText(song.getArtists());
-        Picasso.get().load(song.getSongImage()).into(holder.imageView);
+        Glide.with(mContext)
+                .load("https://media.giphy.com/media/cjocnyoUWBbdVgLIDZ/giphy.gif")
+                .into(holder.imageView);
         holder.move.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

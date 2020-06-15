@@ -24,9 +24,9 @@ import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+    public static SwipeRefreshLayout mSwipeRefreshLayout;
     private LinearLayoutManager layoutManager;
     private List<Song> songs;
-    public static SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView recyclerView;
     private BigCVAdapter songCardAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
@@ -70,13 +70,13 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
 
         //Add observe to current song and playing state change to notify adapter
         songControlViewModel = ViewModelProviders.of(getActivity()).get(SongControlViewModel.class);
-        songControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
+        SongControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
             @Override
             public void onChanged(Song song) {
                 songCardAdapter.notifyDataSetChanged();
             }
         });
-        songControlViewModel.isPlaying.observe(getActivity(), new Observer<Boolean>() {
+        SongControlViewModel.isPlaying.observe(getActivity(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 songCardAdapter.notifyDataSetChanged();

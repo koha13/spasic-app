@@ -59,7 +59,7 @@ public class SplashScreen extends AppCompatActivity {
         }
     }
 
-    private void fetchData(){
+    private void fetchData() {
         AllSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
             @Override
             public void onDataSuccess(List<Song> data) {

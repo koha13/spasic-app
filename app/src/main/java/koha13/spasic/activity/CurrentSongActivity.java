@@ -26,6 +26,8 @@ import koha13.spasic.entity.Song;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
+    SongControlViewModel songControlViewModel;
+    Fragment mFragment;
     private ImageButton backBtn;
     private ImageButton btnPrevious;
     private ImageButton btnNext;
@@ -36,8 +38,6 @@ public class CurrentSongActivity extends AppCompatActivity {
     private TextView songArtist;
     private ImageButton queueBtn;
     private boolean isQueue = false;
-    SongControlViewModel songControlViewModel;
-    Fragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

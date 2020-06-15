@@ -28,6 +28,7 @@
             android:id="@+id/cv_image"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            android:layout_marginHorizontal="5dp"
             android:layout_toRightOf="@+id/drag_handle"
             android:scaleType="centerCrop"
             android:src="@drawable/default_image" />
@@ -35,6 +36,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:layout_toRightOf="@+id/cv_image">
 
             <ImageButton

@@ -1,7 +1,6 @@
 package koha13.spasic.FragmentCurrentSong;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,13 +11,8 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import koha13.spasic.R;
 import koha13.spasic.adapter.QueueSongAdapter;
-import koha13.spasic.adapter.SongCardAdapter;
-import koha13.spasic.entity.Song;
 
 public class QueueFragment extends Fragment {
 

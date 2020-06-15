@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -35,13 +34,13 @@ import koha13.spasic.model.LoginRequest;
 
 public class LoginActivity extends AppCompatActivity implements ResponseCallback<User> {
 
+    private static final float ROTATE_FROM = 0.0f;
+    private static final float ROTATE_TO = -10.0f * 360.0f;// 3.141592654f * 32.0f;
     private EditText username;
     private EditText password;
     private Button lgBtn;
     private LinearLayout loadingScreen;
     private ImageView loadingIcon;
-    private static final float ROTATE_FROM = 0.0f;
-    private static final float ROTATE_TO = -10.0f * 360.0f;// 3.141592654f * 32.0f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +71,14 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         });
     }
 
-    private void login(){
+    private void login() {
         hideKeyboard(this);
         String us = username.getText().toString().toLowerCase().trim();
         String pw = password.getText().toString().toLowerCase().trim();
-        if(us.length()<6 || pw.length()<6){
+        if (us.length() < 6 || pw.length() < 6) {
             onDataFail("Failed");
         }
-        UserData.login(new LoginRequest(us,pw),this);
+        UserData.login(new LoginRequest(us, pw), this);
         loadingScreen.setVisibility(View.VISIBLE);
         RotateAnimation r = new RotateAnimation(ROTATE_FROM, ROTATE_TO,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
@@ -91,7 +90,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
 
     @Override
     public void onDataSuccess(User data) {
-        SharedPreferences.Editor editor = (SharedPreferences.Editor) getSharedPreferences("PRIVATE_DATA",Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences("PRIVATE_DATA", Context.MODE_PRIVATE).edit();
         editor.putString("token", UserData.user.getToken());
         editor.putString("role", UserData.user.getRole());
         editor.putString("username", UserData.user.getUsername());
@@ -107,8 +106,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Đăng nhập không thành công")
                 .setMessage("Tài khoản hoặc mật khẩu không chính xác")
-                .setPositiveButton("OK", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         username.requestFocus();
@@ -133,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private void fetchData(){
+    private void fetchData() {
         AllSongsViewModel.fetchAllSongs(new ResponseCallback<List<Song>>() {
             @Override
             public void onDataSuccess(List<Song> data) {

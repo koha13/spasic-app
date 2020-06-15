@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -43,13 +42,13 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         View rootView = inflater.inflate(R.layout.fragment_pl, container, false);
 
         //Recycler view big Cardview
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerViewSongPL);
+        recyclerView = rootView.findViewById(R.id.recyclerViewSongPL);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
 
         allPlaylistsViewModel = ViewModelProviders.of(getActivity()).get(AllPlaylistsViewModel.class);
-        allPlaylistsViewModel.getAllPlaylists().observe(getActivity(), new Observer<List<Playlist>>() {
+        AllPlaylistsViewModel.getAllPlaylists().observe(getActivity(), new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
                 PLCardAdapter songCardAdapter = new PLCardAdapter(playlists, getActivity());
@@ -58,7 +57,7 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         });
 
         //Swipe refresh
-        mSwipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.pl_swipe_container);
+        mSwipeRefreshLayout = rootView.findViewById(R.id.pl_swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         return rootView;
@@ -72,7 +71,7 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        allPlaylistsViewModel.fetchAllPlaylists(new ResponseCallback<List<Playlist>>() {
+        AllPlaylistsViewModel.fetchAllPlaylists(new ResponseCallback<List<Playlist>>() {
             @Override
             public void onDataSuccess(List<Playlist> data) {
                 mSwipeRefreshLayout.setRefreshing(false);

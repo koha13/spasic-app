@@ -1,7 +1,6 @@
 package koha13.spasic.FragmentSearch;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.activity.SearchActivity;
 import koha13.spasic.adapter.AlbumGridViewAdapter;
 import koha13.spasic.adapter.EndlessScrollListener;
 import koha13.spasic.api.ResponseCallback;
@@ -62,10 +60,12 @@ public class AlbumSearchFragment extends Fragment {
                     }
 
                     @Override
-                    public void onDataFail(String message) { }
+                    public void onDataFail(String message) {
+                    }
 
                     @Override
-                    public void onFailed(Throwable error) { }
+                    public void onFailed(Throwable error) {
+                    }
                 });
                 return true; // ONLY if more data is actually being loaded; false otherwise.
             }

@@ -1,8 +1,5 @@
 package koha13.spasic.data;
 
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +12,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllSongsViewModel{
+public class AllSongsViewModel {
     private static List<Song> allSongs = new ArrayList<>();
 
     public static List<Song> getAllSongs() {
         return allSongs;
     }
 
-    public static void reset(){
+    public static void reset() {
         allSongs = new ArrayList<>();
     }
 
@@ -32,7 +29,7 @@ public class AllSongsViewModel{
 
     public static void fetchAllSongs(final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.getAllSongs(0,3,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+        mAPIService.getAllSongs(0, 3, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {
@@ -59,9 +56,9 @@ public class AllSongsViewModel{
         });
     }
 
-    public static void moreSongs(int page, final ResponseCallback<List<Song>> callback){
+    public static void moreSongs(int page, final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.getAllSongs(page,3,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+        mAPIService.getAllSongs(page, 3, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {

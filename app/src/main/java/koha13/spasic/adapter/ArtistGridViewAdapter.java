@@ -10,13 +10,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
-import koha13.spasic.activity.AlbumDetailActivity;
 import koha13.spasic.activity.ArtistDetailActivity;
 import koha13.spasic.entity.Artist;
 
@@ -72,7 +71,9 @@ public class ArtistGridViewAdapter extends BaseAdapter {
                 mContext.startActivity(intent);
             }
         });
-        Picasso.get().load(artists.get(position).getImageLink()).into(image);
+        Glide.with(mContext)
+                .load(artists.get(position).getImageLink())
+                .into(image);
         artistName.setText(artists.get(position).getName());
 
         return convertView;

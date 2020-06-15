@@ -1,17 +1,16 @@
 package koha13.spasic.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
         fetchData();
     }
 
-    private void initView(){
+    private void initView() {
         recyclerView = findViewById(R.id.rv_song_album);
         albumImage = findViewById(R.id.image_song_album);
         albumName = findViewById(R.id.album_name);
@@ -60,14 +59,16 @@ public class AlbumDetailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
-    private void fetchData(){
+    private void fetchData() {
         SearchApiImpl.getSongByAlbum(word, new ResponseCallback<List<Song>>() {
             @Override
             public void onDataSuccess(List<Song> data) {
-                Picasso.get().load(data.get(0).getSongImage()).into(albumImage);
+                Glide.with(AlbumDetailActivity.this)
+                        .load(data.get(0).getSongImage())
+                        .into(albumImage);
                 albumName.setText(word);
                 albumArtist.setText(data.get(0).getArtists());
-                numSong.setText(String.valueOf(data.size()) + " bài hát");
+                numSong.setText(data.size() + " bài hát");
                 adapter = new SongCardAdapter(data, AlbumDetailActivity.this);
                 recyclerView.setAdapter(adapter);
             }
