@@ -52,6 +52,15 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         holder.songArtist.setText(song.getArtists());
         Picasso.get().load(song.getSongImage()).into(holder.imageView);
         holder.time.setText(GeneralDTO.secondToMinute(song.getLength()));
+        if (SongControlViewModel.currentSong.getValue() != null && song.getId() == SongControlViewModel.currentSong.getValue().getId()) {
+            holder.bgCS.setVisibility(View.VISIBLE);
+            if (SongControlViewModel.isPlaying.getValue()) {
+                holder.iconCS.setImageResource(R.drawable.ic_pause_circle_filled_orange_40dp);
+            } else {
+                holder.iconCS.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
+            }
+            holder.iconCS.setVisibility(View.VISIBLE);
+        }
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
@@ -105,6 +114,8 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
         ImageView imageView;
         ImageButton menu;
         TextView time;
+        ImageView bgCS;
+        ImageView iconCS;
 
         SongViewHolder(View itemView) {
             super(itemView);
@@ -114,6 +125,8 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
             imageView = itemView.findViewById(R.id.cv_big_image);
             menu = itemView.findViewById(R.id.menu_cv_big);
             time = itemView.findViewById(R.id.cv_big_time);
+            bgCS = itemView.findViewById(R.id.bg_cs);
+            iconCS = itemView.findViewById(R.id.icon_cs);
         }
     }
 }

@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -18,6 +20,7 @@ import koha13.spasic.adapter.BigCVAdapter;
 import koha13.spasic.adapter.EndlessRecyclerViewScrollListener;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllSongsViewModel;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -27,6 +30,7 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private RecyclerView recyclerView;
     private BigCVAdapter songCardAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private SongControlViewModel songControlViewModel;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -63,6 +67,21 @@ public class HomeFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         //Swipe refresh
         mSwipeRefreshLayout = rootView.findViewById(R.id.main_swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        //Add observe to current song and playing state change to notify adapter
+        songControlViewModel = ViewModelProviders.of(getActivity()).get(SongControlViewModel.class);
+        songControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
+            @Override
+            public void onChanged(Song song) {
+                songCardAdapter.notifyDataSetChanged();
+            }
+        });
+        songControlViewModel.isPlaying.observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                songCardAdapter.notifyDataSetChanged();
+            }
+        });
 
         return rootView;
     }
