@@ -67,6 +67,16 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onCompletion(MediaPlayer mp)
+            {
+                if(!playNextSong()){
+                    SongControlViewModel.isPlaying.postValue(false);
+                }
+            }
+        });
     }
 
     public void pauseSong() {
@@ -75,10 +85,23 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void nextSong() {
-        if (SongControlViewModel.getNext()) {
-            MainActivity.musicService.playSong();
+    public boolean playNextSong() {
+        Song nextSong = SongControlViewModel.getNextSong();
+        if (nextSong != null) {
+            playSong(nextSong);
+            return true;
         }
+        return false;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean playPreviousSong() {
+        Song prevSong = SongControlViewModel.getPreviousSong();
+        if (prevSong != null) {
+            playSong(prevSong);
+            return true;
+        }
+        return false;
     }
 
 
@@ -107,7 +130,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             } catch (Exception e) {
                 Log.e("MUSIC SERVICE", "Error setting data source", e);
             }
-            SongControlViewModel.currentSong.postValue(song);
+            SongControlViewModel.updateCurrentSong(song);
             SongControlViewModel.isPlaying.postValue(true);
             SongControlViewModel.addSongToQueue(song);
         } else {

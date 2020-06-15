@@ -3,6 +3,7 @@ package koha13.spasic.footer;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,13 @@ public class FooterFragment extends Fragment {
                         MainActivity.musicService.playSong();
                     }
                 }
+            }
+        });
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.musicService.playNextSong();
             }
         });
 

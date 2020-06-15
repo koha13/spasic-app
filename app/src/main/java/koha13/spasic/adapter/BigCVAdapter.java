@@ -68,8 +68,6 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                System.out.println("Music service: " + musicService);
-                Toast.makeText(mContext, "Click cv", Toast.LENGTH_SHORT).show();
                 musicService.playSong(song);
             }
         });

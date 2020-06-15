@@ -1,5 +1,7 @@
 package koha13.spasic.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -23,40 +25,35 @@ public class SongControlViewModel extends ViewModel {
     public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
 
 
-    public static boolean getPrevious() {
-        if (isQueueEmpty()) return false;
+    public static Song getPreviousSong() {
+        if (isQueueEmpty()) return null;
         if (queueSongs.get(0).getId() == currentSong.getValue().getId()) {
-            updateCurrentSong(queueSongs.get(queueSongs.size() - 1));
-            return true;
+            return queueSongs.get(queueSongs.size() - 1);
         }
         for (int index = 1; index < queueSongs.size(); index++) {
-            Song prev = queueSongs.get(index - 1);
-            if (prev.getId() == currentSong.getValue().getId()) {
-                updateCurrentSong(prev);
-                return true;
+            if (queueSongs.get(index).getId() == currentSong.getValue().getId()) {
+                return queueSongs.get(index-1);
             }
         }
-        return false;
+        return null;
     }
 
     private static boolean isQueueEmpty() {
         return queueSongs == null || queueSongs.size() == 0;
     }
 
-    public static boolean getNext() {
-        if (isQueueEmpty()) return false;
+    public static Song getNextSong() {
+        Log.d("Click next song", "OK");
+        if (isQueueEmpty()) return null;
         if (queueSongs.get(queueSongs.size() - 1).getId() == currentSong.getValue().getId()) {
-            updateCurrentSong(queueSongs.get(0));
-            return true;
+            return queueSongs.get(0);
         }
-        for (int index = 1; index < queueSongs.size(); index++) {
-            Song next = queueSongs.get(index + 1);
-            if (next.getId() == currentSong.getValue().getId()) {
-                updateCurrentSong(next);
-                return true;
+        for (int index = 0; index < queueSongs.size()-1; index++) {
+            if (queueSongs.get(index).getId() == currentSong.getValue().getId()) {
+                return queueSongs.get(index+1);
             }
         }
-        return false;
+        return null;
     }
 
     public static void shuffleQueue() {

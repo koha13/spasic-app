@@ -66,7 +66,7 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnPlay", Toast.LENGTH_SHORT).show();
-                if (SongControlViewModel.currentSong.getValue()!=null){
+                if (SongControlViewModel.currentSong.getValue() != null) {
                     if (SongControlViewModel.isPlaying.getValue()) {
                         playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
                         MainActivity.musicService.pauseSong();
@@ -82,7 +82,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         btnLoop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SongControlViewModel.loopState ++;
+                SongControlViewModel.loopState++;
                 updateBtnLoop(SongControlViewModel.loopState);
                 if (SongControlViewModel.loopState > 2) {
                     SongControlViewModel.loopState = 0;
@@ -96,10 +96,7 @@ public class CurrentSongActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "btnPrevious", Toast.LENGTH_SHORT).show();
-                if (SongControlViewModel.getPrevious()){
-                    MainActivity.musicService.playSong();
-                }
+                MainActivity.musicService.playPreviousSong();
             }
         });
 
@@ -108,8 +105,7 @@ public class CurrentSongActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "btnNext", Toast.LENGTH_SHORT).show();
-                MainActivity.musicService.nextSong();
+                MainActivity.musicService.playNextSong();
             }
         });
 
@@ -127,7 +123,7 @@ public class CurrentSongActivity extends AppCompatActivity {
                     SongControlViewModel.shuffleQueue();
                     int randomIndex = new Random().nextInt(queueSongs.size());
                     Song pickedSong = SongControlViewModel.queueSongs.get(randomIndex);
-                    while (pickedSong.equals(SongControlViewModel.currentSong.getValue())){
+                    while (pickedSong.equals(SongControlViewModel.currentSong.getValue())) {
                         randomIndex = new Random().nextInt(queueSongs.size());
                         pickedSong = SongControlViewModel.queueSongs.get(randomIndex);
                     }
@@ -136,10 +132,10 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
         songControlViewModel = ViewModelProviders.of(CurrentSongActivity.this).get(SongControlViewModel.class);
-        songControlViewModel.isPlaying.observe(CurrentSongActivity.this, new Observer<Boolean>() {
+        SongControlViewModel.isPlaying.observe(CurrentSongActivity.this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean == true){
+                if (aBoolean == true) {
                     playBtn.setImageResource(R.drawable.ic_pause_circle_filled_orange_40dp);
                 } else {
                     playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
@@ -147,7 +143,7 @@ public class CurrentSongActivity extends AppCompatActivity {
             }
         });
 
-        songControlViewModel.currentSong.observe(CurrentSongActivity.this, new Observer<Song>() {
+        SongControlViewModel.currentSong.observe(CurrentSongActivity.this, new Observer<Song>() {
             @Override
             public void onChanged(Song song) {
                 songName.setText(song.getName());
