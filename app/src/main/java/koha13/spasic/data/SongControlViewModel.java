@@ -43,7 +43,6 @@ public class SongControlViewModel extends ViewModel {
     }
 
     public static Song getNextSong() {
-        Log.d("Click next song", "OK");
         if (isQueueEmpty()) return null;
         if (queueSongs.get(queueSongs.size() - 1).getId() == currentSong.getValue().getId()) {
             return queueSongs.get(0);
@@ -71,6 +70,14 @@ public class SongControlViewModel extends ViewModel {
             queueSongs.remove(song);
         }
         queueSongs.add(song);
+        return true;
+    }
+
+    public static boolean addSongToQueueNoUpdatePos(Song song) {
+        int index = queueSongs.indexOf(song);
+        if (index == -1) {
+            queueSongs.add(song);
+        }
         return true;
     }
 

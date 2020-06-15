@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import java.util.Objects;
 
 import koha13.spasic.activity.MainActivity;
+import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
@@ -72,8 +73,22 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             @Override
             public void onCompletion(MediaPlayer mp)
             {
-                if(!playNextSong()){
-                    SongControlViewModel.isPlaying.postValue(false);
+                if(SongControlViewModel.loopState == 1){
+                    playAgain();
+                }
+                else if(SongControlViewModel.loopState == 0){
+                    if(SongControlViewModel.currentSong.getValue().getId() !=
+                            SongControlViewModel.queueSongs.get(SongControlViewModel.queueSongs.size()-1).getId()){
+                        if(!playNextSong()) {
+                            SongControlViewModel.isPlaying.postValue(false);
+                        }
+                    }else{
+                        SongControlViewModel.isPlaying.postValue(false);
+                    }
+                }else{
+                    if(!playNextSong()) {
+                        SongControlViewModel.isPlaying.postValue(false);
+                    }
                 }
             }
         });
@@ -82,6 +97,12 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public void pauseSong() {
         SongControlViewModel.isPlaying.postValue(false);
         player.pause();
+    }
+
+    private void playAgain(){
+        player.seekTo(0);
+        player.start();
+        SongControlViewModel.isPlaying.postValue(true);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -132,7 +153,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             }
             SongControlViewModel.updateCurrentSong(song);
             SongControlViewModel.isPlaying.postValue(true);
-            SongControlViewModel.addSongToQueue(song);
+            SongControlViewModel.addSongToQueueNoUpdatePos(song);
         } else {
             if (SongControlViewModel.isPlaying.getValue()) {
                 pauseSong();

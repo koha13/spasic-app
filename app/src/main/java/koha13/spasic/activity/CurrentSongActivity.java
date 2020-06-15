@@ -83,11 +83,10 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 SongControlViewModel.loopState++;
-                updateBtnLoop(SongControlViewModel.loopState);
                 if (SongControlViewModel.loopState > 2) {
                     SongControlViewModel.loopState = 0;
                 }
-                Toast.makeText(getApplicationContext(), "btnLoop" + SongControlViewModel.loopState, Toast.LENGTH_SHORT).show();
+                updateBtnLoop(SongControlViewModel.loopState);
             }
         });
 
