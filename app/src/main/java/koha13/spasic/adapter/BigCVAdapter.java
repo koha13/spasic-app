@@ -60,6 +60,9 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                 holder.iconCS.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
             }
             holder.iconCS.setVisibility(View.VISIBLE);
+        }else {
+            holder.bgCS.setVisibility(View.GONE);
+            holder.iconCS.setVisibility(View.GONE);
         }
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
