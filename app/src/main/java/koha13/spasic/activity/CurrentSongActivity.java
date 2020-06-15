@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 import java.util.Random;
@@ -37,6 +40,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     private TextView songName;
     private TextView songArtist;
     private ImageButton queueBtn;
+    ImageView imageSong;
     private boolean isQueue = false;
 
     @Override
@@ -48,6 +52,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        imageSong = findViewById(R.id.image_song);
         songName = findViewById(R.id.song_name);
         songName.setSelected(true);
         songArtist = findViewById(R.id.song_artist);
@@ -145,6 +150,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         SongControlViewModel.currentSong.observe(CurrentSongActivity.this, new Observer<Song>() {
             @Override
             public void onChanged(Song song) {
+                Glide.with(CurrentSongActivity.this).load(song.getSongImage()).into(imageSong);
                 songName.setText(song.getName());
                 songArtist.setText(song.getArtists());
             }

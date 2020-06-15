@@ -7,17 +7,23 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.QueueSongAdapter;
+import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.entity.Song;
 
 public class QueueFragment extends Fragment {
 
+    SongControlViewModel songControlViewModel;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
+    QueueSongAdapter songCardAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,12 +38,19 @@ public class QueueFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        QueueSongAdapter songCardAdapter = new QueueSongAdapter(getActivity());
+        songCardAdapter = new QueueSongAdapter(getActivity());
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallBack(songCardAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         songCardAdapter.setTouchHelper(touchHelper);
         touchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(songCardAdapter);
+        songControlViewModel = ViewModelProviders.of(getActivity()).get(SongControlViewModel.class);
+        songControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
+            @Override
+            public void onChanged(Song song) {
+                songCardAdapter.notifyDataSetChanged();
+            }
+        });
 
         return rootView;
     }

@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -55,9 +56,13 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         final Song song = SongControlViewModel.queueSongs.get(position);
         holder.songName.setText(song.getName());
         holder.songArtist.setText(song.getArtists());
-        Glide.with(mContext)
-                .load("https://media.giphy.com/media/cjocnyoUWBbdVgLIDZ/giphy.gif")
-                .into(holder.imageView);
+        Glide.with(mContext).load(song.getSongImage()).into(holder.imageView);
+        if(song.getId() == SongControlViewModel.currentSong.getValue().getId()){
+            holder.cv.setCardBackgroundColor(Color.parseColor("#85837A7A"));
+        }else{
+            holder.cv.setCardBackgroundColor(Color.parseColor("#00000000"));
+        }
+
         holder.move.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

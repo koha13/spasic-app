@@ -10,4 +10,5 @@
     <color name="transparent">#00000000</color>
     <color name="semi_transparent_bg">#AA000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="active_item">#85837A7A</color>
 </resources>
