@@ -83,5 +83,8 @@ public class SongControlViewModel extends ViewModel {
             queueSongs.remove(song);
             queueSongs.add(index+1, song);
         }
+        else{
+            queueSongs.add(song);
+        }
     }
 }

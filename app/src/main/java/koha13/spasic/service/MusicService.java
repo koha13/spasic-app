@@ -109,6 +109,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             }
             SongControlViewModel.currentSong.postValue(song);
             SongControlViewModel.isPlaying.postValue(true);
+            SongControlViewModel.addSongToQueue(song);
         } else {
             if (SongControlViewModel.isPlaying.getValue()) {
                 pauseSong();
