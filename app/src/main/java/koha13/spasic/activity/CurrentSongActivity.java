@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import java.util.List;
 import java.util.Random;
 
+import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
 import koha13.spasic.data.SongControlViewModel;
@@ -37,6 +38,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     private ImageButton playBtn;
     private ImageButton btnShuffle;
     private ImageButton btnLoop;
+    private ImageButton addPlBtn;
     private TextView songName;
     private TextView songArtist;
     private ImageButton queueBtn;
@@ -53,6 +55,7 @@ public class CurrentSongActivity extends AppCompatActivity {
 
     private void initView() {
         imageSong = findViewById(R.id.image_song);
+        addPlBtn = findViewById(R.id.add_to_pl_btn);
         songName = findViewById(R.id.song_name);
         songName.setSelected(true);
         songArtist = findViewById(R.id.song_artist);
@@ -119,10 +122,8 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "btnShuffle", Toast.LENGTH_SHORT).show();
-                // TODO: change button image
                 List queueSongs = SongControlViewModel.queueSongs;
                 if (queueSongs == null || queueSongs.size() == 0) {
-                    // TODO:
                 } else {
                     SongControlViewModel.shuffleQueue();
                     int randomIndex = new Random().nextInt(queueSongs.size());
@@ -175,6 +176,13 @@ public class CurrentSongActivity extends AppCompatActivity {
                     queueBtn.setColorFilter(Color.parseColor("#FFFFFF"));
                 }
 
+            }
+        });
+
+        addPlBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AddToPlDialog(SongControlViewModel.currentSong.getValue(), CurrentSongActivity.this).getDialog().show();
             }
         });
     }
