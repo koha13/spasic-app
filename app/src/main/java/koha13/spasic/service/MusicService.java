@@ -76,7 +76,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void nextSong() {
-        if (SongControlViewModel.getNext()){
+        if (SongControlViewModel.getNext()) {
             MainActivity.musicService.playSong();
         }
     }
@@ -108,12 +108,18 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
                 Log.e("MUSIC SERVICE", "Error setting data source", e);
             }
             SongControlViewModel.currentSong.postValue(song);
+            SongControlViewModel.isPlaying.postValue(true);
         } else {
-            int length = player.getCurrentPosition();
-            player.seekTo(length);
-            player.start();
+            if (SongControlViewModel.isPlaying.getValue()) {
+                pauseSong();
+            } else {
+                int length = player.getCurrentPosition();
+                player.seekTo(length);
+                player.start();
+                SongControlViewModel.isPlaying.postValue(true);
+            }
+
         }
-        SongControlViewModel.isPlaying.postValue(true);
     }
 
     public void stopSong() {
