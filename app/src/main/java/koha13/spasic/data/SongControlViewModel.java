@@ -56,7 +56,12 @@ public class SongControlViewModel extends ViewModel {
 
     public static void shuffleQueue() {
         saveBackupQueue();
-        Collections.shuffle(SongControlViewModel.queueSongs);
+        Collections.shuffle(queueSongs);
+        int index = queueSongs.indexOf(currentSong.getValue());
+        if(index != -1){
+            queueSongs.remove(index);
+            queueSongs.add(0, currentSong.getValue());
+        }
         randomState.setValue(true);
     }
 
