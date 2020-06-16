@@ -29,7 +29,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
-                    android:background="@android:color/transparent"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_arrow_back_white_24dp" />
 
                 <AutoCompleteTextView
