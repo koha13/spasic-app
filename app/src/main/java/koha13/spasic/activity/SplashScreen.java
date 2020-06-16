@@ -73,24 +73,32 @@ public class SplashScreen extends AppCompatActivity {
 
                     @Override
                     public void onDataFail(String message) {
-
+                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onFailed(Throwable error) {
-
+                        Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
                 });
             }
 
             @Override
             public void onDataFail(String message) {
-
+                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
 
             @Override
             public void onFailed(Throwable error) {
-
+                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
     }
