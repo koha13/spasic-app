@@ -7,6 +7,8 @@
     android:layout_marginHorizontal="1dp"
     android:layout_marginBottom="5dp"
     card_view:cardBackgroundColor="@color/transparent"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     card_view:cardElevation="0dp">
 
     <RelativeLayout
@@ -33,7 +35,7 @@
                 android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@android:color/transparent"
+                android:background="?selectableItemBackgroundBorderless"
                 android:padding="5dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_play_circle_filled_black_24dp" />

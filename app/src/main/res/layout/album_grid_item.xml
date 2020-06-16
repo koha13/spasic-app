@@ -49,5 +49,7 @@
         android:layout_alignTop="@+id/linearlayoutContactName"
         android:layout_marginTop="-60dp"
         android:src="@drawable/ic_play_circle_filled_orange_40dp"
-        android:background="@android:color/transparent"/>
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@drawable/rounded_trans_bg"/>
 </RelativeLayout>

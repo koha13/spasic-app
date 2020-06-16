@@ -28,7 +28,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="70dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/transparent"
+                android:background="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_favorite_orange_24dp"/>
             <ImageButton
                 android:id="@+id/add_to_pl_btn"
@@ -39,7 +39,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="70dp"
                 android:layout_marginLeft="20dp"
-                android:background="@color/transparent"
+                android:background="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_playlist_add_orange_24dp"/>
         </RelativeLayout>
 
@@ -66,7 +66,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
-                    android:background="@color/transparent"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_arrow_back_white_24dp" />
 
                 <LinearLayout
@@ -110,7 +110,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
-                    android:background="@color/transparent"
+                    android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_queue_music_white_24dp" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
