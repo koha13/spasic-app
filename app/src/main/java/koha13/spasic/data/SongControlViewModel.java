@@ -1,9 +1,12 @@
 package koha13.spasic.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +17,7 @@ public class SongControlViewModel extends ViewModel {
     public static List<Song> savedQueueSongs = new ArrayList<>();
     public static MutableLiveData<Song> currentSong = new MutableLiveData<>();
     public static Integer loopState = 0;
-    public static Boolean randomState = false;
+    public static MutableLiveData<Boolean> randomState = new MutableLiveData<>();
     public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
 
     public static void updateCurrentSong(Song song) {
@@ -52,12 +55,20 @@ public class SongControlViewModel extends ViewModel {
     }
 
     public static void shuffleQueue() {
+        saveBackupQueue();
         Collections.shuffle(SongControlViewModel.queueSongs);
-        backupQueue();
+        randomState.setValue(true);
     }
 
-    private static void backupQueue() {
-        savedQueueSongs = queueSongs;
+    public static void unShuffle(){
+        randomState.setValue(false);
+        queueSongs = savedQueueSongs;
+    }
+
+    private static void saveBackupQueue() {
+        savedQueueSongs = new ArrayList<>();
+        savedQueueSongs.addAll(queueSongs);
+        System.out.println(savedQueueSongs == queueSongs);
     }
 
     public static boolean addSongToQueue(Song song) {
@@ -66,7 +77,17 @@ public class SongControlViewModel extends ViewModel {
             queueSongs.remove(song);
         }
         queueSongs.add(song);
+        addSongToSavedQueue(song);
         return true;
+    }
+
+    private static void addSongToSavedQueue(Song song) {
+        if(randomState.getValue()){
+            int index = savedQueueSongs.indexOf(song);
+            if(index == -1){
+                savedQueueSongs.add(song);
+            }
+        }
     }
 
     public static boolean addSongToQueueNoUpdatePos(Song song) {
@@ -74,6 +95,7 @@ public class SongControlViewModel extends ViewModel {
         if (index == -1) {
             queueSongs.add(song);
         }
+        addSongToSavedQueue(song);
         return true;
     }
 
@@ -84,6 +106,7 @@ public class SongControlViewModel extends ViewModel {
             queueSongs.add(index + 1, song);
         } else {
             queueSongs.add(song);
+            addSongToSavedQueue(song);
         }
     }
 }

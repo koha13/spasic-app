@@ -3,6 +3,7 @@ package koha13.spasic.activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -122,20 +123,25 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
         btnShuffle = findViewById(R.id.btnShuffle);
+        if(SongControlViewModel.randomState.getValue()){
+            btnShuffle.setImageResource(R.drawable.ic_shuffle_orange_24dp);
+        }else{
+            btnShuffle.setImageResource(R.drawable.ic_shuffle_white_24dp);
+        }
         btnShuffle.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "btnShuffle", Toast.LENGTH_SHORT).show();
-                List queueSongs = SongControlViewModel.queueSongs;
-                if (queueSongs == null || queueSongs.size() == 0) {
-                } else {
-                    SongControlViewModel.shuffleQueue();
-                    int randomIndex = new Random().nextInt(queueSongs.size());
-                    Song pickedSong = SongControlViewModel.queueSongs.get(randomIndex);
-                    while (pickedSong.equals(SongControlViewModel.currentSong.getValue())) {
-                        randomIndex = new Random().nextInt(queueSongs.size());
-                        pickedSong = SongControlViewModel.queueSongs.get(randomIndex);
+                if(SongControlViewModel.randomState.getValue()){
+                    SongControlViewModel.unShuffle();
+                    btnShuffle.setImageResource(R.drawable.ic_shuffle_white_24dp);
+                }
+                else{
+                    List queueSongs = SongControlViewModel.queueSongs;
+                    if (queueSongs == null || queueSongs.size() == 0) {
+                    } else {
+                        SongControlViewModel.shuffleQueue();
+                        btnShuffle.setImageResource(R.drawable.ic_shuffle_orange_24dp);
                     }
                 }
             }

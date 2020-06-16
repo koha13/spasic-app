@@ -51,6 +51,12 @@ public class QueueFragment extends Fragment {
                 songCardAdapter.notifyDataSetChanged();
             }
         });
+        songControlViewModel.randomState.observe(getActivity(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                songCardAdapter.notifyDataSetChanged();
+            }
+        });
 
         return rootView;
     }
