@@ -17,7 +17,7 @@ import java.util.List;
 import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.api.ResponseCallback;
-import koha13.spasic.data.SearchApiImpl;
+import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.entity.Song;
 
 public class AlbumDetailActivity extends AppCompatActivity {
@@ -60,7 +60,7 @@ public class AlbumDetailActivity extends AppCompatActivity {
     }
 
     private void fetchData() {
-        SearchApiImpl.getSongByAlbum(word, new ResponseCallback<List<Song>>() {
+        FetchApiImpl.getSongByAlbum(word, new ResponseCallback<List<Song>>() {
             @Override
             public void onDataSuccess(List<Song> data) {
                 Glide.with(AlbumDetailActivity.this)

@@ -52,4 +52,10 @@ public interface SpasicApi {
 
     @GET("album")
     Call<List<Song>> getSongByAlbum(@Query("key") String key, @Header("Authorization") String token);
+
+    @POST("upPlay/{songId}")
+    Call<Object> upPlay(@Path("songId") int songId, @Header("Authorization") String token);
+
+    @GET("rank")
+    Call<List<Song>> getRank(@Header("Authorization") String token);
 }

@@ -16,7 +16,7 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.EndlessRecyclerViewScrollListener;
 import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.api.ResponseCallback;
-import koha13.spasic.data.SearchApiImpl;
+import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.entity.Song;
 
 public class SongSearchFragment extends Fragment {
@@ -59,7 +59,7 @@ public class SongSearchFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager, 20) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                SearchApiImpl.searchSong(searchKey, page, new ResponseCallback<List<Song>>() {
+                FetchApiImpl.searchSong(searchKey, page, new ResponseCallback<List<Song>>() {
                     @Override
                     public void onDataSuccess(List<Song> data) {
                         songAdapter.addSong(data);
@@ -82,7 +82,7 @@ public class SongSearchFragment extends Fragment {
 
     private void updateSearch() {
         songAdapter.reset();
-        SearchApiImpl.searchSong(searchKey, 0, new ResponseCallback<List<Song>>() {
+        FetchApiImpl.searchSong(searchKey, 0, new ResponseCallback<List<Song>>() {
             @Override
             public void onDataSuccess(List<Song> data) {
                 songAdapter.addSong(data);

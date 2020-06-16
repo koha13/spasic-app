@@ -7,7 +7,7 @@
     <permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ArtistDetailActivity"></activity>
+        <activity android:name=".activity.UserInfoActivity"></activity>
+        <activity android:name=".activity.ArtistDetailActivity" />
         <activity android:name=".activity.AlbumDetailActivity" />
         <activity
             android:name=".activity.LoginActivity"
@@ -35,6 +36,7 @@
         <service
             android:name=".service.MusicService"
             android:enabled="true" />
+
         <activity android:name=".activity.SearchActivity" />
     </application>
 

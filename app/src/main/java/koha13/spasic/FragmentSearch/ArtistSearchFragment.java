@@ -16,7 +16,7 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.ArtistGridViewAdapter;
 import koha13.spasic.adapter.EndlessScrollListener;
 import koha13.spasic.api.ResponseCallback;
-import koha13.spasic.data.SearchApiImpl;
+import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.entity.Artist;
 
 public class ArtistSearchFragment extends Fragment {
@@ -55,7 +55,7 @@ public class ArtistSearchFragment extends Fragment {
         artistGv.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
-                SearchApiImpl.searchArtist(searchKey, page, new ResponseCallback<List<Artist>>() {
+                FetchApiImpl.searchArtist(searchKey, page, new ResponseCallback<List<Artist>>() {
                     @Override
                     public void onDataSuccess(List<Artist> data) {
                         artistGridViewAdapter.addArtist(data);
@@ -76,7 +76,7 @@ public class ArtistSearchFragment extends Fragment {
 
     private void updateSearch() {
         artistGridViewAdapter.reset();
-        SearchApiImpl.searchArtist(searchKey, 0, new ResponseCallback<List<Artist>>() {
+        FetchApiImpl.searchArtist(searchKey, 0, new ResponseCallback<List<Artist>>() {
             @Override
             public void onDataSuccess(List<Artist> data) {
                 artistGridViewAdapter.addArtist(data);

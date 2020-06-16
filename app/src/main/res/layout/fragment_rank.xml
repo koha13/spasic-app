@@ -15,31 +15,18 @@
         android:layout_gravity="fill_vertical"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:background="@color/semi_transparent_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp">
-
-            <Spinner
-                android:id="@+id/regionSpinner"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"></Spinner>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:background="@color/transparent"
-                android:textColor="@color/textLight"
-                android:drawableLeft="@drawable/ic_play_circle_filled_white_24dp"
+                android:textColor="@color/textDark"
+                android:drawableLeft="@drawable/ic_play_circle_filled_orange_40dp"
                 android:text="Nghe tất cả" />
-        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:layout_margin="10dp"
             android:id="@+id/recyclerViewSong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

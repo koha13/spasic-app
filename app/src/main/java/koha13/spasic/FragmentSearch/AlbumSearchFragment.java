@@ -15,7 +15,7 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.AlbumGridViewAdapter;
 import koha13.spasic.adapter.EndlessScrollListener;
 import koha13.spasic.api.ResponseCallback;
-import koha13.spasic.data.SearchApiImpl;
+import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.entity.Album;
 
 public class AlbumSearchFragment extends Fragment {
@@ -53,7 +53,7 @@ public class AlbumSearchFragment extends Fragment {
         albumGv.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public boolean onLoadMore(int page, int totalItemsCount) {
-                SearchApiImpl.searchAlbum(searchKey, page, new ResponseCallback<List<Album>>() {
+                FetchApiImpl.searchAlbum(searchKey, page, new ResponseCallback<List<Album>>() {
                     @Override
                     public void onDataSuccess(List<Album> data) {
                         albumGridViewAdapter.addAlbums(data);
@@ -74,7 +74,7 @@ public class AlbumSearchFragment extends Fragment {
 
     private void updateSearch() {
         albumGridViewAdapter.reset();
-        SearchApiImpl.searchAlbum(searchKey, 0, new ResponseCallback<List<Album>>() {
+        FetchApiImpl.searchAlbum(searchKey, 0, new ResponseCallback<List<Album>>() {
             @Override
             public void onDataSuccess(List<Album> data) {
                 albumGridViewAdapter.addAlbums(data);

@@ -1,5 +1,7 @@
 package koha13.spasic.data;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -13,7 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchApiImpl {
+public class FetchApiImpl {
     public static void searchSong(String key, int page, final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.searchSong(key, page, 10, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
@@ -129,6 +131,49 @@ public class SearchApiImpl {
     public static void getSongByArtist(String key, final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.getSongByArtist(key, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+            @Override
+            public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
+                if (response.isSuccessful()) {
+                    if (callback != null)
+                        callback.onDataSuccess(response.body());
+                } else {
+                    if (callback != null) {
+                        try {
+                            callback.onDataFail(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Song>> call, Throwable t) {
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFailed(t);
+            }
+        });
+    }
+
+    public static void upPlay(int id) {
+        SpasicApi mAPIService = RetrofitClient.getAPIService();
+        mAPIService.upPlay(id, "Bearer " + UserData.user.getToken()).enqueue(new Callback<Object>() {
+            @Override
+            public void onResponse(Call<Object> call, Response<Object> response) {
+                Log.d("Upplay","Done");
+            }
+
+            @Override
+            public void onFailure(Call<Object> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static void getRank(final ResponseCallback<List<Song>> callback){
+        SpasicApi mAPIService = RetrofitClient.getAPIService();
+        mAPIService.getRank("Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {

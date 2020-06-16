@@ -16,6 +16,7 @@ import androidx.annotation.RequiresApi;
 
 import java.util.Objects;
 
+import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
@@ -96,6 +97,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     }
 
     private void playAgain() {
+        FetchApiImpl.upPlay(SongControlViewModel.currentSong.getValue().getId());
         player.seekTo(0);
         player.start();
         SongControlViewModel.isPlaying.postValue(true);
@@ -129,6 +131,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void playSong(Song song) {
         if (!song.equals(SongControlViewModel.currentSong.getValue())) {
+            FetchApiImpl.upPlay(song.getId());
             player.reset();
             Uri trackUri = Uri.parse(song.getLink());
             try {

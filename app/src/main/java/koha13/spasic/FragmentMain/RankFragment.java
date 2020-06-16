@@ -18,12 +18,14 @@ import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
+import koha13.spasic.api.ResponseCallback;
+import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.entity.Song;
 
 public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView.LayoutManager layoutManager;
-    private Spinner spinner;
     private SwipeRefreshLayout mSwipeRefreshLayout;
+    SongCardAdapter songCardAdapter;
 
     public RankFragment() {
         // Required empty public constructor
@@ -39,27 +41,13 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_rank, container, false);
 
-        //Add spinner
-        spinner = rootView.findViewById(R.id.regionSpinner);
-        List<String> list = new ArrayList<>();
-        list.add("Nhạc US/UK");
-        list.add("Nhạc Việt");
-        list.add("Nhạc Hàn");
-        list.add("Nhạc Trung");
-        ArrayAdapter<String> adapter = new ArrayAdapter(this.getActivity(), android.R.layout.simple_spinner_item, list);
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(adapter);
-
         //Add recycler viewcard
         RecyclerView recyclerView = rootView.findViewById(R.id.recyclerViewSong);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         List<Song> songs = new ArrayList<>();
-        songs.add(new Song("Test1", "Artist", 123));
-        songs.add(new Song("Test2", "Artist", 123));
-        songs.add(new Song("Test3", "Artist", 123));
-        SongCardAdapter songCardAdapter = new SongCardAdapter(songs, getActivity());
+        songCardAdapter = new SongCardAdapter(songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
 
         //Swipe refresh
@@ -67,13 +55,12 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
         //First load when view created
-//        mSwipeRefreshLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                mSwipeRefreshLayout.setRefreshing(true);
-//                loadRecyclerViewData();
-//            }
-//        });
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                loadRecyclerViewData();
+            }
+        });
         return rootView;
     }
 
@@ -85,9 +72,24 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     private void loadRecyclerViewData() {
         // Showing refresh animation before making http call
         mSwipeRefreshLayout.setRefreshing(true);
-        Toast.makeText(getActivity(), "Ahlo", Toast.LENGTH_SHORT).show();
+        FetchApiImpl.getRank(new ResponseCallback<List<Song>>() {
+            @Override
+            public void onDataSuccess(List<Song> data) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                songCardAdapter.reset();
+                songCardAdapter.addSong(data);
+            }
 
-        // Stop refresh animation
-        mSwipeRefreshLayout.setRefreshing(false);
+            @Override
+            public void onDataFail(String message) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onFailed(Throwable error) {
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
     }
 }
