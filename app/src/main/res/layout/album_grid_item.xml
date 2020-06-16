@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:src="@drawable/default_image"
-        android:scaleType="fitXY" />
+        android:scaleType="centerCrop" />
     <LinearLayout
         android:id="@+id/linearlayoutContactName"
         android:layout_width="match_parent"
@@ -40,16 +40,4 @@
             android:textSize="15sp"
             android:text="Artist" />
     </LinearLayout>
-    <ImageButton
-        android:id="@+id/grid_view_play_btn"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:scaleType="fitXY"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/linearlayoutContactName"
-        android:layout_marginTop="-60dp"
-        android:src="@drawable/ic_play_circle_filled_orange_40dp"
-        android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:background="@drawable/rounded_trans_bg"/>
 </RelativeLayout>

@@ -1,13 +1,16 @@
 package koha13.spasic.FragmentMain;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,12 +23,15 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.FetchApiImpl;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView.LayoutManager layoutManager;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     SongCardAdapter songCardAdapter;
+    Button playAllRank;
+    List<Song> songs;
 
     public RankFragment() {
         // Required empty public constructor
@@ -46,7 +52,7 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        List<Song> songs = new ArrayList<>();
+        songs = new ArrayList<>();
         songCardAdapter = new SongCardAdapter(songs, getActivity());
         recyclerView.setAdapter(songCardAdapter);
 
@@ -59,6 +65,14 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void run() {
                 loadRecyclerViewData();
+            }
+        });
+        playAllRank = rootView.findViewById(R.id.la_rank);
+        playAllRank.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                SongControlViewModel.playList(songs);
             }
         });
         return rootView;
@@ -76,8 +90,9 @@ public class RankFragment extends Fragment implements SwipeRefreshLayout.OnRefre
             @Override
             public void onDataSuccess(List<Song> data) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                songs = data;
                 songCardAdapter.reset();
-                songCardAdapter.addSong(data);
+                songCardAdapter.addSong(songs);
             }
 
             @Override

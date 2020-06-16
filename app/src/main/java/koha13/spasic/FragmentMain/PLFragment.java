@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import koha13.spasic.R;
 import koha13.spasic.adapter.PLCardAdapter;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.AllPlaylistsViewModel;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Playlist;
 
 public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -59,7 +61,6 @@ public class PLFragment extends Fragment implements SwipeRefreshLayout.OnRefresh
         //Swipe refresh
         mSwipeRefreshLayout = rootView.findViewById(R.id.pl_swipe_container);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
         return rootView;
     }
 

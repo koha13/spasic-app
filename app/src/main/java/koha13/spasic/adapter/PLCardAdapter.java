@@ -2,6 +2,7 @@ package koha13.spasic.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,7 +19,9 @@ import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.activity.PLActivity;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Playlist;
+import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
 public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHolder> {
@@ -52,10 +56,10 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
             }
         });
         holder.play.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                //Business code here
-                Toast.makeText(mContext, "Play pl", Toast.LENGTH_SHORT).show();
+                SongControlViewModel.playList(pls.get(position).getSongs());
             }
         });
     }

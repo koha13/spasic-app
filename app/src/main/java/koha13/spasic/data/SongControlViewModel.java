@@ -1,15 +1,16 @@
 package koha13.spasic.data;
 
-import android.util.Log;
+import android.os.Build;
 
+import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import koha13.spasic.activity.MainActivity;
 import koha13.spasic.entity.Song;
 
 public class SongControlViewModel extends ViewModel {
@@ -58,14 +59,14 @@ public class SongControlViewModel extends ViewModel {
         saveBackupQueue();
         Collections.shuffle(queueSongs);
         int index = queueSongs.indexOf(currentSong.getValue());
-        if(index != -1){
+        if (index != -1) {
             queueSongs.remove(index);
             queueSongs.add(0, currentSong.getValue());
         }
         randomState.setValue(true);
     }
 
-    public static void unShuffle(){
+    public static void unShuffle() {
         randomState.setValue(false);
         queueSongs = savedQueueSongs;
     }
@@ -87,9 +88,9 @@ public class SongControlViewModel extends ViewModel {
     }
 
     private static void addSongToSavedQueue(Song song) {
-        if(randomState.getValue()){
+        if (randomState.getValue()) {
             int index = savedQueueSongs.indexOf(song);
-            if(index == -1){
+            if (index == -1) {
                 savedQueueSongs.add(song);
             }
         }
@@ -113,5 +114,14 @@ public class SongControlViewModel extends ViewModel {
             queueSongs.add(song);
             addSongToSavedQueue(song);
         }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public static void playList(List<Song> songs) {
+        if (songs == null || songs.size() == 0) return;
+        queueSongs = new ArrayList<>();
+        queueSongs.addAll(songs);
+        randomState.setValue(false);
+        MainActivity.musicService.playSong(queueSongs.get(0));
     }
 }

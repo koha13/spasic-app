@@ -1,23 +1,27 @@
 package koha13.spasic.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import koha13.spasic.R;
 import koha13.spasic.adapter.SongCardAdapter;
 import koha13.spasic.api.ResponseCallback;
 import koha13.spasic.data.FetchApiImpl;
+import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class ArtistDetailActivity extends AppCompatActivity {
@@ -29,6 +33,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SongCardAdapter adapter;
     private String word;
+    List<Song> songs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,13 @@ public class ArtistDetailActivity extends AppCompatActivity {
         artistName = findViewById(R.id.artist_name);
         numSong = findViewById(R.id.artist_num_song);
         playAll = findViewById(R.id.play_all_artist);
+        playAll.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onClick(View v) {
+                SongControlViewModel.playList(songs);
+            }
+        });
         ImageButton backBtn = findViewById(R.id.back_btn_artist);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +80,7 @@ public class ArtistDetailActivity extends AppCompatActivity {
                 numSong.setText(data.size() + " bài hát");
                 adapter = new SongCardAdapter(data, ArtistDetailActivity.this);
                 recyclerView.setAdapter(adapter);
+                songs = data;
             }
 
             @Override
