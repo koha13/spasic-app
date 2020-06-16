@@ -19,8 +19,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,12 +31,11 @@ import koha13.spasic.adapter.ViewPagerAdapter;
 public class SearchActivity extends AppCompatActivity {
 
     final int LIMIT_ITEM = 2;
-
-    private Timer timer; //timer to debounce search
     AutoCompleteTextView searchBox;
     ImageButton timesBtn;
     ImageButton backBtn;
-//    List<String> suggestions = new ArrayList<>();
+    private Timer timer; //timer to debounce search
+    //    List<String> suggestions = new ArrayList<>();
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SongSearchFragment songSearchFragment;

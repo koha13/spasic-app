@@ -28,9 +28,9 @@ import koha13.spasic.service.MusicService;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MusicService musicService;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    public static MusicService musicService;
     private Intent playIntent;
     private boolean musicBound = false;
     private ServiceConnection musicConnection;
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPlayerService() {
         SongControlViewModel.isPlaying.setValue(false);
+        SongControlViewModel.randomState.setValue(false);
 
         musicConnection = new ServiceConnection() {
             @Override

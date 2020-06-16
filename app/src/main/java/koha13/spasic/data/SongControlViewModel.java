@@ -1,9 +1,12 @@
 package koha13.spasic.data;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,58 +17,63 @@ public class SongControlViewModel extends ViewModel {
     public static List<Song> savedQueueSongs = new ArrayList<>();
     public static MutableLiveData<Song> currentSong = new MutableLiveData<>();
     public static Integer loopState = 0;
-    public static Boolean randomState = false;
+    public static MutableLiveData<Boolean> randomState = new MutableLiveData<>();
+    public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
 
     public static void updateCurrentSong(Song song) {
         currentSong.setValue(song);
     }
 
-    public static MutableLiveData<Boolean> isPlaying = new MutableLiveData<>();
-
-
-    public static boolean getPrevious() {
-        if (isQueueEmpty()) return false;
+    public static Song getPreviousSong() {
+        if (isQueueEmpty()) return null;
         if (queueSongs.get(0).getId() == currentSong.getValue().getId()) {
-            updateCurrentSong(queueSongs.get(queueSongs.size() - 1));
-            return true;
+            return queueSongs.get(queueSongs.size() - 1);
         }
         for (int index = 1; index < queueSongs.size(); index++) {
-            Song prev = queueSongs.get(index - 1);
-            if (prev.getId() == currentSong.getValue().getId()) {
-                updateCurrentSong(prev);
-                return true;
+            if (queueSongs.get(index).getId() == currentSong.getValue().getId()) {
+                return queueSongs.get(index - 1);
             }
         }
-        return false;
+        return null;
     }
 
     private static boolean isQueueEmpty() {
         return queueSongs == null || queueSongs.size() == 0;
     }
 
-    public static boolean getNext() {
-        if (isQueueEmpty()) return false;
+    public static Song getNextSong() {
+        if (isQueueEmpty()) return null;
         if (queueSongs.get(queueSongs.size() - 1).getId() == currentSong.getValue().getId()) {
-            updateCurrentSong(queueSongs.get(0));
-            return true;
+            return queueSongs.get(0);
         }
-        for (int index = 1; index < queueSongs.size(); index++) {
-            Song next = queueSongs.get(index + 1);
-            if (next.getId() == currentSong.getValue().getId()) {
-                updateCurrentSong(next);
-                return true;
+        for (int index = 0; index < queueSongs.size() - 1; index++) {
+            if (queueSongs.get(index).getId() == currentSong.getValue().getId()) {
+                return queueSongs.get(index + 1);
             }
         }
-        return false;
+        return null;
     }
 
     public static void shuffleQueue() {
-        Collections.shuffle(SongControlViewModel.queueSongs);
-        backupQueue();
+        saveBackupQueue();
+        Collections.shuffle(queueSongs);
+        int index = queueSongs.indexOf(currentSong.getValue());
+        if(index != -1){
+            queueSongs.remove(index);
+            queueSongs.add(0, currentSong.getValue());
+        }
+        randomState.setValue(true);
     }
 
-    private static void backupQueue() {
-        savedQueueSongs = queueSongs;
+    public static void unShuffle(){
+        randomState.setValue(false);
+        queueSongs = savedQueueSongs;
+    }
+
+    private static void saveBackupQueue() {
+        savedQueueSongs = new ArrayList<>();
+        savedQueueSongs.addAll(queueSongs);
+        System.out.println(savedQueueSongs == queueSongs);
     }
 
     public static boolean addSongToQueue(Song song) {
@@ -74,6 +82,25 @@ public class SongControlViewModel extends ViewModel {
             queueSongs.remove(song);
         }
         queueSongs.add(song);
+        addSongToSavedQueue(song);
+        return true;
+    }
+
+    private static void addSongToSavedQueue(Song song) {
+        if(randomState.getValue()){
+            int index = savedQueueSongs.indexOf(song);
+            if(index == -1){
+                savedQueueSongs.add(song);
+            }
+        }
+    }
+
+    public static boolean addSongToQueueNoUpdatePos(Song song) {
+        int index = queueSongs.indexOf(song);
+        if (index == -1) {
+            queueSongs.add(song);
+        }
+        addSongToSavedQueue(song);
         return true;
     }
 
@@ -81,7 +108,10 @@ public class SongControlViewModel extends ViewModel {
         int index = queueSongs.indexOf(currentSong);
         if (index != -1) {
             queueSongs.remove(song);
-            queueSongs.add(index+1, song);
+            queueSongs.add(index + 1, song);
+        } else {
+            queueSongs.add(song);
+            addSongToSavedQueue(song);
         }
     }
 }

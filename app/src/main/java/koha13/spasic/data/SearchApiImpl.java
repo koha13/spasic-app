@@ -14,9 +14,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SearchApiImpl {
-    public static void searchSong(String key, int page, final ResponseCallback<List<Song>> callback){
+    public static void searchSong(String key, int page, final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.searchSong(key,page,10,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+        mAPIService.searchSong(key, page, 10, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {
@@ -42,9 +42,9 @@ public class SearchApiImpl {
         });
     }
 
-    public static void searchAlbum(String key, int page, final ResponseCallback<List<Album>> callback){
+    public static void searchAlbum(String key, int page, final ResponseCallback<List<Album>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.searchAlbum(key,page,10,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Album>>() {
+        mAPIService.searchAlbum(key, page, 10, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Album>>() {
             @Override
             public void onResponse(Call<List<Album>> call, Response<List<Album>> response) {
                 if (response.isSuccessful()) {
@@ -70,9 +70,9 @@ public class SearchApiImpl {
         });
     }
 
-    public static void searchArtist(String key, int page, final ResponseCallback<List<Artist>> callback){
+    public static void searchArtist(String key, int page, final ResponseCallback<List<Artist>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.searchArtist(key,page,10,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Artist>>() {
+        mAPIService.searchArtist(key, page, 10, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Artist>>() {
             @Override
             public void onResponse(Call<List<Artist>> call, Response<List<Artist>> response) {
                 if (response.isSuccessful()) {
@@ -98,9 +98,9 @@ public class SearchApiImpl {
         });
     }
 
-    public static void getSongByAlbum(String key, final ResponseCallback<List<Song>> callback){
+    public static void getSongByAlbum(String key, final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.getSongByAlbum(key,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+        mAPIService.getSongByAlbum(key, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {
@@ -126,9 +126,9 @@ public class SearchApiImpl {
         });
     }
 
-    public static void getSongByArtist(String key, final ResponseCallback<List<Song>> callback){
+    public static void getSongByArtist(String key, final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
-        mAPIService.getSongByArtist(key,"Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
+        mAPIService.getSongByArtist(key, "Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
             public void onResponse(Call<List<Song>> call, Response<List<Song>> response) {
                 if (response.isSuccessful()) {

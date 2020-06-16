@@ -41,7 +41,7 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
     @Override
     public void onBindViewHolder(@NonNull PLCardAdapter.PLViewHolder holder, final int position) {
         holder.plName.setText(pls.get(position).getName());
-        holder.totalSong.setText(String.valueOf(pls.get(position).getSongs().size()) + " songs");
+        holder.totalSong.setText(pls.get(position).getSongs().size() + " songs");
         holder.totalTime.setText(GeneralDTO.secondToMinute(pls.get(position).getTotalTime()));
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,11 +74,11 @@ public class PLCardAdapter extends RecyclerView.Adapter<PLCardAdapter.PLViewHold
 
         PLViewHolder(View itemView) {
             super(itemView);
-            cv = (CardView) itemView.findViewById(R.id.pl_cv);
-            plName = (TextView) itemView.findViewById(R.id.pl_cv_name);
-            totalSong = (TextView) itemView.findViewById(R.id.pl_cv_info);
-            totalTime = (TextView) itemView.findViewById(R.id.pl_cv_time);
-            play = (ImageButton) itemView.findViewById(R.id.play_pl_cv);
+            cv = itemView.findViewById(R.id.pl_cv);
+            plName = itemView.findViewById(R.id.pl_cv_name);
+            totalSong = itemView.findViewById(R.id.pl_cv_info);
+            totalTime = itemView.findViewById(R.id.pl_cv_time);
+            play = itemView.findViewById(R.id.play_pl_cv);
         }
     }
 }

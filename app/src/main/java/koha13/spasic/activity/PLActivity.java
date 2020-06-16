@@ -1,13 +1,5 @@
 package koha13.spasic.activity;
 
-import androidx.activity.OnBackPressedDispatcher;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +10,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.List;
 
 import koha13.spasic.R;
@@ -27,28 +26,28 @@ import koha13.spasic.entity.Playlist;
 
 public class PLActivity extends AppCompatActivity {
 
-    private RecyclerView.LayoutManager layoutManager;
-    private int plId;
-    private AllPlaylistsViewModel viewModel;
     TextView plName;
     ImageButton backBtn;
     SongPLAdapter songCardAdapter;
     RecyclerView recyclerView;
     Playlist pl;
+    private RecyclerView.LayoutManager layoutManager;
+    private int plId;
+    private AllPlaylistsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pl);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerPLItem);
+        recyclerView = findViewById(R.id.recyclerPLItem);
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        plId=getIntent().getIntExtra("plID", -1);
+        plId = getIntent().getIntExtra("plID", -1);
 
         viewModel = ViewModelProviders.of(this).get(AllPlaylistsViewModel.class);
-        viewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
+        AllPlaylistsViewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
                 pl = AllPlaylistsViewModel.getPlByID(plId);
@@ -58,7 +57,7 @@ public class PLActivity extends AppCompatActivity {
                 songCardAdapter = new SongPLAdapter(pl.getSongs(), PLActivity.this, plId);
                 recyclerView.setAdapter(songCardAdapter);
 
-                backBtn = (ImageButton) findViewById(R.id.backBtnPL);
+                backBtn = findViewById(R.id.backBtnPL);
                 backBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -66,8 +65,8 @@ public class PLActivity extends AppCompatActivity {
                     }
                 });
 
-                if(pl.getId() != -1) {
-                    final ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
+                if (pl.getId() != -1) {
+                    final ImageButton menuBtn = findViewById(R.id.menuBtnPL);
                     menuBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -92,30 +91,30 @@ public class PLActivity extends AppCompatActivity {
                             popupMenu.show();
                         }
                     });
-                }else{
-                    ImageButton menuBtn = (ImageButton) findViewById(R.id.menuBtnPL);
+                } else {
+                    ImageButton menuBtn = findViewById(R.id.menuBtnPL);
                     menuBtn.setVisibility(View.INVISIBLE);
                 }
             }
         });
     }
 
-    private void deletePL(){
+    private void deletePL() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Xóa playlist: "+pl.getName()).setNegativeButton("Hủy", null)
+        builder.setTitle("Xóa playlist: " + pl.getName()).setNegativeButton("Hủy", null)
                 .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                onBackPressed();
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
                     @Override
-                    public void run() {
-                        AllPlaylistsViewModel.deletePlById(plId);
-                    }
-                },1000);
+                    public void onClick(DialogInterface dialog, int which) {
+                        onBackPressed();
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                AllPlaylistsViewModel.deletePlById(plId);
+                            }
+                        }, 1000);
 
-            }
-        }).show();
+                    }
+                }).show();
     }
 }

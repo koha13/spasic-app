@@ -15,9 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,13 +35,13 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
         this.mContext = mContext;
     }
 
-    public void addSong(List<Song> songs){
-        if(songs == null) songs = new ArrayList<>();
+    public void addSong(List<Song> songs) {
+        if (songs == null) songs = new ArrayList<>();
         this.songs.addAll(songs);
         notifyDataSetChanged();
     }
 
-    public void reset(){
+    public void reset() {
         songs = new ArrayList<>();
         notifyDataSetChanged();
     }
@@ -60,7 +59,9 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
         final Song song = songs.get(position);
         holder.songName.setText(song.getName());
         holder.songArtist.setText(song.getArtists());
-        Picasso.get().load(song.getSongImage()).into(holder.imageView);
+        Glide.with(mContext)
+                .load(song.getSongImage())
+                .into(holder.imageView);
         holder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

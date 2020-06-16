@@ -24,6 +24,23 @@
                 android:layout_alignParentLeft="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_image" />
+            <ImageView
+                android:id="@+id/bg_cs"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:foregroundGravity="center"
+                android:background="@color/semi_transparent_bg">
+            </ImageView>
+            <ImageView
+                android:id="@+id/icon_cs"
+                android:visibility="gone"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_play_circle_filled_orange_40dp"
+                android:layout_centerInParent="true"/>
+
 
             <TextView
                 android:id="@+id/cv_big_time"

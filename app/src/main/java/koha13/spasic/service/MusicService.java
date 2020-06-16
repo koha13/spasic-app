@@ -16,14 +16,13 @@ import androidx.annotation.RequiresApi;
 
 import java.util.Objects;
 
-import koha13.spasic.activity.MainActivity;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
         MediaPlayer.OnCompletionListener {
-    private MediaPlayer player;
     private final IBinder musicBind = new MusicBinder();
+    private MediaPlayer player;
 
     @Nullable
     @Override
@@ -67,6 +66,28 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
+        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                if (SongControlViewModel.loopState == 1) {
+                    playAgain();
+                } else if (SongControlViewModel.loopState == 0) {
+                    if (SongControlViewModel.currentSong.getValue().getId() !=
+                            SongControlViewModel.queueSongs.get(SongControlViewModel.queueSongs.size() - 1).getId()) {
+                        if (!playNextSong()) {
+                            SongControlViewModel.isPlaying.postValue(false);
+                        }
+                    } else {
+                        SongControlViewModel.isPlaying.postValue(false);
+                    }
+                } else {
+                    if (!playNextSong()) {
+                        SongControlViewModel.isPlaying.postValue(false);
+                    }
+                }
+            }
+        });
     }
 
     public void pauseSong() {
@@ -74,21 +95,30 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.pause();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public void nextSong() {
-        if (SongControlViewModel.getNext()){
-            MainActivity.musicService.playSong();
-        }
+    private void playAgain() {
+        player.seekTo(0);
+        player.start();
+        SongControlViewModel.isPlaying.postValue(true);
     }
 
-
-    public class MusicBinder extends Binder {
-        public MusicBinder() {
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean playNextSong() {
+        Song nextSong = SongControlViewModel.getNextSong();
+        if (nextSong != null) {
+            playSong(nextSong);
+            return true;
         }
+        return false;
+    }
 
-        public MusicService getService() {
-            return MusicService.this;
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public boolean playPreviousSong() {
+        Song prevSong = SongControlViewModel.getPreviousSong();
+        if (prevSong != null) {
+            playSong(prevSong);
+            return true;
         }
+        return false;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -107,18 +137,34 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             } catch (Exception e) {
                 Log.e("MUSIC SERVICE", "Error setting data source", e);
             }
-            SongControlViewModel.currentSong.postValue(song);
+            SongControlViewModel.updateCurrentSong(song);
+            SongControlViewModel.isPlaying.postValue(true);
+            SongControlViewModel.addSongToQueueNoUpdatePos(song);
         } else {
-            int length = player.getCurrentPosition();
-            player.seekTo(length);
-            player.start();
+            if (SongControlViewModel.isPlaying.getValue()) {
+                pauseSong();
+            } else {
+                int length = player.getCurrentPosition();
+                player.seekTo(length);
+                player.start();
+                SongControlViewModel.isPlaying.postValue(true);
+            }
+
         }
-        SongControlViewModel.isPlaying.postValue(true);
     }
 
     public void stopSong() {
         SongControlViewModel.isPlaying.postValue(false);
         player.stop();
+    }
+
+    public class MusicBinder extends Binder {
+        public MusicBinder() {
+        }
+
+        public MusicService getService() {
+            return MusicService.this;
+        }
     }
 
 

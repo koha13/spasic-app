@@ -61,7 +61,8 @@
         android:id="@+id/recyclerPLItem"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="65dp"
         android:paddingBottom="@dimen/footer_height" />
 
     <fragment

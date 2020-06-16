@@ -7,13 +7,12 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+    public static final String BASE_URL = "https://spasic-api.herokuapp.com";
     private static Retrofit retrofit = null;
-
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder().connectTimeout(10, TimeUnit.SECONDS);
 
-
     public static Retrofit getClient(String baseUrl) {
-        if (retrofit==null) {
+        if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create()).client(httpClient.build())
@@ -21,8 +20,6 @@ public class RetrofitClient {
         }
         return retrofit;
     }
-
-    public static final String BASE_URL = "https://spasic-api.herokuapp.com";
 
     public static SpasicApi getAPIService() {
 

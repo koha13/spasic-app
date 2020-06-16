@@ -56,7 +56,7 @@ public class FooterFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                if (SongControlViewModel.currentSong.getValue()!=null){
+                if (SongControlViewModel.currentSong.getValue() != null) {
                     if (SongControlViewModel.isPlaying.getValue()) {
                         playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
                         MainActivity.musicService.pauseSong();
@@ -68,18 +68,25 @@ public class FooterFragment extends Fragment {
             }
         });
 
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.musicService.playNextSong();
+            }
+        });
+
     }
 
-    private void initView(){
+    private void initView() {
         playBtn = getActivity().findViewById(R.id.playBtn);
         nextBtn = getActivity().findViewById(R.id.nextBtn);
         songName = getActivity().findViewById(R.id.txtSongName);
         songArtist = getActivity().findViewById(R.id.txtSongArtist);
         songControlViewModel = ViewModelProviders.of(getActivity()).get(SongControlViewModel.class);
-        songControlViewModel.isPlaying.observe(getActivity(), new Observer<Boolean>() {
+        SongControlViewModel.isPlaying.observe(getActivity(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if(aBoolean == true){
+                if (aBoolean == true) {
                     playBtn.setImageResource(R.drawable.ic_pause_circle_filled_orange_40dp);
                 } else {
                     playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);
@@ -87,7 +94,7 @@ public class FooterFragment extends Fragment {
             }
         });
 
-        songControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
+        SongControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
             @Override
             public void onChanged(Song song) {
                 songName.setText(song.getName());
