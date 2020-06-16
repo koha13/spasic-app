@@ -21,25 +21,25 @@
                 android:src="@drawable/default_image"/>
             <ImageButton
                 android:id="@+id/love_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/footer_height"
-                android:layout_marginRight="5dp"
-                android:background="@android:color/transparent"
+                android:layout_marginBottom="70dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
                 android:src="@drawable/ic_favorite_orange_24dp"/>
             <ImageButton
                 android:id="@+id/add_to_pl_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:scaleType="fitXY"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/footer_height"
-                android:layout_marginLeft="5dp"
-                android:background="@android:color/transparent"
+                android:layout_marginBottom="70dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/transparent"
                 android:src="@drawable/ic_playlist_add_orange_24dp"/>
         </RelativeLayout>
 

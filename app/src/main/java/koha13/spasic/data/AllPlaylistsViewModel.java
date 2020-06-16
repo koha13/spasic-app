@@ -69,15 +69,6 @@ public class AllPlaylistsViewModel extends ViewModel {
                 break;
             }
         }
-        if (plId == -1) {
-            List<Song> songs = AllSongsViewModel.getAllSongs();
-            for (Song s : songs) {
-                if (s.getId() == song.getId()) {
-                    s.setLike(true);
-                    break;
-                }
-            }
-        }
         allPlaylists.setValue(pls);
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.addSongToPl(plId, song.getId(),
@@ -101,15 +92,6 @@ public class AllPlaylistsViewModel extends ViewModel {
             if (pl.getId() == plId) {
                 pl.getSongs().remove(song);
                 break;
-            }
-        }
-        if (plId == -1) {
-            List<Song> songs = AllSongsViewModel.getAllSongs();
-            for (Song s : songs) {
-                if (s.getId() == song.getId()) {
-                    s.setLike(false);
-                    break;
-                }
             }
         }
         allPlaylists.setValue(pls);

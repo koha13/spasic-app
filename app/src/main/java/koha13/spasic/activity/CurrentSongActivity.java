@@ -25,12 +25,15 @@ import java.util.Random;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
+import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.data.SongControlViewModel;
+import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
     SongControlViewModel songControlViewModel;
+    AllPlaylistsViewModel allPlaylistsViewModel;
     Fragment mFragment;
     private ImageButton backBtn;
     private ImageButton btnPrevious;
@@ -42,6 +45,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     private TextView songName;
     private TextView songArtist;
     private ImageButton queueBtn;
+    private ImageButton loveBtn;
     ImageView imageSong;
     private boolean isQueue = false;
 
@@ -57,6 +61,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         imageSong = findViewById(R.id.image_song);
         addPlBtn = findViewById(R.id.add_to_pl_btn);
         songName = findViewById(R.id.song_name);
+        loveBtn = findViewById(R.id.love_btn);
         songName.setSelected(true);
         songArtist = findViewById(R.id.song_artist);
         songArtist.setSelected(true);
@@ -158,6 +163,8 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
 
+
+
         mFragment = new QueueFragment();
         queueBtn = findViewById(R.id.queue_btn);
         queueBtn.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +190,42 @@ public class CurrentSongActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new AddToPlDialog(SongControlViewModel.currentSong.getValue(), CurrentSongActivity.this).getDialog().show();
+            }
+        });
+
+        allPlaylistsViewModel = ViewModelProviders.of(CurrentSongActivity.this).get(AllPlaylistsViewModel.class);
+        allPlaylistsViewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
+            @Override
+            public void onChanged(List<Playlist> playlists) {
+                for(Playlist pl : playlists){
+                    if(pl.getId() == -1){
+                        for(Song s:pl.getSongs()){
+                            if(s.getId() == songControlViewModel.currentSong.getValue().getId()){
+                                loveBtn.setImageResource(R.drawable.ic_favorite_orange_24dp);
+                                return;
+                            }
+                        }
+                    }
+                }
+                loveBtn.setImageResource(R.drawable.ic_favorite_border_orange_24dp);
+            }
+        });
+
+        loveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Playlist> playlists = allPlaylistsViewModel.getAllPlaylists().getValue();
+                for(Playlist pl : playlists){
+                    if(pl.getId() == -1){
+                        for(Song s:pl.getSongs()){
+                            if(s.getId() == songControlViewModel.currentSong.getValue().getId()){
+                                allPlaylistsViewModel.deleteSongFromPl(-1, songControlViewModel.currentSong.getValue());
+                                return;
+                            }
+                        }
+                    }
+                }
+                allPlaylistsViewModel.addSongToPl(-1, songControlViewModel.currentSong.getValue());
             }
         });
     }
