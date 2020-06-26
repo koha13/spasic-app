@@ -57,9 +57,9 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         holder.songName.setText(song.getName());
         holder.songArtist.setText(song.getArtists());
         Glide.with(mContext).load(song.getSongImage()).into(holder.imageView);
-        if(song.getId() == SongControlViewModel.currentSong.getValue().getId()){
+        if (song.getId() == SongControlViewModel.currentSong.getValue().getId()) {
             holder.cv.setCardBackgroundColor(Color.parseColor("#85837A7A"));
-        }else{
+        } else {
             holder.cv.setCardBackgroundColor(Color.parseColor("#00000000"));
         }
 

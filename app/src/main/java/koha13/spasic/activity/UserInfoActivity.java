@@ -1,17 +1,16 @@
 package koha13.spasic.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import koha13.spasic.R;
 import koha13.spasic.api.ResponseCallback;
@@ -76,7 +75,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
     private void initView() {
         username = findViewById(R.id.username);
-        oldPass= findViewById(R.id.old_pass);
+        oldPass = findViewById(R.id.old_pass);
         newPass = findViewById(R.id.new_pass);
         changPassBtn = findViewById(R.id.change_pass_btn);
         backBtn = findViewById(R.id.backBtn);

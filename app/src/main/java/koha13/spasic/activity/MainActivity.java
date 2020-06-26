@@ -29,13 +29,13 @@ import koha13.spasic.service.MusicService;
 public class MainActivity extends AppCompatActivity {
 
     public static MusicService musicService;
+    ImageButton searchBtn;
+    ImageButton userBtn;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private Intent playIntent;
     private boolean musicBound = false;
     private ServiceConnection musicConnection;
-    ImageButton searchBtn;
-    ImageButton userBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override

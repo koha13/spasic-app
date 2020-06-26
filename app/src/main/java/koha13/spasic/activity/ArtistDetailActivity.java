@@ -26,6 +26,7 @@ import koha13.spasic.entity.Song;
 
 public class ArtistDetailActivity extends AppCompatActivity {
 
+    List<Song> songs = new ArrayList<>();
     private ImageView albumImage;
     private TextView artistName;
     private TextView numSong;
@@ -33,7 +34,6 @@ public class ArtistDetailActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SongCardAdapter adapter;
     private String word;
-    List<Song> songs = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

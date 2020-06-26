@@ -21,9 +21,9 @@ import koha13.spasic.entity.Song;
 public class QueueFragment extends Fragment {
 
     SongControlViewModel songControlViewModel;
+    QueueSongAdapter songCardAdapter;
     private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
-    QueueSongAdapter songCardAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,24 +45,24 @@ public class QueueFragment extends Fragment {
         touchHelper.attachToRecyclerView(recyclerView);
         recyclerView.setAdapter(songCardAdapter);
         songControlViewModel = ViewModelProviders.of(getActivity()).get(SongControlViewModel.class);
-        songControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
+        SongControlViewModel.currentSong.observe(getActivity(), new Observer<Song>() {
             @Override
             public void onChanged(Song song) {
                 songCardAdapter.notifyDataSetChanged();
                 int checkStart = layoutManager.findFirstVisibleItemPosition();
                 int checkEnd = layoutManager.findLastVisibleItemPosition();
-                int index =0;
-                for(index=0;index<SongControlViewModel.queueSongs.size();index++){
-                    if(SongControlViewModel.queueSongs.get(index).getId() == SongControlViewModel.currentSong.getValue().getId()){
+                int index = 0;
+                for (index = 0; index < SongControlViewModel.queueSongs.size(); index++) {
+                    if (SongControlViewModel.queueSongs.get(index).getId() == SongControlViewModel.currentSong.getValue().getId()) {
                         break;
                     }
                 }
-                if(checkStart < index || checkEnd>index){
+                if (checkStart < index || checkEnd > index) {
                     layoutManager.scrollToPosition(index);
                 }
             }
         });
-        songControlViewModel.randomState.observe(getActivity(), new Observer<Boolean>() {
+        SongControlViewModel.randomState.observe(getActivity(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 songCardAdapter.notifyDataSetChanged();

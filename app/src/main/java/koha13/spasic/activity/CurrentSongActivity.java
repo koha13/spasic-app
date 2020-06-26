@@ -3,7 +3,6 @@ package koha13.spasic.activity;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -21,7 +20,6 @@ import androidx.lifecycle.ViewModelProviders;
 import com.bumptech.glide.Glide;
 
 import java.util.List;
-import java.util.Random;
 
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
@@ -36,6 +34,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     SongControlViewModel songControlViewModel;
     AllPlaylistsViewModel allPlaylistsViewModel;
     Fragment mFragment;
+    ImageView imageSong;
     private ImageButton backBtn;
     private ImageButton btnPrevious;
     private ImageButton btnNext;
@@ -47,7 +46,6 @@ public class CurrentSongActivity extends AppCompatActivity {
     private TextView songArtist;
     private ImageButton queueBtn;
     private ImageButton loveBtn;
-    ImageView imageSong;
     private boolean isQueue = false;
 
     @Override
@@ -123,20 +121,19 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
         btnShuffle = findViewById(R.id.btnShuffle);
-        if(SongControlViewModel.randomState.getValue()){
+        if (SongControlViewModel.randomState.getValue()) {
             btnShuffle.setImageResource(R.drawable.ic_shuffle_orange_24dp);
-        }else{
+        } else {
             btnShuffle.setImageResource(R.drawable.ic_shuffle_white_24dp);
         }
         btnShuffle.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                if(SongControlViewModel.randomState.getValue()){
+                if (SongControlViewModel.randomState.getValue()) {
                     SongControlViewModel.unShuffle();
                     btnShuffle.setImageResource(R.drawable.ic_shuffle_white_24dp);
-                }
-                else{
+                } else {
                     List queueSongs = SongControlViewModel.queueSongs;
                     if (queueSongs == null || queueSongs.size() == 0) {
                     } else {
@@ -169,8 +166,6 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
 
-
-
         mFragment = new QueueFragment();
         queueBtn = findViewById(R.id.queue_btn);
         queueBtn.setOnClickListener(new View.OnClickListener() {
@@ -200,13 +195,13 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
         allPlaylistsViewModel = ViewModelProviders.of(CurrentSongActivity.this).get(AllPlaylistsViewModel.class);
-        allPlaylistsViewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
+        AllPlaylistsViewModel.getAllPlaylists().observe(this, new Observer<List<Playlist>>() {
             @Override
             public void onChanged(List<Playlist> playlists) {
-                for(Playlist pl : playlists){
-                    if(pl.getId() == -1){
-                        for(Song s:pl.getSongs()){
-                            if(s.getId() == songControlViewModel.currentSong.getValue().getId()){
+                for (Playlist pl : playlists) {
+                    if (pl.getId() == -1) {
+                        for (Song s : pl.getSongs()) {
+                            if (s.getId() == SongControlViewModel.currentSong.getValue().getId()) {
                                 loveBtn.setImageResource(R.drawable.ic_favorite_orange_24dp);
                                 return;
                             }
@@ -220,18 +215,18 @@ public class CurrentSongActivity extends AppCompatActivity {
         loveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Playlist> playlists = allPlaylistsViewModel.getAllPlaylists().getValue();
-                for(Playlist pl : playlists){
-                    if(pl.getId() == -1){
-                        for(Song s:pl.getSongs()){
-                            if(s.getId() == songControlViewModel.currentSong.getValue().getId()){
-                                allPlaylistsViewModel.deleteSongFromPl(-1, songControlViewModel.currentSong.getValue());
+                List<Playlist> playlists = AllPlaylistsViewModel.getAllPlaylists().getValue();
+                for (Playlist pl : playlists) {
+                    if (pl.getId() == -1) {
+                        for (Song s : pl.getSongs()) {
+                            if (s.getId() == SongControlViewModel.currentSong.getValue().getId()) {
+                                AllPlaylistsViewModel.deleteSongFromPl(-1, SongControlViewModel.currentSong.getValue());
                                 return;
                             }
                         }
                     }
                 }
-                allPlaylistsViewModel.addSongToPl(-1, songControlViewModel.currentSong.getValue());
+                AllPlaylistsViewModel.addSongToPl(-1, SongControlViewModel.currentSong.getValue());
             }
         });
     }

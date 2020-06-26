@@ -163,7 +163,7 @@ public class FetchApiImpl {
         mAPIService.upPlay(id, "Bearer " + UserData.user.getToken()).enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {
-                Log.d("Upplay","Done");
+                Log.d("Upplay", "Done");
             }
 
             @Override
@@ -173,7 +173,7 @@ public class FetchApiImpl {
         });
     }
 
-    public static void getRank(final ResponseCallback<List<Song>> callback){
+    public static void getRank(final ResponseCallback<List<Song>> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.getRank("Bearer " + UserData.user.getToken()).enqueue(new Callback<List<Song>>() {
             @Override
@@ -201,7 +201,7 @@ public class FetchApiImpl {
         });
     }
 
-    public static void changePassword(String oldPass, String newPass, final ResponseCallback<User> callback){
+    public static void changePassword(String oldPass, String newPass, final ResponseCallback<User> callback) {
         SpasicApi mAPIService = RetrofitClient.getAPIService();
         mAPIService.changePass(new ChangePassRequest(oldPass, newPass), "Bearer " + UserData.user.getToken()).enqueue(new Callback<User>() {
             @Override
