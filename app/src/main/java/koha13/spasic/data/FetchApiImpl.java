@@ -11,6 +11,8 @@ import koha13.spasic.api.SpasicApi;
 import koha13.spasic.entity.Album;
 import koha13.spasic.entity.Artist;
 import koha13.spasic.entity.Song;
+import koha13.spasic.entity.User;
+import koha13.spasic.model.ChangePassRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -192,6 +194,34 @@ public class FetchApiImpl {
 
             @Override
             public void onFailure(Call<List<Song>> call, Throwable t) {
+                t.printStackTrace();
+                if (callback != null)
+                    callback.onFailed(t);
+            }
+        });
+    }
+
+    public static void changePassword(String oldPass, String newPass, final ResponseCallback<User> callback){
+        SpasicApi mAPIService = RetrofitClient.getAPIService();
+        mAPIService.changePass(new ChangePassRequest(oldPass, newPass), "Bearer " + UserData.user.getToken()).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()) {
+                    if (callback != null)
+                        callback.onDataSuccess(response.body());
+                } else {
+                    if (callback != null) {
+                        try {
+                            callback.onDataFail(response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
                 t.printStackTrace();
                 if (callback != null)
                     callback.onFailed(t);

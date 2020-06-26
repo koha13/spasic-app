@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private Intent playIntent;
     private boolean musicBound = false;
     private ServiceConnection musicConnection;
+    ImageButton searchBtn;
+    ImageButton userBtn;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -41,11 +43,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton searchBtn = findViewById(R.id.tb_search_ic);
+        //Set event to searchBtn
+        searchBtn = findViewById(R.id.tb_search_ic);
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Set event to userBtn
+        userBtn = findViewById(R.id.tb_person_ic);
+        userBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, UserInfoActivity.class);
                 startActivity(intent);
             }
         });

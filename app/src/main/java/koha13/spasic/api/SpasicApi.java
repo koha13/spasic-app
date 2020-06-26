@@ -7,6 +7,7 @@ import koha13.spasic.entity.Artist;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
+import koha13.spasic.model.ChangePassRequest;
 import koha13.spasic.model.LoginRequest;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -58,4 +59,7 @@ public interface SpasicApi {
 
     @GET("rank")
     Call<List<Song>> getRank(@Header("Authorization") String token);
+
+    @POST("auth/changepass")
+    Call<User> changePass(@Body ChangePassRequest changePassRequest, @Header("Authorization") String token);
 }
