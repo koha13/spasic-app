@@ -1,7 +1,10 @@
 package koha13.spasic.service;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -38,9 +41,25 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         return false;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onCompletion(MediaPlayer mp) {
-
+        if (SongControlViewModel.loopState == 1) {
+            playAgain();
+        } else if (SongControlViewModel.loopState == 0) {
+            if (SongControlViewModel.currentSong.getValue().getId() !=
+                    SongControlViewModel.queueSongs.get(SongControlViewModel.queueSongs.size() - 1).getId()) {
+                if (!playNextSong()) {
+                    SongControlViewModel.isPlaying.postValue(false);
+                }
+            } else {
+                SongControlViewModel.isPlaying.postValue(false);
+            }
+        } else {
+            if (!playNextSong()) {
+                SongControlViewModel.isPlaying.postValue(false);
+            }
+        }
     }
 
     @Override
@@ -58,6 +77,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         super.onCreate();
         player = new MediaPlayer();
         initMusicPlayer();
+        registerBecomingNoisyReceiver();
     }
 
     public void initMusicPlayer() {
@@ -67,28 +87,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         player.setOnPreparedListener(this);
         player.setOnCompletionListener(this);
         player.setOnErrorListener(this);
-        player.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (SongControlViewModel.loopState == 1) {
-                    playAgain();
-                } else if (SongControlViewModel.loopState == 0) {
-                    if (SongControlViewModel.currentSong.getValue().getId() !=
-                            SongControlViewModel.queueSongs.get(SongControlViewModel.queueSongs.size() - 1).getId()) {
-                        if (!playNextSong()) {
-                            SongControlViewModel.isPlaying.postValue(false);
-                        }
-                    } else {
-                        SongControlViewModel.isPlaying.postValue(false);
-                    }
-                } else {
-                    if (!playNextSong()) {
-                        SongControlViewModel.isPlaying.postValue(false);
-                    }
-                }
-            }
-        });
     }
 
     public void pauseSong() {
@@ -170,6 +168,21 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         }
     }
 
+    //Handle headphone remove
+    //Becoming noisy
+    private BroadcastReceiver becomingNoisyReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            //pause audio on ACTION_AUDIO_BECOMING_NOISY
+            pauseSong();
+//            buildNotification(PlaybackStatus.PAUSED);
+        }
+    };
 
+    private void registerBecomingNoisyReceiver() {
+        //register after getting audio focus
+        IntentFilter intentFilter = new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
+        registerReceiver(becomingNoisyReceiver, intentFilter);
+    }
 }
 
