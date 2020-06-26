@@ -49,14 +49,15 @@ public class QueueFragment extends Fragment {
             @Override
             public void onChanged(Song song) {
                 songCardAdapter.notifyDataSetChanged();
-                int check = layoutManager.findFirstVisibleItemPosition();
+                int checkStart = layoutManager.findFirstVisibleItemPosition();
+                int checkEnd = layoutManager.findLastVisibleItemPosition();
                 int index =0;
                 for(index=0;index<SongControlViewModel.queueSongs.size();index++){
                     if(SongControlViewModel.queueSongs.get(index).getId() == SongControlViewModel.currentSong.getValue().getId()){
                         break;
                     }
                 }
-                if(check < index){
+                if(checkStart < index || checkEnd>index){
                     layoutManager.scrollToPosition(index);
                 }
             }
@@ -69,18 +70,6 @@ public class QueueFragment extends Fragment {
         });
 
         return rootView;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        int index =0;
-        for(index=0;index<SongControlViewModel.queueSongs.size();index++){
-            if(SongControlViewModel.queueSongs.get(index).getId() == SongControlViewModel.currentSong.getValue().getId()){
-                break;
-            }
-        }
-        layoutManager.scrollToPosition(index);
     }
 
     public interface ItemTouchHelperAdapter {
