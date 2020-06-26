@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -27,6 +28,8 @@ import java.util.Collections;
 import koha13.spasic.AddToPlDialog;
 import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
+import koha13.spasic.activity.AlbumDetailActivity;
+import koha13.spasic.activity.ArtistDetailActivity;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
@@ -96,10 +99,14 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                                 new AddToPlDialog(song, mContext).getDialog().show();
                                 break;
                             case R.id.btn_go_artist:
-                                Toast.makeText(mContext, "Chuyen den ca si", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(mContext, ArtistDetailActivity.class);
+                                intent.putExtra("artistName", song.getArtists());
+                                mContext.startActivity(intent);
                                 break;
                             case R.id.btn_go_album:
-                                Toast.makeText(mContext, "Chuyen den album", Toast.LENGTH_SHORT).show();
+                                Intent intent2 = new Intent(mContext, AlbumDetailActivity.class);
+                                intent2.putExtra("albumName", song.getAlbum());
+                                mContext.startActivity(intent2);
                                 break;
                             default:
                                 break;
