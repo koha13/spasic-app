@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -30,8 +29,11 @@ import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
 import koha13.spasic.activity.AlbumDetailActivity;
 import koha13.spasic.activity.ArtistDetailActivity;
+import koha13.spasic.activity.MainActivity;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
+
+import static koha13.spasic.activity.MainActivity.musicService;
 
 public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.SongViewHolder> implements QueueFragment.ItemTouchHelperAdapter {
 
@@ -76,9 +78,11 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
             }
         });
         holder.cv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                //Business code here
+                if (SongControlViewModel.currentSong.getValue().getId() == song.getId()) return;
+                musicService.playSong(song);
             }
         });
         holder.menu.setOnClickListener(new View.OnClickListener() {
@@ -145,8 +149,16 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onItemDismiss(int position) {
+        if(SongControlViewModel.currentSong.getValue().getId() == SongControlViewModel.queueSongs.get(position).getId()){
+            if(SongControlViewModel.queueSongs.size()==1){
+                notifyDataSetChanged();
+                return;
+            }
+            musicService.playNextSong();
+        }
         SongControlViewModel.queueSongs.remove(position);
         notifyItemRemoved(position);
     }
