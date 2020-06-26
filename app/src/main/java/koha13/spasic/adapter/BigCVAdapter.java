@@ -10,7 +10,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -83,7 +82,6 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.btn_add_after_curent_song:
-                                Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 SongControlViewModel.addSongAfterCurrentSong(song);
                                 break;
                             case R.id.btn_add_to_pl:
@@ -91,7 +89,6 @@ public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHold
                                 break;
                             case R.id.btn_add_to_queue:
                                 SongControlViewModel.addSongToQueue(song);
-                                Toast.makeText(mContext, "Đã thêm", Toast.LENGTH_SHORT).show();
                                 break;
                             default:
                                 break;

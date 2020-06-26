@@ -91,7 +91,6 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
                         switch (item.getItemId()) {
                             case R.id.btn_add_after_curent_song:
                                 SongControlViewModel.addSongAfterCurrentSong(song);
-                                Toast.makeText(mContext, "Đã thêm vào ds", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.btn_add_to_pl:
                                 new AddToPlDialog(song, mContext).getDialog().show();

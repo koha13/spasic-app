@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -79,14 +78,12 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.btn_add_after_curent_song:
-                                Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 SongControlViewModel.addSongAfterCurrentSong(song);
                                 break;
                             case R.id.btn_add_to_pl:
                                 new AddToPlDialog(song, mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
-                                Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
                                 SongControlViewModel.addSongToQueue(song);
                                 break;
                             default:

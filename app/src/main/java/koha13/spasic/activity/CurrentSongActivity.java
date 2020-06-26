@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -77,7 +76,6 @@ public class CurrentSongActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "btnPlay", Toast.LENGTH_SHORT).show();
                 if (SongControlViewModel.currentSong.getValue() != null) {
                     if (SongControlViewModel.isPlaying.getValue()) {
                         playBtn.setImageResource(R.drawable.ic_play_circle_filled_orange_40dp);

@@ -77,14 +77,12 @@ public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHo
                                 AllPlaylistsViewModel.deleteSongFromPl(plId, song);
                                 break;
                             case R.id.btn_add_after_curent_song:
-                                Toast.makeText(mContext, "Phat tiep theo", Toast.LENGTH_SHORT).show();
                                 SongControlViewModel.addSongAfterCurrentSong(song);
                                 break;
                             case R.id.btn_add_to_pl:
                                 new AddToPlDialog(song, mContext).getDialog().show();
                                 break;
                             case R.id.btn_add_to_queue:
-                                Toast.makeText(mContext, "Them vao ds", Toast.LENGTH_SHORT).show();
                                 SongControlViewModel.addSongToQueue(song);
                                 break;
                             default:
