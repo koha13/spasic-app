@@ -26,7 +26,7 @@ public class SongControlViewModel extends ViewModel {
     }
 
     public static Song getPreviousSong() {
-        if (isQueueEmpty()) return null;
+        if (isQueueEmpty() || queueSongs.size() == 1) return null;
         if (queueSongs.get(0).getId() == currentSong.getValue().getId()) {
             return queueSongs.get(queueSongs.size() - 1);
         }
@@ -43,7 +43,7 @@ public class SongControlViewModel extends ViewModel {
     }
 
     public static Song getNextSong() {
-        if (isQueueEmpty()) return null;
+        if (isQueueEmpty() || queueSongs.size() == 1) return null;
         if (queueSongs.get(queueSongs.size() - 1).getId() == currentSong.getValue().getId()) {
             return queueSongs.get(0);
         }
