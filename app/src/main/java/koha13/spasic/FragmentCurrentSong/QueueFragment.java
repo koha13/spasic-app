@@ -21,7 +21,7 @@ import koha13.spasic.entity.Song;
 public class QueueFragment extends Fragment {
 
     SongControlViewModel songControlViewModel;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
     private RecyclerView recyclerView;
     QueueSongAdapter songCardAdapter;
 
@@ -49,6 +49,16 @@ public class QueueFragment extends Fragment {
             @Override
             public void onChanged(Song song) {
                 songCardAdapter.notifyDataSetChanged();
+                int check = layoutManager.findFirstVisibleItemPosition();
+                int index =0;
+                for(index=0;index<SongControlViewModel.queueSongs.size();index++){
+                    if(SongControlViewModel.queueSongs.get(index).getId() == SongControlViewModel.currentSong.getValue().getId()){
+                        break;
+                    }
+                }
+                if(check < index){
+                    layoutManager.scrollToPosition(index);
+                }
             }
         });
         songControlViewModel.randomState.observe(getActivity(), new Observer<Boolean>() {
@@ -59,6 +69,18 @@ public class QueueFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int index =0;
+        for(index=0;index<SongControlViewModel.queueSongs.size();index++){
+            if(SongControlViewModel.queueSongs.get(index).getId() == SongControlViewModel.currentSong.getValue().getId()){
+                break;
+            }
+        }
+        layoutManager.scrollToPosition(index);
     }
 
     public interface ItemTouchHelperAdapter {
