@@ -149,6 +149,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public void pauseSong() {
         SongControlViewModel.isPlaying.postValue(false);
         player.pause();
+        buildNotification(PlaybackStatus.PAUSED);
     }
 
     private void playAgain() {
@@ -363,6 +364,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         // Create a new Notification
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setShowWhen(false)
+                .setOnlyAlertOnce(true)
                 .setStyle(new androidx.media.app.NotificationCompat.MediaStyle()
                         // Attach our MediaSession token
                         .setMediaSession(mediaSession.getSessionToken())
