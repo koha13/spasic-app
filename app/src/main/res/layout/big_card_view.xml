@@ -7,7 +7,8 @@
     android:layout_marginBottom="10dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:background="@drawable/rounded_trans_bg"
+    card_view:cardBackgroundColor="@color/card"
+    card_view:cardCornerRadius="2dp"
     card_view:cardElevation="0dp">
 
     <LinearLayout
@@ -18,12 +19,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="160dp">
 
             <ImageView
                 android:id="@+id/cv_big_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:layout_alignParentLeft="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_image" />
@@ -31,7 +32,7 @@
                 android:id="@+id/bg_cs"
                 android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="160dp"
                 android:foregroundGravity="center"
                 android:background="@color/semi_transparent_bg">
             </ImageView>
@@ -50,63 +51,60 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@+id/cv_big_image"
-                android:layout_alignTop="@+id/song_info"
+                android:layout_alignParentBottom="true"
                 android:layout_marginRight="2dp"
-                android:layout_marginTop="-20dp"
+                android:layout_marginBottom="5dp"
                 android:text="asd"
                 android:background="#59626A"
                 android:paddingHorizontal="4dp"
                 android:textColor="@color/textLight" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/song_info"
+            android:layout_width="match_parent"
+            android:background="@color/semi_transparent_bg"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="10dp">
 
-            <RelativeLayout
-                android:id="@+id/song_info"
-                android:layout_alignBottom="@+id/cv_big_image"
-                android:layout_width="match_parent"
-                android:background="@color/semi_transparent_bg"
+            <ImageButton
+                android:id="@+id/menu_cv_big"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp">
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_more_vert_white_24dp" />
 
-                <ImageButton
-                    android:id="@+id/menu_cv_big"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="?selectableItemBackgroundBorderless"
-                    android:layout_marginLeft="10dp"
-                    android:src="@drawable/ic_more_vert_white_24dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/menu_cv_big"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/cv_big_song_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/menu_cv_big"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:scrollHorizontally="true"
+                    android:text="TextView is very long"
+                    android:textColor="@color/textLight"
+                    android:textSize="@dimen/text_size_title" />
 
-                    <TextView
-                        android:id="@+id/cv_big_song_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:scrollHorizontally="true"
-                        android:text="TextView is very long"
-                        android:textColor="@color/textLight"
-                        android:textStyle="bold"
-                        android:textSize="20dp" />
-
-                    <TextView
-                        android:id="@+id/cv_big_song_artist"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:scrollHorizontally="true"
-                        android:text="TextViwewew"
-                        android:textColor="@color/textLight" />
-                </LinearLayout>
-            </RelativeLayout>
+                <TextView
+                    android:id="@+id/cv_big_song_artist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:scrollHorizontally="true"
+                    android:text="TextViwewew"
+                    android:textSize="@dimen/text_size_sub"
+                    android:textColor="@color/textLight" />
+            </LinearLayout>
         </RelativeLayout>
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>
