@@ -29,7 +29,6 @@ import koha13.spasic.FragmentCurrentSong.QueueFragment;
 import koha13.spasic.R;
 import koha13.spasic.activity.AlbumDetailActivity;
 import koha13.spasic.activity.ArtistDetailActivity;
-import koha13.spasic.activity.MainActivity;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
@@ -152,8 +151,8 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     public void onItemDismiss(int position) {
-        if(SongControlViewModel.currentSong.getValue().getId() == SongControlViewModel.queueSongs.get(position).getId()){
-            if(SongControlViewModel.queueSongs.size()==1){
+        if (SongControlViewModel.currentSong.getValue().getId() == SongControlViewModel.queueSongs.get(position).getId()) {
+            if (SongControlViewModel.queueSongs.size() == 1) {
                 notifyDataSetChanged();
                 return;
             }
