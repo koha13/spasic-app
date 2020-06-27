@@ -10,11 +10,12 @@
     android:clipToPadding="false"
     android:clipChildren="false"
     card_view:cardElevation="10dp"
+    card_view:cardBackgroundColor="@color/card"
     card_view:cardPreventCornerOverlap="false"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".footer.FooterFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/footer_height"
         android:layout_gravity="bottom"
@@ -48,12 +49,9 @@
             android:id="@+id/song_info_ft"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="90dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent">
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/txtSongName"
@@ -62,10 +60,9 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:text="Out longgggggggg"
-                android:textColor="@color/textDark"
-                android:textSize="@dimen/text_size_title"
-                android:textStyle="bold" />
+                android:text="--"
+                android:textColor="@color/textLight"
+                android:textSize="@dimen/text_size_title" />
 
             <TextView
                 android:id="@+id/txtSongArtist"
@@ -74,11 +71,13 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:scrollHorizontally="true"
-                android:text="Some random artist"
-                android:textColor="@color/textDark" />
+                android:text="--"
+                android:textStyle="italic"
+                android:textSize="@dimen/text_size_sub"
+                android:textColor="@color/textLight" />
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>
