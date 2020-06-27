@@ -45,8 +45,10 @@ public class FooterFragment extends Fragment {
         songInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CurrentSongActivity.class);
-                startActivity(intent);
+                if(SongControlViewModel.currentSong.getValue() != null){
+                    Intent intent = new Intent(getActivity(), CurrentSongActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -69,6 +71,7 @@ public class FooterFragment extends Fragment {
         });
 
         nextBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
                 MainActivity.musicService.playNextSong();
