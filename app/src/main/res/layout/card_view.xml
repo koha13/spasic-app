@@ -4,7 +4,7 @@
     android:id="@+id/cv_song"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    card_view:cardBackgroundColor="@color/transparent"
+    card_view:cardBackgroundColor="@color/card"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_marginBottom="5dp"
@@ -36,7 +36,7 @@
                 android:layout_centerVertical="true"
                 android:background="?selectableItemBackgroundBorderless"
                 android:padding="5dp"
-                android:src="@drawable/ic_more_vert_black_18dp" />
+                android:src="@drawable/ic_more_vert_white_24dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:text="TextView is very longggggggggggggggggggggggggggggggggggggggggggggggggggggg"
-                    android:textColor="@color/textDark"
+                    android:textColor="@color/textLight"
                     android:textSize="17dp" />
 
                 <TextView
@@ -64,12 +64,13 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:text="TextViwewew"
-                    android:textColor="@color/textDark" />
+                    android:textColor="@color/textLight" />
 
                 <TextView
                     android:id="@+id/cv_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textLightSub"
                     android:text="6:02" />
             </LinearLayout>
         </RelativeLayout>

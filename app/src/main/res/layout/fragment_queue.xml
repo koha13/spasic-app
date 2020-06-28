@@ -5,7 +5,7 @@
     android:layout_gravity="fill_vertical"
     android:clipToPadding="false"
     android:isScrollContainer="false"
-    android:background="@android:color/white"
+    android:background="@color/background"
     android:orientation="vertical"
     android:paddingBottom="@dimen/footer_height"
     android:paddingTop="65dp"
@@ -15,6 +15,4 @@
             android:id="@+id/recyclerQueue"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-
 </LinearLayout>

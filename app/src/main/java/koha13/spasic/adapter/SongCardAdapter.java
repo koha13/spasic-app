@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +25,8 @@ import koha13.spasic.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
+
+import static koha13.spasic.activity.MainActivity.musicService;
 
 public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongViewHolder> {
 
@@ -62,9 +66,12 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
                 .load(song.getSongImage())
                 .into(holder.imageView);
         holder.cv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                //Business code here
+                if (SongControlViewModel.currentSong.getValue() != null && SongControlViewModel.currentSong.getValue().getId() == song.getId())
+                    return;
+                musicService.playSong(song);
             }
         });
         holder.menu.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +81,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
 
                 popupMenu.inflate(R.menu.option_menu_big_cv);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {

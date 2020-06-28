@@ -27,6 +27,8 @@ import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
+import static koha13.spasic.activity.MainActivity.musicService;
+
 public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHolder> {
 
     private List<Song> songs;
@@ -57,9 +59,12 @@ public class SongPLAdapter extends RecyclerView.Adapter<SongPLAdapter.SongViewHo
                 .load(song.getSongImage())
                 .into(holder.imageView);
         holder.cv.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                //Business code here
+                if (SongControlViewModel.currentSong.getValue() != null && SongControlViewModel.currentSong.getValue().getId() == song.getId())
+                    return;
+                musicService.playSong(song);
             }
         });
         holder.menu.setOnClickListener(new View.OnClickListener() {

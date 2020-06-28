@@ -27,6 +27,9 @@ public interface SpasicApi {
     @POST("auth/login")
     Call<User> login(@Body LoginRequest loginRequest);
 
+    @POST("auth/signup")
+    Call<User> signup(@Body LoginRequest loginRequest);
+
     @POST("playlists/{id}/song")
     Call<Object> addSongToPl(@Path("id") int id, @Query("idSong") int idSong, @Header("Authorization") String token);
 

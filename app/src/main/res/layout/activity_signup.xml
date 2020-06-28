@@ -29,18 +29,12 @@
             android:inputType="textPassword"
             android:hint="Mật khẩu"/>
         <Button
-            android:id="@+id/lg_btn"
+            android:id="@+id/signup_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Zooo"
+            android:text="Đăng ký"
             android:background="@color/card"
             android:textColor="@color/textLight"/>
-        <Button
-            android:id="@+id/signup_btn"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đăng ký tài khoản mới"/>
     </LinearLayout>
     <LinearLayout
         android:id="@+id/lg_loading_screen"
