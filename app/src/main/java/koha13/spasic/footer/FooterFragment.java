@@ -45,7 +45,7 @@ public class FooterFragment extends Fragment {
         songInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(SongControlViewModel.currentSong.getValue() != null){
+                if (SongControlViewModel.currentSong.getValue() != null) {
                     Intent intent = new Intent(getActivity(), CurrentSongActivity.class);
                     startActivity(intent);
                 }

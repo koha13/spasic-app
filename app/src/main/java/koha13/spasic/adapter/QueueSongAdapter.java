@@ -80,7 +80,8 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public void onClick(View v) {
-                if (SongControlViewModel.currentSong.getValue().getId() == song.getId()) return;
+                if (SongControlViewModel.currentSong.getValue() != null && SongControlViewModel.currentSong.getValue().getId() == song.getId())
+                    return;
                 musicService.playSong(song);
             }
         });
