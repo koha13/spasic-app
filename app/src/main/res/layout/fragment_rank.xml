@@ -27,7 +27,7 @@
                 android:text="Nghe tất cả" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_margin="10dp"
+            android:layout_marginVertical="10dp"
             android:id="@+id/recyclerViewSong"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

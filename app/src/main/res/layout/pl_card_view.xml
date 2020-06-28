@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="1dp"
     android:layout_marginBottom="5dp"
-    card_view:cardBackgroundColor="@color/transparent"
+    card_view:cardBackgroundColor="@color/card"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     card_view:cardElevation="0dp">
@@ -38,7 +38,7 @@
                 android:background="?selectableItemBackgroundBorderless"
                 android:padding="5dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_play_circle_filled_black_24dp" />
+                android:src="@drawable/ic_play_circle_filled_white_24dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:text="TextView is very longggg"
-                    android:textColor="@color/textDark"
+                    android:textColor="@color/textLight"
                     android:textSize="17dp" />
 
                 <TextView
@@ -63,12 +63,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="12 songs"
-                    android:textColor="@color/textDark" />
+                    android:textColor="@color/textLight" />
 
                 <TextView
                     android:id="@+id/pl_cv_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textLightSub"
                     android:text="6:02" />
             </LinearLayout>
         </RelativeLayout>

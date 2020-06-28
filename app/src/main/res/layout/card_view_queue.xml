@@ -9,7 +9,7 @@
     card_view:cardElevation="0dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardBackgroundColor="@color/transparent"
+    card_view:cardBackgroundColor="@color/card"
     tools:ignore="MissingDefaultResource">
 
     <RelativeLayout
@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="5dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_drag_handle_black_24dp"/>
+            android:src="@drawable/ic_drag_handle_white_24dp"/>
 
         <ImageView
             android:id="@+id/cv_image"
@@ -49,7 +49,7 @@
                 android:layout_centerVertical="true"
                 android:padding="5dp"
                 android:background="?selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_more_vert_black_18dp" />
+                android:src="@drawable/ic_more_vert_white_24dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:text="TextView is very longggggggggggggggggggggggggggggggggggggggggggggggggggggg"
-                    android:textColor="@color/textDark"
+                    android:textColor="@color/textLight"
                     android:textSize="17dp" />
 
                 <TextView
@@ -77,12 +77,13 @@
                     android:maxLines="1"
                     android:scrollHorizontally="true"
                     android:text="TextViwewew"
-                    android:textColor="@color/textDark" />
+                    android:textColor="@color/textLight" />
 
                 <TextView
                     android:id="@+id/cv_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/textLightSub"
                     android:text="6:02" />
             </LinearLayout>
         </RelativeLayout>

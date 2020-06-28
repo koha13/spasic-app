@@ -6,10 +6,12 @@
     <color name="activeMain">#ffffff</color>
     <color name="tabUnselectedIconColor">#b6cccc</color>
     <color name="textLight">#ffffff</color>
+    <color name="textLightSub">#E3E3E3</color>
     <color name="textDark">#000000</color>
     <color name="transparent">#00000000</color>
     <color name="semi_transparent_bg">#AA000000</color>
     <color name="white">#FFFFFF</color>
     <color name="active_item">#85837A7A</color>
-    <color name="card">#264e53</color>
+    <color name="card">#21464A</color>
+    <color name="background">#2a555b</color>
 </resources>

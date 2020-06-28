@@ -62,7 +62,7 @@
         <RelativeLayout
             android:id="@+id/song_info"
             android:layout_width="match_parent"
-            android:background="@color/semi_transparent_bg"
+            android:background="@color/transparent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp">
 
