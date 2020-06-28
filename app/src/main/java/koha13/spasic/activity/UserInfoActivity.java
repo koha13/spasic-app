@@ -1,6 +1,7 @@
 package koha13.spasic.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class UserInfoActivity extends AppCompatActivity {
     EditText newPass;
     Button changPassBtn;
     ImageButton backBtn;
+    Button logoutBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,17 @@ public class UserInfoActivity extends AppCompatActivity {
                 });
             }
         });
+
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = getSharedPreferences("PRIVATE_DATA", Context.MODE_PRIVATE).edit();
+                editor.clear();
+                editor.apply();
+                Intent intent = new Intent(UserInfoActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView() {
@@ -79,6 +92,7 @@ public class UserInfoActivity extends AppCompatActivity {
         newPass = findViewById(R.id.new_pass);
         changPassBtn = findViewById(R.id.change_pass_btn);
         backBtn = findViewById(R.id.backBtn);
+        logoutBtn = findViewById(R.id.logout_btn);
 
         username.setText(UserData.user.getUsername());
     }

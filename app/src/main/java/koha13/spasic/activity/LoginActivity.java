@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         String us = username.getText().toString().toLowerCase().trim();
         String pw = password.getText().toString().toLowerCase().trim();
         if (us.length() < 6 || pw.length() < 6) {
-            onDataFail("Failed");
+            onDataFail("Tên đăng nhập hoặc mật khẩu không hợp lệ");
         }
         UserData.login(new LoginRequest(us, pw), this);
         loadingScreen.setVisibility(View.VISIBLE);
@@ -115,7 +115,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle("Đăng nhập không thành công")
-                .setMessage("Tài khoản hoặc mật khẩu không chính xác")
+                .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

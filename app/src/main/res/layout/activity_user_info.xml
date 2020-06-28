@@ -66,6 +66,11 @@
                 android:textSize="@dimen/text_size_title"
                 android:textColor="@color/textDark"
                 android:layout_margin="10dp"/>
+            <Button
+                android:id="@+id/logout_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đăng xuất" />
 
             <LinearLayout
                 android:layout_width="match_parent"

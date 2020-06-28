@@ -77,9 +77,9 @@ public class SignupActivity extends AppCompatActivity implements ResponseCallbac
         String us = username.getText().toString().toLowerCase().trim();
         String pw = password.getText().toString().toLowerCase().trim();
         if (us.length() < 6 || pw.length() < 6) {
-            onDataFail("Failed");
+            onDataFail("Tên đăng nhập hoặc mật khẩu không hợp lệ");
         }
-        UserData.login(new LoginRequest(us, pw), this);
+        UserData.signup(new LoginRequest(us, pw), this);
         loadingScreen.setVisibility(View.VISIBLE);
         RotateAnimation r = new RotateAnimation(ROTATE_FROM, ROTATE_TO,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
@@ -105,8 +105,8 @@ public class SignupActivity extends AppCompatActivity implements ResponseCallbac
         loadingScreen.setVisibility(View.INVISIBLE);
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("Đăng nhập không thành công")
-                .setMessage("Tài khoản hoặc mật khẩu không chính xác")
+                .setTitle("Đăng ký không thành công")
+                .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
