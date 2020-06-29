@@ -131,11 +131,14 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public void onDestroy() {
         super.onDestroy();
         removeNotification();
+        removeAudioFocus();
+        unregisterReceiver(becomingNoisyReceiver);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         handleIncomingActions(intent);
+        requestAudioFocus();
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -472,6 +475,22 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
                 if (player.isPlaying()) player.setVolume(0.1f, 0.1f);
                 break;
         }
+    }
+
+    private boolean requestAudioFocus() {
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int result = audioManager.requestAudioFocus(this, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            //Focus gained
+            return true;
+        }
+        //Could not gain focus
+        return false;
+    }
+
+    private boolean removeAudioFocus() {
+        return AudioManager.AUDIOFOCUS_REQUEST_GRANTED ==
+                audioManager.abandonAudioFocus(this);
     }
 
     public enum PlaybackStatus {
