@@ -85,6 +85,7 @@
                 <EditText
                     android:id="@+id/old_pass"
                     android:layout_width="match_parent"
+                    android:inputType="textPassword"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="10dp"
                     android:hint="Mật khẩu cũ"/>
@@ -97,7 +98,6 @@
                     android:hint="Mật khẩu mới"/>
                 <Button
                     android:id="@+id/change_pass_btn"
-                    android:inputType="textPassword"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đổi mật khẩu"/>
