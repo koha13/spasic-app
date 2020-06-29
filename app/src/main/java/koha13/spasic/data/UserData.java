@@ -1,7 +1,5 @@
 package koha13.spasic.data;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import koha13.spasic.api.ResponseCallback;

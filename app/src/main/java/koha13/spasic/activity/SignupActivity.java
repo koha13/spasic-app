@@ -1,8 +1,5 @@
 package koha13.spasic.activity;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 
 import koha13.spasic.R;
@@ -33,7 +33,7 @@ import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
 import koha13.spasic.model.LoginRequest;
 
-public class SignupActivity extends AppCompatActivity implements ResponseCallback<User>{
+public class SignupActivity extends AppCompatActivity implements ResponseCallback<User> {
 
     private static final float ROTATE_FROM = 0.0f;
     private static final float ROTATE_TO = -10.0f * 360.0f;// 3.141592654f * 32.0f;

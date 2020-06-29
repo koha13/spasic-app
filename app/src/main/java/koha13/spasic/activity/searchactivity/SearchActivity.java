@@ -22,10 +22,10 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import koha13.spasic.R;
 import koha13.spasic.activity.searchactivity.fragmentsearch.AlbumSearchFragment;
 import koha13.spasic.activity.searchactivity.fragmentsearch.ArtistSearchFragment;
 import koha13.spasic.activity.searchactivity.fragmentsearch.SongSearchFragment;
-import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
 
 public class SearchActivity extends AppCompatActivity {

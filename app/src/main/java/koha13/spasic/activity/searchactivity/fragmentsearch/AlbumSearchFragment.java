@@ -81,9 +81,9 @@ public class AlbumSearchFragment extends Fragment {
             @Override
             public void onDataSuccess(List<Album> data) {
                 albumGridViewAdapter.addAlbums(data);
-                if (data.size() ==0){
+                if (data.size() == 0) {
                     noDataTv.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     noDataTv.setVisibility(View.GONE);
                 }
             }

@@ -83,9 +83,9 @@ public class ArtistSearchFragment extends Fragment {
             @Override
             public void onDataSuccess(List<Artist> data) {
                 artistGridViewAdapter.addArtist(data);
-                if (data.size() ==0){
+                if (data.size() == 0) {
                     noDataTv.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     noDataTv.setVisibility(View.GONE);
                 }
             }

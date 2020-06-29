@@ -89,9 +89,9 @@ public class SongSearchFragment extends Fragment {
             @Override
             public void onDataSuccess(List<Song> data) {
                 songAdapter.addSong(data);
-                if (data.size() ==0){
+                if (data.size() == 0) {
                     noDataTv.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     noDataTv.setVisibility(View.GONE);
                 }
             }
