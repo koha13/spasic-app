@@ -39,7 +39,7 @@ import koha13.spasic.entity.Song;
 import lombok.SneakyThrows;
 
 public class MusicService extends Service implements MediaPlayer.OnPreparedListener, MediaPlayer.OnErrorListener,
-        MediaPlayer.OnCompletionListener {
+        MediaPlayer.OnCompletionListener, AudioManager.OnAudioFocusChangeListener {
 
     public static final String ACTION_PLAY = "ACTION_PLAY";
     public static final String ACTION_PAUSE = "ACTION_PAUSE";
@@ -58,6 +58,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private boolean ongoingCall = false;
     private PhoneStateListener phoneStateListener;
     private TelephonyManager telephonyManager;
+    private AudioManager audioManager;
+
     //Handle headphone remove
     //Becoming noisy
     private BroadcastReceiver becomingNoisyReceiver = new BroadcastReceiver() {
@@ -438,6 +440,37 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             transportControls.skipToPrevious();
         } else if (actionString.equalsIgnoreCase(ACTION_STOP)) {
             transportControls.stop();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onAudioFocusChange(int focusChange) {
+        //Invoked when the audio focus of the system is updated.
+        switch (focusChange) {
+            case AudioManager.AUDIOFOCUS_GAIN:
+                // resume playback
+                if (player == null) initMusicPlayer();
+                else if (!player.isPlaying()) playSong();
+                player.setVolume(1.0f, 1.0f);
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS:
+                // Lost focus for an unbounded amount of time: stop playback and release media player
+                if (player.isPlaying()) stopSong();
+                player.release();
+                player = new MediaPlayer();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
+                // Lost focus for a short time, but we have to stop
+                // playback. We don't release the media player because playback
+                // is likely to resume
+                if (player.isPlaying()) pauseSong();
+                break;
+            case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK:
+                // Lost focus for a short time, but it's ok to keep playing
+                // at an attenuated level
+                if (player.isPlaying()) player.setVolume(0.1f, 0.1f);
+                break;
         }
     }
 
