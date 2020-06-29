@@ -18,8 +18,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import koha13.spasic.R;
-import koha13.spasic.activity.CurrentSongActivity;
-import koha13.spasic.activity.MainActivity;
+import koha13.spasic.activity.csactivity.CurrentSongActivity;
+import koha13.spasic.activity.mainactivity.MainActivity;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 

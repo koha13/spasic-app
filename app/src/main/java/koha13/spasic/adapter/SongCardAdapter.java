@@ -21,12 +21,12 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import koha13.spasic.AddToPlDialog;
+import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 
-import static koha13.spasic.activity.MainActivity.musicService;
+import static koha13.spasic.activity.mainactivity.MainActivity.musicService;
 
 public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongViewHolder> {
 

@@ -1,4 +1,4 @@
-package koha13.spasic.activity;
+package koha13.spasic.activity.searchactivity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -22,9 +22,9 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import koha13.spasic.FragmentSearch.AlbumSearchFragment;
-import koha13.spasic.FragmentSearch.ArtistSearchFragment;
-import koha13.spasic.FragmentSearch.SongSearchFragment;
+import koha13.spasic.activity.searchactivity.fragmentsearch.AlbumSearchFragment;
+import koha13.spasic.activity.searchactivity.fragmentsearch.ArtistSearchFragment;
+import koha13.spasic.activity.searchactivity.fragmentsearch.SongSearchFragment;
 import koha13.spasic.R;
 import koha13.spasic.adapter.ViewPagerAdapter;
 

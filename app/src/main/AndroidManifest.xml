@@ -33,14 +33,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.PLActivity" />
-        <activity android:name=".activity.CurrentSongActivity" />
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.csactivity.CurrentSongActivity" />
+        <activity android:name=".activity.mainactivity.MainActivity" />
 
         <service
             android:name=".service.MusicService"
             android:enabled="true" />
 
-        <activity android:name=".activity.SearchActivity" />
+        <activity android:name=".activity.searchactivity.SearchActivity" />
     </application>
 
 </manifest>

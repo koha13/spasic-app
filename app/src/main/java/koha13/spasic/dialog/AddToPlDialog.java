@@ -1,4 +1,4 @@
-package koha13.spasic;
+package koha13.spasic.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import koha13.spasic.R;
 import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
@@ -36,7 +37,7 @@ public class AddToPlDialog {
         for (Playlist pl : pls) {
             plsName.add(pl.getName());
         }
-        return dialogBuilder.setTitle("Thêm bào playlist:").setMultiChoiceItems(plsName.toArray(new
+        return dialogBuilder.setTitle("Thêm bài playlist:").setMultiChoiceItems(plsName.toArray(new
                         CharSequence[plsName.size()]), checkSub(),
                 new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

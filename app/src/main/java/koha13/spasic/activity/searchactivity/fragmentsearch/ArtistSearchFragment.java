@@ -1,4 +1,4 @@
-package koha13.spasic.FragmentSearch;
+package koha13.spasic.activity.searchactivity.fragmentsearch;
 
 import android.os.Bundle;
 import android.util.Log;

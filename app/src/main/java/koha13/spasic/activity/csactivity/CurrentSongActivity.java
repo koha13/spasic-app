@@ -1,4 +1,4 @@
-package koha13.spasic.activity;
+package koha13.spasic.activity.csactivity;
 
 import android.graphics.Color;
 import android.os.Build;
@@ -20,9 +20,9 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import koha13.spasic.AddToPlDialog;
-import koha13.spasic.FragmentCurrentSong.QueueFragment;
+import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.R;
+import koha13.spasic.activity.mainactivity.MainActivity;
 import koha13.spasic.data.AllPlaylistsViewModel;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Playlist;

@@ -1,4 +1,4 @@
-package koha13.spasic.FragmentCurrentSong;
+package koha13.spasic.activity.csactivity;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -18,14 +18,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import koha13.spasic.AddToPlDialog;
+import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.R;
 import koha13.spasic.data.AllSongsViewModel;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
 import koha13.spasic.utils.GeneralDTO;
 
-import static koha13.spasic.activity.MainActivity.musicService;
+import static koha13.spasic.activity.mainactivity.MainActivity.musicService;
 
 
 public class BigCVAdapter extends RecyclerView.Adapter<BigCVAdapter.SongViewHolder> {

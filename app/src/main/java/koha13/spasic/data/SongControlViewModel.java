@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import koha13.spasic.activity.MainActivity;
+import koha13.spasic.activity.mainactivity.MainActivity;
 import koha13.spasic.entity.Song;
 
 public class SongControlViewModel extends ViewModel {

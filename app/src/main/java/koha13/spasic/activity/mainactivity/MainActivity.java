@@ -1,4 +1,4 @@
-package koha13.spasic.activity;
+package koha13.spasic.activity.mainactivity;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -18,10 +18,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
-import koha13.spasic.FragmentMain.HomeFragment;
-import koha13.spasic.FragmentMain.PLFragment;
-import koha13.spasic.FragmentMain.RankFragment;
+import koha13.spasic.activity.mainactivity.fragmentmain.HomeFragment;
+import koha13.spasic.activity.mainactivity.fragmentmain.PLFragment;
+import koha13.spasic.activity.mainactivity.fragmentmain.RankFragment;
 import koha13.spasic.R;
+import koha13.spasic.activity.searchactivity.SearchActivity;
+import koha13.spasic.activity.UserInfoActivity;
 import koha13.spasic.adapter.ViewPagerAdapter;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.service.MusicService;
