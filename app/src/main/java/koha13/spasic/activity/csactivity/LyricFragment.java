@@ -43,6 +43,9 @@ public class LyricFragment extends Fragment {
             public void onChanged(Song song) {
                 if(song.getLyric() != null)
                     tvLyric.setText(song.getLyric());
+                else{
+                    tvLyric.setText("Không tìm thấy lyric");
+                }
             }
         });
     }

@@ -18,7 +18,7 @@
         <TextView
             android:id="@+id/lyric_tv"
             android:textColor="@color/textLight"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </ScrollView>
