@@ -120,6 +120,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     @Override
     public void onCreate() {
         super.onCreate();
+        SongControlViewModel.isPlaying.postValue(false);
+        SongControlViewModel.randomState.postValue(false);
         player = new MediaPlayer();
         initMediaSession();
         initMusicPlayer();
