@@ -224,6 +224,7 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     public void stopSong() {
         SongControlViewModel.isPlaying.postValue(false);
         player.stop();
+        player.release();
     }
 
     private void registerBecomingNoisyReceiver() {
@@ -459,9 +460,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
                 break;
             case AudioManager.AUDIOFOCUS_LOSS:
                 // Lost focus for an unbounded amount of time: stop playback and release media player
-                if (player.isPlaying()) stopSong();
-                player.release();
-                player = new MediaPlayer();
+                Log.d("Loss song", "True");
+                if (player.isPlaying()) pauseSong();
                 break;
             case AudioManager.AUDIOFOCUS_LOSS_TRANSIENT:
                 // Lost focus for a short time, but we have to stop
