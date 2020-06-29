@@ -117,6 +117,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <SeekBar
+        android:id="@+id/seekbar"
+        android:layout_margin="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/footer_height"

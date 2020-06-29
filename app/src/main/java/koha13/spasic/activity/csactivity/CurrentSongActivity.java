@@ -6,10 +6,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,8 +29,9 @@ import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
+import koha13.spasic.service.MusicService;
 
-public class CurrentSongActivity extends AppCompatActivity {
+public class CurrentSongActivity extends AppCompatActivity implements Runnable {
 
     SongControlViewModel songControlViewModel;
     AllPlaylistsViewModel allPlaylistsViewModel;
@@ -46,6 +49,7 @@ public class CurrentSongActivity extends AppCompatActivity {
     private ImageButton queueBtn;
     private ImageButton loveBtn;
     private boolean isQueue = false;
+    public static SeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         setContentView(R.layout.activity_current_song);
 
         initView();
+        run();
     }
 
     private void initView() {
@@ -227,6 +232,35 @@ public class CurrentSongActivity extends AppCompatActivity {
                 AllPlaylistsViewModel.addSongToPl(-1, SongControlViewModel.currentSong.getValue());
             }
         });
+
+        seekBar = findViewById(R.id.seekbar);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+//                seekBarHint.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+//                seekBarHint.setVisibility(View.VISIBLE);
+
+                if (SongControlViewModel.isPlaying.getValue() == false) {
+                    System.out.println("PRG changed");
+                    MainActivity.musicService.stopSong();
+                    seekBar.setProgress(0);
+                }
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (SongControlViewModel.isPlaying.getValue()) {
+                    System.out.println("MOVING "+ seekBar.getProgress());
+                    MainActivity.musicService.seekTo(seekBar.getProgress());
+                }
+            }
+        });
     }
 
     private void updateBtnLoop(Integer loopState) {
@@ -239,4 +273,27 @@ public class CurrentSongActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void run() {
+        int currentPosition = MainActivity.musicService.getCurrentPosition();
+        int total = SongControlViewModel.currentSong.getValue().getLength();
+
+        System.out.println(SongControlViewModel.isPlaying.getValue());
+        System.out.println(currentPosition);
+        System.out.println(total);
+        while (SongControlViewModel.isPlaying.getValue() && currentPosition < total) {
+            try {
+                Thread.sleep(1000);
+                currentPosition = MainActivity.musicService.getCurrentPosition();
+                System.out.println("CURRENT POS"+ currentPosition);
+            } catch (InterruptedException e) {
+                return;
+            } catch (Exception e) {
+                return;
+            }
+            seekBar.setProgress(currentPosition);
+        }
+
+        System.out.println("END");
+    }
 }

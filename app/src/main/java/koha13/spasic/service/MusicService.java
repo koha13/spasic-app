@@ -33,6 +33,7 @@ import androidx.core.app.NotificationCompat;
 import java.util.Objects;
 
 import koha13.spasic.R;
+import koha13.spasic.activity.csactivity.CurrentSongActivity;
 import koha13.spasic.data.FetchApiImpl;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.entity.Song;
@@ -181,7 +182,9 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void playSong() {
-        playSong(Objects.requireNonNull(SongControlViewModel.currentSong.getValue()));
+        Song currentSongValue = SongControlViewModel.currentSong.getValue();
+        CurrentSongActivity.seekBar.setMax(currentSongValue.getLength());
+        playSong(Objects.requireNonNull(currentSongValue));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -439,6 +442,14 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         } else if (actionString.equalsIgnoreCase(ACTION_STOP)) {
             transportControls.stop();
         }
+    }
+
+    public void seekTo(int progress) {
+        player.seekTo(progress);
+    }
+
+    public int getCurrentPosition() {
+        return player.getCurrentPosition();
     }
 
     public enum PlaybackStatus {
