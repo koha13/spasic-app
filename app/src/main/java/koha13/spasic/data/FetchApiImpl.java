@@ -2,6 +2,8 @@ package koha13.spasic.data;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import koha13.spasic.entity.Album;
 import koha13.spasic.entity.Artist;
 import koha13.spasic.entity.Song;
 import koha13.spasic.entity.User;
+import koha13.spasic.model.APIError;
 import koha13.spasic.model.ChangePassRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +32,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -57,7 +62,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -85,7 +92,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -113,7 +122,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -141,7 +152,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -184,7 +197,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
@@ -212,7 +227,9 @@ public class FetchApiImpl {
                 } else {
                     if (callback != null) {
                         try {
-                            callback.onDataFail(response.errorBody().string());
+                            Gson gson = new Gson();
+                            APIError apiError = gson.fromJson(response.errorBody().string(), APIError.class);
+                            callback.onDataFail(apiError.getMessage());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
