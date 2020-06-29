@@ -5,6 +5,15 @@
     android:orientation="vertical"
     android:layout_width="match_parent">
 
+    <TextView
+        android:id="@+id/tv_no_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="Không có ca sĩ phù hợp"
+        android:textAppearance="?android:textAppearanceMedium"
+        android:visibility="gone" />
+
     <GridView
         android:id="@+id/gv_artist_search"
         android:layout_marginHorizontal="10dp"

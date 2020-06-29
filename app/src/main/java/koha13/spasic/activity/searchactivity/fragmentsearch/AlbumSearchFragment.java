@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -22,6 +23,7 @@ public class AlbumSearchFragment extends Fragment {
     private String searchKey;
     private GridView albumGv;
     private AlbumGridViewAdapter albumGridViewAdapter;
+    private TextView noDataTv;
 
     public AlbumSearchFragment() {
     }
@@ -47,6 +49,7 @@ public class AlbumSearchFragment extends Fragment {
 
     private void initView(View rootView) {
         albumGv = rootView.findViewById(R.id.gv_album_search);
+        noDataTv = rootView.findViewById(R.id.tv_no_data);
         List<Album> albums = new ArrayList<>();
         albumGridViewAdapter = new AlbumGridViewAdapter(albums, getActivity());
         albumGv.setAdapter(albumGridViewAdapter);
@@ -78,6 +81,11 @@ public class AlbumSearchFragment extends Fragment {
             @Override
             public void onDataSuccess(List<Album> data) {
                 albumGridViewAdapter.addAlbums(data);
+                if (data.size() ==0){
+                    noDataTv.setVisibility(View.VISIBLE);
+                }else{
+                    noDataTv.setVisibility(View.GONE);
+                }
             }
 
             @Override

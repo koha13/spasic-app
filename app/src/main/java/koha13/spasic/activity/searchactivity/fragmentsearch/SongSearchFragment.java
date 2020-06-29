@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ public class SongSearchFragment extends Fragment {
     private SongCardAdapter songAdapter;
     private LinearLayoutManager linearLayoutManager;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private TextView noDataTv;
 
     public SongSearchFragment() {
     }
@@ -51,6 +53,7 @@ public class SongSearchFragment extends Fragment {
 
     private void initView(View rootView) {
         songRe = rootView.findViewById(R.id.re_song_search);
+        noDataTv = rootView.findViewById(R.id.tv_no_data);
         List<Song> songs = new ArrayList<>();
         songAdapter = new SongCardAdapter(songs, getActivity());
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -86,6 +89,11 @@ public class SongSearchFragment extends Fragment {
             @Override
             public void onDataSuccess(List<Song> data) {
                 songAdapter.addSong(data);
+                if (data.size() ==0){
+                    noDataTv.setVisibility(View.VISIBLE);
+                }else{
+                    noDataTv.setVisibility(View.GONE);
+                }
             }
 
             @Override

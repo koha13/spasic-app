@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -23,6 +24,7 @@ public class ArtistSearchFragment extends Fragment {
     private String searchKey;
     private GridView artistGv;
     private ArtistGridViewAdapter artistGridViewAdapter;
+    private TextView noDataTv;
 
     public ArtistSearchFragment() {
     }
@@ -49,6 +51,7 @@ public class ArtistSearchFragment extends Fragment {
 
     private void initView(View rootView) {
         artistGv = rootView.findViewById(R.id.gv_artist_search);
+        noDataTv = rootView.findViewById(R.id.tv_no_data);
         List<Artist> artists = new ArrayList<>();
         artistGridViewAdapter = new ArtistGridViewAdapter(artists, getActivity());
         artistGv.setAdapter(artistGridViewAdapter);
@@ -80,6 +83,11 @@ public class ArtistSearchFragment extends Fragment {
             @Override
             public void onDataSuccess(List<Artist> data) {
                 artistGridViewAdapter.addArtist(data);
+                if (data.size() ==0){
+                    noDataTv.setVisibility(View.VISIBLE);
+                }else{
+                    noDataTv.setVisibility(View.GONE);
+                }
             }
 
             @Override
