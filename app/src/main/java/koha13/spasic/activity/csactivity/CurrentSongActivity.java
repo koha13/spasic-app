@@ -1,6 +1,8 @@
 package koha13.spasic.activity.csactivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -31,7 +33,7 @@ import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
 import koha13.spasic.service.MusicService;
 
-public class CurrentSongActivity extends AppCompatActivity implements Runnable {
+public class CurrentSongActivity extends AppCompatActivity {
 
     SongControlViewModel songControlViewModel;
     AllPlaylistsViewModel allPlaylistsViewModel;
@@ -51,13 +53,45 @@ public class CurrentSongActivity extends AppCompatActivity implements Runnable {
     private boolean isQueue = false;
     public static SeekBar seekBar;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_song);
 
         initView();
-        run();
+
+        new AsyncTask() {
+            @SuppressLint("WrongThread")
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                int currentPosition = MainActivity.musicService.getCurrentPosition();
+                Song currentSongValue = SongControlViewModel.currentSong.getValue();
+                int total = currentSongValue.getLength() * 1000;
+                CurrentSongActivity.seekBar.setMax(total * 1000);
+                System.out.println(SongControlViewModel.isPlaying.getValue());
+                System.out.println(currentPosition);
+                System.out.println(total);
+
+
+                while (SongControlViewModel.isPlaying.getValue() && currentPosition < total) {
+                    try {
+                        Thread.sleep(1000);
+                        currentPosition = MainActivity.musicService.getCurrentPosition();
+                        System.out.println("CURRENT POS "+ currentPosition);
+                        System.out.println("Max "+ seekBar.getMax());
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    seekBar.setProgress(currentPosition);
+                }
+
+                System.out.println("END");
+                return null;
+            }
+        }.execute();
     }
 
     private void initView() {
@@ -238,16 +272,14 @@ public class CurrentSongActivity extends AppCompatActivity implements Runnable {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-//                seekBarHint.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-//                seekBarHint.setVisibility(View.VISIBLE);
 
                 if (SongControlViewModel.isPlaying.getValue() == false) {
                     System.out.println("PRG changed");
-                    MainActivity.musicService.stopSong();
+//                    MainActivity.musicService.stopSong();
                     seekBar.setProgress(0);
                 }
 
@@ -271,29 +303,5 @@ public class CurrentSongActivity extends AppCompatActivity implements Runnable {
         } else if (loopState == 2) {
             btnLoop.setImageResource(R.drawable.ic_repeat_all_orange_24dp);
         }
-    }
-
-    @Override
-    public void run() {
-        int currentPosition = MainActivity.musicService.getCurrentPosition();
-        int total = SongControlViewModel.currentSong.getValue().getLength();
-
-        System.out.println(SongControlViewModel.isPlaying.getValue());
-        System.out.println(currentPosition);
-        System.out.println(total);
-        while (SongControlViewModel.isPlaying.getValue() && currentPosition < total) {
-            try {
-                Thread.sleep(1000);
-                currentPosition = MainActivity.musicService.getCurrentPosition();
-                System.out.println("CURRENT POS"+ currentPosition);
-            } catch (InterruptedException e) {
-                return;
-            } catch (Exception e) {
-                return;
-            }
-            seekBar.setProgress(currentPosition);
-        }
-
-        System.out.println("END");
     }
 }

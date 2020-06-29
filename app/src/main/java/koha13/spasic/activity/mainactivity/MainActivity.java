@@ -96,9 +96,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPlayerService() {
-        SongControlViewModel.isPlaying.setValue(false);
-        SongControlViewModel.randomState.setValue(false);
-
         musicConnection = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName name, IBinder service) {
