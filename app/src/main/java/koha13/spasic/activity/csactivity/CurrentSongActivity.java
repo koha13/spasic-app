@@ -39,7 +39,7 @@ public class CurrentSongActivity extends AppCompatActivity {
 
     SongControlViewModel songControlViewModel;
     AllPlaylistsViewModel allPlaylistsViewModel;
-    Fragment mFragment;
+    Fragment queueFragment;
     ImageView imageSong;
     private ImageButton backBtn;
     private ImageButton btnPrevious;
@@ -53,6 +53,9 @@ public class CurrentSongActivity extends AppCompatActivity {
     private ImageButton queueBtn;
     private ImageButton loveBtn;
     private boolean isQueue = false;
+    private ImageButton lyricBtn;
+    private boolean isLyricShow = false;
+    private Fragment lyricFragment;
     public static SeekBar seekBar;
     private TextView currentTime;
     private TextView maxTime;
@@ -202,7 +205,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
 
-        mFragment = new QueueFragment();
+        queueFragment = new QueueFragment();
         queueBtn = findViewById(R.id.queue_btn);
         queueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,13 +214,34 @@ public class CurrentSongActivity extends AppCompatActivity {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
                 if (!isQueue) {
-                    ft.replace(R.id.framelayout, mFragment).commit();
+                    ft.replace(R.id.framelayout, queueFragment).commit();
                     isQueue = true;
                     queueBtn.setColorFilter(Color.parseColor("#FF5722"));
                 } else {
-                    ft.remove(mFragment).commit();
+                    ft.remove(queueFragment).commit();
                     isQueue = false;
                     queueBtn.setColorFilter(Color.parseColor("#FFFFFF"));
+                }
+
+            }
+        });
+
+        lyricFragment = new LyricFragment();
+        lyricBtn = findViewById(R.id.lyric_btn);
+        lyricBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+                if (!isLyricShow) {
+                    ft.replace(R.id.framelayout, lyricFragment).commit();
+                    isLyricShow = true;
+                    lyricBtn.setColorFilter(Color.parseColor("#FF5722"));
+                } else {
+                    ft.remove(lyricFragment).commit();
+                    isLyricShow = false;
+                    lyricBtn.setColorFilter(Color.parseColor("#FFFFFF"));
                 }
 
             }
