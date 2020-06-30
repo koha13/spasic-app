@@ -248,6 +248,7 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
         addPlBtn.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 new AddToPlDialog(SongControlViewModel.currentSong.getValue(), CurrentSongActivity.this).getDialog().show();
@@ -301,7 +302,7 @@ public class CurrentSongActivity extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-                currentTime.setText(GeneralDTO.secondToMinute((int) progress / 1000));
+                currentTime.setText(GeneralDTO.secondToMinute((int) Math.ceil(progress / 1000)));
             }
 
             @Override
