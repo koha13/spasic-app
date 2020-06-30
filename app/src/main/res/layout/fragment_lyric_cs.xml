@@ -8,7 +8,7 @@
     android:isScrollContainer="false"
     android:background="@color/semi_transparent_bg"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/footer_height"
+    android:paddingBottom="75dp"
     android:paddingTop="65dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
