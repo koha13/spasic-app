@@ -51,6 +51,7 @@ public class UserInfoActivity extends AppCompatActivity {
                 String np = newPass.getText().toString().trim();
                 if (op.length() < 6 || np.length() < 6) {
                     Toast.makeText(UserInfoActivity.this, "Không hợp lệ", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 FetchApiImpl.changePassword(op, np, new ResponseCallback<User>() {
                     @Override

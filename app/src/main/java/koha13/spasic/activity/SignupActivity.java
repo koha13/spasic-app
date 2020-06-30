@@ -79,6 +79,7 @@ public class SignupActivity extends AppCompatActivity implements ResponseCallbac
         String pw = password.getText().toString().toLowerCase().trim();
         if (us.length() < 6 || pw.length() < 6) {
             onDataFail("Tên đăng nhập hoặc mật khẩu không hợp lệ");
+            return;
         }
         UserData.signup(new LoginRequest(us, pw), this);
         loadingScreen.setVisibility(View.VISIBLE);
