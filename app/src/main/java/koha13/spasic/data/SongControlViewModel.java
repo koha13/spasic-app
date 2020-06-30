@@ -106,6 +106,7 @@ public class SongControlViewModel extends ViewModel {
     }
 
     public static void addSongAfterCurrentSong(Song song) {
+        if(song.getId() == currentSong.getValue().getId()) return;
         int index = queueSongs.indexOf(song);
         if (index != -1) {
             queueSongs.remove(song);
