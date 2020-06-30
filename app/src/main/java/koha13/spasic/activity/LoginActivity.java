@@ -88,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements ResponseCallback
         String pw = password.getText().toString().toLowerCase().trim();
         if (us.length() < 6 || pw.length() < 6) {
             onDataFail("Tên đăng nhập hoặc mật khẩu không hợp lệ");
+            return;
         }
         UserData.login(new LoginRequest(us, pw), this);
         loadingScreen.setVisibility(View.VISIBLE);
