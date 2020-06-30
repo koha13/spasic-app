@@ -31,6 +31,7 @@ import koha13.spasic.activity.csactivity.QueueFragment;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.entity.Song;
+import koha13.spasic.utils.GeneralDTO;
 
 import static koha13.spasic.activity.mainactivity.MainActivity.musicService;
 
@@ -60,6 +61,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         final Song song = SongControlViewModel.queueSongs.get(position);
         holder.songName.setText(song.getName());
         holder.songArtist.setText(song.getArtists());
+        holder.timeTv.setText(GeneralDTO.secondToMinute(song.getLength()));
         Glide.with(mContext).load(song.getSongImage()).into(holder.imageView);
         if (song.getId() == SongControlViewModel.currentSong.getValue().getId()) {
             holder.cv.setCardBackgroundColor(Color.parseColor("#85837A7A"));
@@ -171,6 +173,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
         ImageView imageView;
         ImageButton menu;
         ImageButton move;
+        TextView timeTv;
 
         SongViewHolder(View itemView) {
             super(itemView);
@@ -180,6 +183,7 @@ public class QueueSongAdapter extends RecyclerView.Adapter<QueueSongAdapter.Song
             imageView = itemView.findViewById(R.id.cv_image);
             menu = itemView.findViewById(R.id.menu_cv);
             move = itemView.findViewById(R.id.drag_handle);
+            timeTv = itemView.findViewById(R.id.cv_time);
         }
     }
 }
