@@ -51,7 +51,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
     private static final int NOTIFICATION_ID = 101;
     private final IBinder musicBind = new MusicBinder();
     //MediaSession
-    private MediaSessionManager mediaSessionManager;
     private MediaSessionCompat mediaSession;
     private MediaControllerCompat.TransportControls transportControls;
     private MediaPlayer player;
@@ -101,7 +100,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             }
         } else {
             if (!playNextSong()) {
-//                SongControlViewModel.isPlaying.postValue(false);
                 playAgain();
             }
         }
@@ -209,7 +207,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             SongControlViewModel.updateCurrentSong(song);
             SongControlViewModel.isPlaying.postValue(true);
             SongControlViewModel.addSongToQueueNoUpdatePos(song);
-            updateMetaData();
             buildNotification(PlaybackStatus.PLAYING);
         } else {
             if (SongControlViewModel.isPlaying.getValue()) {
@@ -219,7 +216,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
                 player.seekTo(length);
                 player.start();
                 SongControlViewModel.isPlaying.postValue(true);
-                updateMetaData();
                 buildNotification(PlaybackStatus.PLAYING);
             }
 
@@ -277,9 +273,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void initMediaSession() throws RemoteException {
-        if (mediaSessionManager != null) return; //mediaSessionManager exists
-
-        mediaSessionManager = (MediaSessionManager) getSystemService(Context.MEDIA_SESSION_SERVICE);
         // Create a new MediaSession
         mediaSession = new MediaSessionCompat(getApplicationContext(), "AudioPlayer");
         //Get MediaSessions transport controls
@@ -289,9 +282,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
         //indicate that the MediaSession handles transport control commands
         // through its MediaSessionCompat.Callback.
         mediaSession.setFlags(MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-
-        //Set mediaSession's MetaData
-//        updateMetaData();
 
         // Attach Callback to receive MediaSession updates
         mediaSession.setCallback(new MediaSessionCompat.Callback() {
@@ -314,7 +304,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             public void onSkipToNext() {
                 super.onSkipToNext();
                 playNextSong();
-                updateMetaData();
                 buildNotification(PlaybackStatus.PLAYING);
             }
 
@@ -322,7 +311,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             public void onSkipToPrevious() {
                 super.onSkipToPrevious();
                 playPreviousSong();
-                updateMetaData();
                 buildNotification(PlaybackStatus.PLAYING);
             }
 
@@ -339,18 +327,6 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
                 super.onSeekTo(position);
             }
         });
-    }
-
-    private void updateMetaData() {
-        Bitmap albumArt = BitmapFactory.decodeResource(getResources(),
-                R.drawable.default_image); //replace with medias albumArt
-        // Update the current metadata
-        mediaSession.setMetadata(new MediaMetadataCompat.Builder()
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumArt)
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, SongControlViewModel.currentSong.getValue().getArtists())
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, SongControlViewModel.currentSong.getValue().getAlbum())
-                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, SongControlViewModel.currentSong.getValue().getName())
-                .build());
     }
 
     private void buildNotification(PlaybackStatus playbackStatus) {
