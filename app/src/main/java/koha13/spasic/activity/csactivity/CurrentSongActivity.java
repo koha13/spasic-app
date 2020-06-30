@@ -2,6 +2,7 @@ package koha13.spasic.activity.csactivity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
 import koha13.spasic.service.MusicService;
+import koha13.spasic.utils.GeneralDTO;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
@@ -52,6 +54,8 @@ public class CurrentSongActivity extends AppCompatActivity {
     private ImageButton loveBtn;
     private boolean isQueue = false;
     public static SeekBar seekBar;
+    private TextView currentTime;
+    private TextView maxTime;
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -68,18 +72,11 @@ public class CurrentSongActivity extends AppCompatActivity {
                 int currentPosition = MainActivity.musicService.getCurrentPosition();
                 Song currentSongValue = SongControlViewModel.currentSong.getValue();
                 int total = currentSongValue.getLength() * 1000;
-                CurrentSongActivity.seekBar.setMax(total * 1000);
-                System.out.println(SongControlViewModel.isPlaying.getValue());
-                System.out.println(currentPosition);
-                System.out.println(total);
-
-
-                while (SongControlViewModel.isPlaying.getValue() && currentPosition < total) {
+                CurrentSongActivity.seekBar.setMax(total);
+                while (currentPosition < total) {
                     try {
                         Thread.sleep(1000);
                         currentPosition = MainActivity.musicService.getCurrentPosition();
-                        System.out.println("CURRENT POS "+ currentPosition);
-                        System.out.println("Max "+ seekBar.getMax());
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (Exception e) {
@@ -87,8 +84,6 @@ public class CurrentSongActivity extends AppCompatActivity {
                     }
                     seekBar.setProgress(currentPosition);
                 }
-
-                System.out.println("END");
                 return null;
             }
         }.execute();
@@ -199,6 +194,10 @@ public class CurrentSongActivity extends AppCompatActivity {
                 Glide.with(CurrentSongActivity.this).load(song.getSongImage()).into(imageSong);
                 songName.setText(song.getName());
                 songArtist.setText(song.getArtists());
+                seekBar.setMax(song.getLength()*1000);
+                seekBar.setProgress(0);
+                currentTime.setText("0:00");
+                maxTime.setText(GeneralDTO.secondToMinute(song.getLength()));
             }
         });
 
@@ -268,6 +267,8 @@ public class CurrentSongActivity extends AppCompatActivity {
         });
 
         seekBar = findViewById(R.id.seekbar);
+        currentTime = findViewById(R.id.cs_time);
+        maxTime = findViewById(R.id.max_time);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -276,19 +277,12 @@ public class CurrentSongActivity extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
-
-                if (SongControlViewModel.isPlaying.getValue() == false) {
-                    System.out.println("PRG changed");
-//                    MainActivity.musicService.stopSong();
-                    seekBar.setProgress(0);
-                }
-
+                currentTime.setText(GeneralDTO.secondToMinute((int) progress / 1000));
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (SongControlViewModel.isPlaying.getValue()) {
-                    System.out.println("MOVING "+ seekBar.getProgress());
                     MainActivity.musicService.seekTo(seekBar.getProgress());
                 }
             }
