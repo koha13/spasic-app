@@ -109,10 +109,22 @@ public class SongControlViewModel extends ViewModel {
         if(song.getId() == currentSong.getValue().getId()) return;
         int index = queueSongs.indexOf(song);
         if (index != -1) {
-            queueSongs.remove(song);
-            queueSongs.add(index + 1, song);
+            queueSongs.remove(index);
+            int indexCs = queueSongs.indexOf(currentSong.getValue());
+            if(indexCs == queueSongs.size()-1){
+                queueSongs.add(song);
+            }
+            else{
+                queueSongs.add(indexCs + 1, song);
+            }
         } else {
-            queueSongs.add(song);
+            int indexCs = queueSongs.indexOf(currentSong.getValue());
+            if(indexCs == queueSongs.size()-1){
+                queueSongs.add(song);
+            }
+            else{
+                queueSongs.add(queueSongs.indexOf(currentSong.getValue()) + 1, song);
+            }
             addSongToSavedQueue(song);
         }
     }

@@ -1,6 +1,7 @@
 package koha13.spasic.adapter;
 
 import android.content.Context;
+import android.media.TimedText;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import koha13.spasic.R;
 import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.entity.Song;
+import koha13.spasic.utils.GeneralDTO;
 
 import static koha13.spasic.activity.mainactivity.MainActivity.musicService;
 
@@ -74,6 +76,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
                 musicService.playSong(song);
             }
         });
+        holder.timeTv.setText(GeneralDTO.secondToMinute(song.getLength()));
         holder.menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +126,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
         TextView songArtist;
         ImageView imageView;
         ImageButton menu;
+        TextView timeTv;
 
         SongViewHolder(View itemView) {
             super(itemView);
@@ -131,6 +135,7 @@ public class SongCardAdapter extends RecyclerView.Adapter<SongCardAdapter.SongVi
             songArtist = itemView.findViewById(R.id.cv_song_artist);
             imageView = itemView.findViewById(R.id.cv_image);
             menu = itemView.findViewById(R.id.menu_cv);
+            timeTv = itemView.findViewById(R.id.cv_time);
         }
     }
 }
