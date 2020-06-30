@@ -1,15 +1,20 @@
 package koha13.spasic.activity.csactivity;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,12 +32,14 @@ import koha13.spasic.data.SongControlViewModel;
 import koha13.spasic.dialog.AddToPlDialog;
 import koha13.spasic.entity.Playlist;
 import koha13.spasic.entity.Song;
+import koha13.spasic.service.MusicService;
+import koha13.spasic.utils.GeneralDTO;
 
 public class CurrentSongActivity extends AppCompatActivity {
 
     SongControlViewModel songControlViewModel;
     AllPlaylistsViewModel allPlaylistsViewModel;
-    Fragment mFragment;
+    Fragment queueFragment;
     ImageView imageSong;
     private ImageButton backBtn;
     private ImageButton btnPrevious;
@@ -46,13 +53,43 @@ public class CurrentSongActivity extends AppCompatActivity {
     private ImageButton queueBtn;
     private ImageButton loveBtn;
     private boolean isQueue = false;
+    private ImageButton lyricBtn;
+    private boolean isLyricShow = false;
+    private Fragment lyricFragment;
+    public static SeekBar seekBar;
+    private TextView currentTime;
+    private TextView maxTime;
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_current_song);
 
         initView();
+
+        new AsyncTask() {
+            @SuppressLint("WrongThread")
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                int currentPosition = MainActivity.musicService.getCurrentPosition();
+                Song currentSongValue = SongControlViewModel.currentSong.getValue();
+                int total = currentSongValue.getLength() * 1000;
+                CurrentSongActivity.seekBar.setMax(total);
+                while (currentPosition < total) {
+                    try {
+                        Thread.sleep(1000);
+                        currentPosition = MainActivity.musicService.getCurrentPosition();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    seekBar.setProgress(currentPosition);
+                }
+                return null;
+            }
+        }.execute();
     }
 
     private void initView() {
@@ -160,11 +197,15 @@ public class CurrentSongActivity extends AppCompatActivity {
                 Glide.with(CurrentSongActivity.this).load(song.getSongImage()).into(imageSong);
                 songName.setText(song.getName());
                 songArtist.setText(song.getArtists());
+                seekBar.setMax(song.getLength()*1000);
+                seekBar.setProgress(0);
+                currentTime.setText("0:00");
+                maxTime.setText(GeneralDTO.secondToMinute(song.getLength()));
             }
         });
 
 
-        mFragment = new QueueFragment();
+        queueFragment = new QueueFragment();
         queueBtn = findViewById(R.id.queue_btn);
         queueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,13 +214,34 @@ public class CurrentSongActivity extends AppCompatActivity {
                 FragmentTransaction ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
                 if (!isQueue) {
-                    ft.replace(R.id.framelayout, mFragment).commit();
+                    ft.replace(R.id.framelayout, queueFragment).commit();
                     isQueue = true;
                     queueBtn.setColorFilter(Color.parseColor("#FF5722"));
                 } else {
-                    ft.remove(mFragment).commit();
+                    ft.remove(queueFragment).commit();
                     isQueue = false;
                     queueBtn.setColorFilter(Color.parseColor("#FFFFFF"));
+                }
+
+            }
+        });
+
+        lyricFragment = new LyricFragment();
+        lyricBtn = findViewById(R.id.lyric_btn);
+        lyricBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out);
+                if (!isLyricShow) {
+                    ft.replace(R.id.framelayout, lyricFragment).commit();
+                    isLyricShow = true;
+                    lyricBtn.setColorFilter(Color.parseColor("#FF5722"));
+                } else {
+                    ft.remove(lyricFragment).commit();
+                    isLyricShow = false;
+                    lyricBtn.setColorFilter(Color.parseColor("#FFFFFF"));
                 }
 
             }
@@ -227,6 +289,28 @@ public class CurrentSongActivity extends AppCompatActivity {
                 AllPlaylistsViewModel.addSongToPl(-1, SongControlViewModel.currentSong.getValue());
             }
         });
+
+        seekBar = findViewById(R.id.seekbar);
+        currentTime = findViewById(R.id.cs_time);
+        maxTime = findViewById(R.id.max_time);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromTouch) {
+                currentTime.setText(GeneralDTO.secondToMinute((int) progress / 1000));
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                if (SongControlViewModel.isPlaying.getValue()) {
+                    MainActivity.musicService.seekTo(seekBar.getProgress());
+                }
+            }
+        });
     }
 
     private void updateBtnLoop(Integer loopState) {
@@ -238,5 +322,4 @@ public class CurrentSongActivity extends AppCompatActivity {
             btnLoop.setImageResource(R.drawable.ic_repeat_all_orange_24dp);
         }
     }
-
 }

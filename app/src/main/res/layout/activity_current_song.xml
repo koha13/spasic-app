@@ -26,7 +26,7 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="70dp"
+                android:layout_marginBottom="80dp"
                 android:layout_marginRight="20dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_favorite_orange_24dp"/>
@@ -37,11 +37,12 @@
                 android:scaleType="fitXY"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="70dp"
+                android:layout_marginBottom="80dp"
                 android:layout_marginLeft="20dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_playlist_add_orange_24dp"/>
         </RelativeLayout>
+
 
     </FrameLayout>
     <com.google.android.material.appbar.AppBarLayout
@@ -73,7 +74,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_toLeftOf="@+id/queue_btn"
+                    android:layout_toLeftOf="@+id/lyric_btn"
                     android:layout_toRightOf="@+id/backBtn"
                     android:gravity="center_horizontal">
 
@@ -102,14 +103,22 @@
                         android:textSize="@dimen/text_size_sub" />
                 </LinearLayout>
 
-
+                <ImageButton
+                    android:id="@+id/lyric_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/queue_btn"
+                    android:layout_centerVertical="true"
+                    android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
+                    android:background="?selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_art_track_white_24dp" />
                 <ImageButton
                     android:id="@+id/queue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginHorizontal="@dimen/margin_hori_imagebutton_toolbar"
+                    android:layout_marginRight="@dimen/margin_hori_imagebutton_toolbar"
                     android:background="?selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_queue_music_white_24dp" />
             </RelativeLayout>
@@ -119,51 +128,91 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/footer_height"
+        android:layout_height="72dp"
         android:layout_alignParentBottom="true"
+        android:orientation="vertical"
         android:layout_gravity="bottom"
         android:background="@color/semi_transparent_bg"
         android:gravity="center_vertical|center_horizontal">
 
-        <ImageButton
-            android:id="@+id/btnLoop"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_repeat_white_24dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/cs_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textLight"
+                android:text="12:02"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginHorizontal="4dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textLight"
+                android:text="/"/>
+            <TextView
+                android:id="@+id/max_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textLight"
+                android:text="12:02"/>
+            <SeekBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seekbar"
+                android:thumbTint="@android:color/holo_orange_dark"
+                android:progressTint="@android:color/holo_orange_light"
+                android:progressBackgroundTint="@android:color/holo_green_light"/>
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/btnPrevious"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_skip_previous_white_24dp" />
 
-        <ImageButton
-            android:id="@+id/btnPlay"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_play_circle_filled_orange_40dp" />
 
-        <ImageButton
-            android:id="@+id/btnNext"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_skip_next_white_24dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="@dimen/footer_height">
+            <ImageButton
+                android:id="@+id/btnLoop"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_repeat_white_24dp" />
 
-        <ImageButton
-            android:id="@+id/btnShuffle"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_shuffle_white_24dp" />
+            <ImageButton
+                android:id="@+id/btnPrevious"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_skip_previous_white_24dp" />
+
+            <ImageButton
+                android:id="@+id/btnPlay"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_play_circle_filled_orange_40dp" />
+
+            <ImageButton
+                android:id="@+id/btnNext"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_skip_next_white_24dp" />
+
+            <ImageButton
+                android:id="@+id/btnShuffle"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_shuffle_white_24dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
