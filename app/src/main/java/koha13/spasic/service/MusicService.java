@@ -101,7 +101,8 @@ public class MusicService extends Service implements MediaPlayer.OnPreparedListe
             }
         } else {
             if (!playNextSong()) {
-                SongControlViewModel.isPlaying.postValue(false);
+//                SongControlViewModel.isPlaying.postValue(false);
+                playAgain();
             }
         }
     }
